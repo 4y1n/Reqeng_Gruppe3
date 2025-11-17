@@ -9,7 +9,7 @@ public class ElectricChargingStationNetwork {
         LocationManager lm = LocationManager.getInstance().clearLocations();
 
         lm.createLocation("Vienna West Station")
-                .setAddress("Mariahilfer Str. 120, 1070 Vienna")
+                .setAddress("Mariahilfer Str. 130, 1070 Vienna")
                 .setChargerCount(4);
 
         lm.createLocation("Linz Center Garage")
