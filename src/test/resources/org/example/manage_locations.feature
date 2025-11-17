@@ -6,7 +6,6 @@ Feature: Manage Locations
   Background:
     Given a new FillingStationNetwork
 
-  # --- Create Location ---
   Scenario: create a new location
     When owner creates a location with the unique name "Vienna West Station"
     And sets the address to "Mariahilfer Str. 120, 1070 Vienna"
@@ -15,7 +14,6 @@ Feature: Manage Locations
     And the address is "Mariahilfer Str. 120, 1070 Vienna"
     And the number of chargers is 4
 
-  # --- View Location List ---
   Scenario: view all existing locations
     Given the following locations exist:
       | Name                | Address                              | Chargers |
@@ -32,13 +30,11 @@ Feature: Manage Locations
         Graz Main Square: Herrengasse 3, 8010 Graz (6 chargers)
       """
 
-  # --- Update Location ---
   Scenario: update a location
     Given an existing location "Vienna West Station"
     When owner updates the address to "Mariahilfer Gürtel 210, 1150 Vienna"
     Then the location "Vienna West Station" has the new address "Mariahilfer Gürtel 210, 1150 Vienna"
 
-  # --- Delete Location ---
   Scenario: delete a location
     Given the location "Linz Center Garage" exists
     When owner deletes the location "Linz Center Garage"

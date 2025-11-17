@@ -18,17 +18,12 @@ public class ManageLocations_Steps {
     private Location currentLocation;
     private String viewedLocationListOutput;
 
-    // --------------------------------------------------------
-    // Background
-    // --------------------------------------------------------
+
     @Given("a new FillingStationNetwork")
     public void aNewFillingStationNetwork() {
         locationManager = LocationManager.getInstance().clearLocations();
     }
 
-    // --------------------------------------------------------
-    // Create Location
-    // --------------------------------------------------------
     @When("owner creates a location with the unique name {string}")
     public void ownerCreatesALocationWithTheUniqueName(String name) {
         currentLocation = locationManager.createLocation(name);
@@ -59,9 +54,8 @@ public class ManageLocations_Steps {
         assertEquals(expectedCount.intValue(), currentLocation.getChargerCount());
     }
 
-    // --------------------------------------------------------
-    // View Locations
-    // --------------------------------------------------------
+
+
     @Given("the following locations exist:")
     public void theFollowingLocationsExist(DataTable dataTable) {
         locationManager.clearLocations();
@@ -90,9 +84,8 @@ public class ManageLocations_Steps {
         assertEquals(docString.trim(), viewedLocationListOutput.trim());
     }
 
-    // --------------------------------------------------------
-    // Update Location
-    // --------------------------------------------------------
+
+
     @Given("an existing location {string}")
     public void anExistingLocation(String name) {
         locationManager.clearLocations();
@@ -110,9 +103,8 @@ public class ManageLocations_Steps {
                 locationManager.readLocation(name).getAddress());
     }
 
-    // --------------------------------------------------------
-    // Delete Location
-    // --------------------------------------------------------
+
+
     @Given("the location {string} exists")
     public void theLocationExists(String name) {
         locationManager.clearLocations();
