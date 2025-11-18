@@ -5,15 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a95d4356-2898-4a31-b425-34951fb3278f" name="Changes" comment="add feature locations">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Charger.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/ChargerManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/resources/org/example/manage_chargers.feature" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Customer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/CustomerManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/org/example/manage_customers.feature" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/ElectricChargingStationNetwork.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/ElectricChargingStationNetwork.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/LocationManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/LocationManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/ManageLocations_Steps.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/org/example/StepDefinitions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/StepDefinitions.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/resources/org/example/example.feature" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,12 +57,13 @@
   "keyToString": {
     "Application.ElectricChargingStationNetwork.executor": "Run",
     "Cucumber Java.Feature: manage_chargers.executor": "Run",
+    "Cucumber Java.Feature: manage_customers.executor": "Run",
     "Cucumber Java.Feature: manage_locations.executor": "Run",
     "JUnit.RunCucumberTest.executor": "Run",
     "Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "feature-chargers",
+    "git-widget-placeholder": "feature-clients",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -102,6 +100,25 @@
       <module name="ElectricChargingStationNetwork" />
       <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter" />
       <option name="SUGGESTED_NAME" value="Feature: manage_chargers" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="io.cucumber.core.cli.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Feature: manage_customers" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
+      <option name="CUCUMBER_CORE_VERSION" value="5" />
+      <option name="FILE_PATH" value="$PROJECT_DIR$/src/test/resources/org/example/manage_customers.feature" />
+      <option name="GLUE" value="org.example" />
+      <option name="MAIN_CLASS_NAME" value="io.cucumber.core.cli.Main" />
+      <module name="ElectricChargingStationNetwork" />
+      <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter" />
+      <option name="SUGGESTED_NAME" value="Feature: manage_customers" />
       <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
       <extension name="coverage">
         <pattern>
@@ -150,6 +167,7 @@
     </configuration>
     <list>
       <item itemvalue="Application.ElectricChargingStationNetwork" />
+      <item itemvalue="Cucumber Java.Feature: manage_customers" />
       <item itemvalue="Cucumber Java.Feature: manage_chargers" />
       <item itemvalue="Cucumber Java.Feature: manage_locations" />
       <item itemvalue="JUnit.RunCucumberTest" />
@@ -157,9 +175,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.ElectricChargingStationNetwork" />
+        <item itemvalue="JUnit.RunCucumberTest" />
+        <item itemvalue="Cucumber Java.Feature: manage_customers" />
         <item itemvalue="Cucumber Java.Feature: manage_chargers" />
         <item itemvalue="Cucumber Java.Feature: manage_locations" />
-        <item itemvalue="JUnit.RunCucumberTest" />
       </list>
     </recent_temporary>
   </component>
