@@ -16,12 +16,17 @@ public class StepDefinitions {
 
     private LocationManager locationManager;
     private ChargerManager chargerManager;
+    private CustomerManager customerManager;
+
 
     private Location currentLocation;
     private Charger currentCharger;
+    private Customer currentCustomer;
+
 
     private String viewedLocationListOutput;
     private String viewedChargerListOutput;
+    private String viewedCustomerListOutput;
 
 
 
@@ -29,6 +34,7 @@ public class StepDefinitions {
     public void aNewFillingStationNetwork() {
         locationManager = LocationManager.getInstance().clearLocations();
         chargerManager = ChargerManager.getInstance().clearChargers();
+        customerManager = CustomerManager.getInstance().clearCustomers();
     }
 
 
@@ -244,4 +250,123 @@ public class StepDefinitions {
     public void theChargerNoLongerExistsInTheChargerList(String id) {
         assertNull(chargerManager.viewCharger(id));
     }
+
+
+
+
+
+// Customer
+
+
+    @When("customer creates a customer account with the unique id {string}")
+    public void customerCreatesAccountWithId(String id) {
+        customerManager = CustomerManager.getInstance();
+        currentCustomer = customerManager.createCustomer(id);
+    }
+
+    @And("sets the customer name to {string}")
+    public void setsTheCustomerNameTo(String name) {
+        currentCustomer.setName(name);
+    }
+
+    @And("sets the customer email to {string}")
+    public void setsTheCustomerEmailTo(String email) {
+        currentCustomer.setEmail(email);
+    }
+
+    @Then("the customer account {string} is part of the customer account list")
+    public void theCustomerAccountIsPartOfTheList(String id) {
+        assertNotNull(customerManager.viewCustomer(id));
+    }
+
+    @And("the customer name is {string}")
+    public void theCustomerNameIs(String expected) {
+        assertEquals(expected, currentCustomer.getName());
+    }
+
+    @And("the customer email is {string}")
+    public void theCustomerEmailIs(String expected) {
+        assertEquals(expected, currentCustomer.getEmail());
+    }
+
+    @And("the customer credit is {double}")
+    public void theCustomerCreditIs(Double expected) {
+        assertEquals(expected, currentCustomer.getCredit());
+    }
+
+
+
+
+
+
+    @Given("the following customer accounts exist:")
+    public void theFollowingCustomerAccountsExist(DataTable dataTable) {
+        customerManager = CustomerManager.getInstance().clearCustomers();
+
+        List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
+
+        for (Map<String, String> row : rows) {
+            Customer c = customerManager.createCustomer(row.get("Id"));
+            c.setName(row.get("Name"));
+            c.setEmail(row.get("Email"));
+            c.setCredit(Double.parseDouble(row.get("Credit")));
+        }
+    }
+
+
+
+
+    @When("customer views the customer account with id {string}")
+    public void customerViewsAccount(String id) {
+        currentCustomer = customerManager.viewCustomer(id);
+        assertNotNull(currentCustomer);
+    }
+
+
+
+
+
+    @Given("an existing customer account with id {string}")
+    public void anExistingCustomerAccountWithId(String id) {
+        customerManager = CustomerManager.getInstance().clearCustomers();
+        currentCustomer = customerManager.createCustomer(id);
+    }
+
+    @Given("the customer has a credit of {double}")
+    public void customerHasCredit(Double amount) {
+        currentCustomer.setCredit(amount);
+    }
+
+    @When("customer adds {double} credit to the customer account")
+    public void customerAddsCredit(Double amount) {
+        currentCustomer.addCredit(amount);
+    }
+
+    @Then("the customer account {string} has a credit of {double}")
+    public void customerAccountHasCredit(String id, Double expected) {
+        Customer c = customerManager.viewCustomer(id);
+        assertNotNull(c);
+        assertEquals(expected, c.getCredit());
+    }
+
+
+
+
+
+
+    @When("owner views the list of all customer accounts")
+    public void ownerViewsCustomerList() {
+        viewedCustomerListOutput = customerManager.toString();
+    }
+
+    @Then("the number of customer accounts is {int}")
+    public void theNumberOfCustomerAccountsIs(Integer count) {
+        assertEquals(count.intValue(), customerManager.getNumberOfCustomers());
+    }
+
+    @And("viewing the customer account list shows the following output:")
+    public void viewingCustomerListShows(String docString) {
+        assertEquals(docString.trim(), viewedCustomerListOutput.trim());
+    }
+
 }
