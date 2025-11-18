@@ -6,17 +6,57 @@ public class ElectricChargingStationNetwork {
 
         System.out.println("=== Electric Charging Station Network ===");
 
+
+
         LocationManager lm = LocationManager.getInstance().clearLocations();
 
-        lm.createLocation("Vienna West Station")
+        Location loc1 = lm.createLocation("Vienna West Station")
                 .setAddress("Mariahilfer Str. 130, 1070 Vienna")
-                .setChargerCount(4);
+                .setChargerCount(0);
 
-        lm.createLocation("Linz Center Garage")
+        Location loc2 = lm.createLocation("Linz Center Garage")
                 .setAddress("Landstraße 45, 4020 Linz")
-                .setChargerCount(2);
+                .setChargerCount(0);
 
-        System.out.println("\nCurrent Locations:");
+        System.out.println("\ncurrent locations:");
         System.out.println(lm);
+
+
+
+
+
+        ChargerManager cm = ChargerManager.getInstance().clearChargers();
+
+        cm.createCharger("CHG-001", "AC", "available", loc1);
+        cm.createCharger("CHG-002", "DC", "unavailable", loc1);
+        cm.createCharger("CHG-003", "AC", "available", loc2);
+
+        System.out.println("\ncurrent Chargers:");
+        System.out.println(cm);
+
+
+
+        System.out.println("\nupdating CHG-002 status to available");
+
+        cm.viewCharger("CHG-002").setStatus("available");
+
+        System.out.println("updated Chargers:");
+        System.out.println(cm);
+
+        System.out.println(lm);
+
+
+
+        System.out.println("\ndeleting charger CHG-003");
+
+        cm.deleteCharger("CHG-003");
+
+        System.out.println("chargers after deletion:");
+        System.out.println(cm);
+
+        System.out.println(lm);
+
+
+
     }
 }

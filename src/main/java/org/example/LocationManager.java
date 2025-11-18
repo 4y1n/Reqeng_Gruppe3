@@ -21,7 +21,7 @@ public class LocationManager {
     }
 
     public Location createLocation(String name) {
-        if (readLocation(name) != null)
+        if (viewLocation(name) != null)
             throw new IllegalArgumentException("Location \"" + name + "\" already exists.");
 
         Location loc = new Location(name);
@@ -29,7 +29,7 @@ public class LocationManager {
         return loc;
     }
 
-    public Location readLocation(String name) {
+    public Location viewLocation(String name) {
         return locations.stream()
                 .filter(l -> l.getName().equals(name))
                 .findFirst()
@@ -37,7 +37,7 @@ public class LocationManager {
     }
 
     public void deleteLocation(String name) {
-        locations.remove(readLocation(name));
+        locations.remove(viewLocation(name));
     }
 
     public int getNumberOfLocations() {
