@@ -5,10 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a95d4356-2898-4a31-b425-34951fb3278f" name="Changes" comment="add feature locations">
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/Chargers_Steps.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/Customers_Steps.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/Locations_Steps.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/Network_Steps.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/CustomerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/CustomerManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/StepDefinitions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/StepDefinitions.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/resources/org/example/manage_customers.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/org/example/manage_customers.feature" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/StepDefinitions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/StepDefinitions.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,18 +64,25 @@
     "Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "feature-fix",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/dominik/Documents/FH Technikum/WS25/REQEN/Project/fuelstation/ElectricChargingStationNetwork/src",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src" />
+    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="org.example" />
     </key>
@@ -173,10 +183,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Cucumber Java.Feature: manage_customers" />
-        <item itemvalue="Application.ElectricChargingStationNetwork" />
-        <item itemvalue="JUnit.RunCucumberTest" />
         <item itemvalue="Cucumber Java.Feature: manage_chargers" />
         <item itemvalue="Cucumber Java.Feature: manage_locations" />
+        <item itemvalue="Application.ElectricChargingStationNetwork" />
+        <item itemvalue="JUnit.RunCucumberTest" />
       </list>
     </recent_temporary>
   </component>
