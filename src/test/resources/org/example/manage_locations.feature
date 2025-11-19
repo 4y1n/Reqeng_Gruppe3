@@ -6,6 +6,7 @@ Feature: Manage Locations
   Background:
     Given a new FillingStationNetwork
 
+
   Scenario: create a new location
     When owner creates a location with the unique name "Vienna West Station"
     And sets the address to "Mariahilfer Str. 120, 1070 Vienna"
