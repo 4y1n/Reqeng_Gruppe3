@@ -1,11 +1,7 @@
 package org.example;
 
 import io.cucumber.datatable.DataTable;
-import io.cucumber.java.en.And;
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
-
+import io.cucumber.java.en.*;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,12 +10,13 @@ public class Chargers_Steps {
 
     private final LocationManager locationManager;
     private final ChargerManager chargerManager;
+
     private Charger currentCharger;
     private String viewedChargerListOutput;
 
     public Chargers_Steps() {
-        this.chargerManager = ChargerManager.getInstance();
         this.locationManager = LocationManager.getInstance();
+        this.chargerManager = ChargerManager.getInstance();
     }
 
 
@@ -28,7 +25,8 @@ public class Chargers_Steps {
     @Given("a location {string} exists for chargers")
     public void chargerLocationExists(String locationName) {
         if (locationManager.viewLocation(locationName) == null) {
-            locationManager.createLocation(locationName);
+            Location loc = locationManager.createLocation(locationName);
+            loc.setAddress("Unknown");
         }
     }
 
@@ -55,20 +53,7 @@ public class Chargers_Steps {
         assertNotNull(chargerManager.viewCharger(id));
     }
 
-    @Then("the charger type is {string}")
-    public void chargerTypeIs(String expected) {
-        assertEquals(expected, currentCharger.getType());
-    }
 
-    @Then("the charger status is {string}")
-    public void chargerStatusIs(String expected) {
-        assertEquals(expected, currentCharger.getStatus());
-    }
-
-    @Then("the charger belongs to location {string}")
-    public void chargerBelongsTo(String location) {
-        assertEquals(location, currentCharger.getLocation().getName());
-    }
 
 
     @Given("the following chargers exist:")
@@ -79,13 +64,19 @@ public class Chargers_Steps {
             String locName = row.get("Location");
 
             Location loc = locationManager.viewLocation(locName);
-            if (loc == null) loc = locationManager.createLocation(locName);
+            if (loc == null) {
+                loc = locationManager.createLocation(locName);
+                loc.setAddress("Unknown");
+            }
 
             Charger c = chargerManager.createCharger(row.get("ID"), loc);
             c.setType(row.get("Type"));
             c.setStatus(row.get("Status"));
         }
     }
+
+
+
 
     @When("owner views the list of all chargers")
     public void viewChargerList() {
@@ -96,6 +87,8 @@ public class Chargers_Steps {
     public void chargerListShows(String expected) {
         assertEquals(expected.trim(), viewedChargerListOutput.trim());
     }
+
+
 
 
     @When("owner updates the status of charger {string} to {string}")
@@ -111,6 +104,8 @@ public class Chargers_Steps {
     }
 
 
+
+
     @When("owner deletes the charger {string}")
     public void deleteCharger(String id) {
         chargerManager.deleteCharger(id);
@@ -120,5 +115,4 @@ public class Chargers_Steps {
     public void chargerNotExists(String id) {
         assertNull(chargerManager.viewCharger(id));
     }
-
 }

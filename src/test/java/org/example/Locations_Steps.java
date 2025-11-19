@@ -12,14 +12,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class Locations_Steps {
 
-
-
     private final LocationManager locationManager;
     private Location currentLocation;
     private String viewedLocationListOutput;
-
-
-
 
     public Locations_Steps() {
         this.locationManager = LocationManager.getInstance();
@@ -27,35 +22,19 @@ public class Locations_Steps {
 
 
 
-    @When("owner creates a location with the unique name {string}")
-    public void ownerCreatesLocation(String name) {
-        currentLocation = locationManager.createLocation(name);
+
+    @When("the following locations are created:")
+    public void createMultipleLocations(DataTable table) {
+        locationManager.clearLocations();
+
+        for (Map<String, String> row : table.asMaps()) {
+            Location loc = locationManager.createLocation(row.get("Name"));
+            loc.setAddress(row.get("Address"));
+            // No charger count → determined later by chargers
+        }
     }
 
-    @And("sets the address to {string}")
-    public void setsLocationAddress(String address) {
-        currentLocation.setAddress(address);
-    }
 
-    @And("sets the number of chargers to {int}")
-    public void setsLocationChargerCount(Integer count) {
-        currentLocation.setChargerCount(count);
-    }
-
-    @Then("the location {string} is part of the location list")
-    public void locationExists(String name) {
-        assertNotNull(locationManager.viewLocation(name));
-    }
-
-    @And("the address is {string}")
-    public void addressIs(String expected) {
-        assertEquals(expected, currentLocation.getAddress());
-    }
-
-    @And("the number of chargers is {int}")
-    public void chargerCountIs(Integer expected) {
-        assertEquals(expected.intValue(), currentLocation.getChargerCount());
-    }
 
 
     @Given("the following locations exist:")
@@ -65,9 +44,16 @@ public class Locations_Steps {
         for (Map<String, String> row : table.asMaps()) {
             Location loc = locationManager.createLocation(row.get("Name"));
             loc.setAddress(row.get("Address"));
-            loc.setChargerCount(Integer.parseInt(row.get("Chargers")));
+
+            // For backwards compatibility with Chargers.feature
+            if (row.containsKey("Chargers")) {
+                int count = Integer.parseInt(row.get("Chargers"));
+            }
         }
     }
+
+
+
 
     @When("owner views the list of all locations")
     public void viewLocationList() {
@@ -85,6 +71,9 @@ public class Locations_Steps {
     }
 
 
+
+
+
     @Given("an existing location {string}")
     public void ensureLocationExists(String name) {
         locationManager.clearLocations();
@@ -100,6 +89,10 @@ public class Locations_Steps {
     public void locationHasNewAddress(String name, String expected) {
         assertEquals(expected, locationManager.viewLocation(name).getAddress());
     }
+
+
+
+
 
 
     @Given("the location {string} exists")

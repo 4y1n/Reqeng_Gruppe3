@@ -47,9 +47,10 @@ public class LocationManager {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("Locations:\n");
-        for (Location l : locations) {
-            sb.append("  ").append(l.toString()).append("\n");
+        for (Location loc : locations) {
+            sb.append("  ").append(loc.toString()).append("\n");
         }
         return sb.toString().trim();
     }
+
 }

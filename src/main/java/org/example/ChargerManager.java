@@ -26,7 +26,6 @@ public class ChargerManager {
     public Charger createCharger(String id, String type, String status, Location location) {
         Charger c = new Charger(id, type, status, location);
         chargers.add(c);
-        location.setChargerCount(location.getChargerCount() + 1);
         return c;
     }
 
@@ -47,10 +46,7 @@ public class ChargerManager {
         if (c == null) return;
 
         Location loc = c.getLocation();
-        if (loc != null) {
-            int current = loc.getChargerCount();
-            loc.setChargerCount(Math.max(0, current - 1));
-        }
+
 
         chargers.removeIf(ch -> ch.getId().equals(id));
     }
@@ -58,6 +54,13 @@ public class ChargerManager {
     public List<Charger> getAllChargers() {
         return chargers;
     }
+
+    public List<Charger> getChargersByLocation(Location location) {
+        return chargers.stream()
+                .filter(c -> c.getLocation().equals(location))
+                .toList();
+    }
+
 
     @Override
     public String toString() {
