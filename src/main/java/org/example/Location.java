@@ -4,7 +4,6 @@ public class Location {
 
     private final String name;
     private String address;
-    private int chargerCount;
 
     public Location(String name) {
         this.name = name;
@@ -23,17 +22,29 @@ public class Location {
         return address;
     }
 
-    public Location setChargerCount(int count) {
-        this.chargerCount = count;
-        return this;
-    }
-
-    public int getChargerCount() {
-        return chargerCount;
-    }
-
     @Override
     public String toString() {
-        return name + ": " + address + " (" + chargerCount + " chargers)";
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(name).append(": ").append(address);
+
+
+        var chargers = ChargerManager.getInstance().getChargersByLocation(this);
+
+
+        if (!chargers.isEmpty()) {
+            for (Charger c : chargers) {
+                sb.append("\n    - ")
+                        .append(c.getId())
+                        .append(": ")
+                        .append(c.getType())
+                        .append(" - ")
+                        .append(c.getStatus());
+            }
+        }
+
+        return sb.toString();
     }
+
+
 }

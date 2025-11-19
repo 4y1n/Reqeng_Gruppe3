@@ -6,74 +6,55 @@ public class ElectricChargingStationNetwork {
 
         System.out.println("=== Electric Charging Station Network ===");
 
-
-
         LocationManager lm = LocationManager.getInstance().clearLocations();
+        ChargerManager cm = ChargerManager.getInstance().clearChargers();
+        CustomerManager um = CustomerManager.getInstance().clearCustomers();
+
 
         Location loc1 = lm.createLocation("Vienna West Station")
-                .setAddress("Mariahilfer Str. 130, 1070 Vienna")
-                .setChargerCount(0);
+                .setAddress("Mariahilfer Str. 130, 1070 Vienna");
 
         Location loc2 = lm.createLocation("Linz Center Garage")
-                .setAddress("Landstraße 45, 4020 Linz")
-                .setChargerCount(0);
+                .setAddress("Landstraße 45, 4020 Linz");
 
-        System.out.println("\ncurrent locations:");
-        System.out.println(lm);
-
-
-
-
-
-        ChargerManager cm = ChargerManager.getInstance().clearChargers();
 
         cm.createCharger("CHG-001", "AC", "available", loc1);
         cm.createCharger("CHG-002", "DC", "unavailable", loc1);
         cm.createCharger("CHG-003", "AC", "available", loc2);
 
-        System.out.println("\ncurrent Chargers:");
-        System.out.println(cm);
+
+        System.out.println("\nCurrent Locations (with chargers):");
+        System.out.println(lm);
 
 
 
-        System.out.println("\nupdating CHG-002 status to available");
-
+        System.out.println("\nUpdating CHG-002 status to available");
         cm.viewCharger("CHG-002").setStatus("available");
 
-        System.out.println("updated Chargers:");
-        System.out.println(cm);
-
+        System.out.println("\nLocations after charger update:");
         System.out.println(lm);
 
 
 
-        System.out.println("\ndeleting charger CHG-003");
-
+        System.out.println("\nDeleting charger CHG-003");
         cm.deleteCharger("CHG-003");
 
-        System.out.println("chargers after deletion:");
-        System.out.println(cm);
-
+        System.out.println("\nLocations after charger deletion:");
         System.out.println(lm);
 
 
 
+        Customer c1 = um.createCustomer("001")
+                .setName("Alissa Strom")
+                .setEmail("alissa@strom.at")
+                .setCredit(50.0);
 
+        Customer c2 = um.createCustomer("002")
+                .setName("Eduard Power")
+                .setEmail("eduard@power.at")
+                .setCredit(0.0);
 
-        CustomerManager um = CustomerManager.getInstance().clearCustomers();
-
-        Customer c1 = um.createCustomer("001");
-        c1.setName("Alissa Strom");
-        c1.setEmail("alissa@strom.at");
-        c1.setCredit(50.0);
-
-        Customer c2 = um.createCustomer("002");
-        c2.setName("Eduard Power");
-        c2.setEmail("eduard@power.at");
-        c2.setCredit(0.0);
-
-        System.out.println("\ncurrent customers:");
+        System.out.println("\nCurrent Customers:");
         System.out.println(um);
     }
 }
-
