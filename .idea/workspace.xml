@@ -5,12 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a95d4356-2898-4a31-b425-34951fb3278f" name="Changes" comment="add feature locations">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Customer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/CustomerManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/resources/org/example/manage_customers.feature" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/ElectricChargingStationNetwork.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/ElectricChargingStationNetwork.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/CustomerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/CustomerManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/org/example/StepDefinitions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/StepDefinitions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/org/example/manage_customers.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/org/example/manage_customers.feature" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,7 +61,7 @@
     "Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "feature-clients",
+    "git-widget-placeholder": "feature-fix",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -79,7 +77,7 @@
       <recent name="org.example" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.ElectricChargingStationNetwork">
+  <component name="RunManager" selected="Cucumber Java.Feature: manage_customers">
     <configuration name="ElectricChargingStationNetwork" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.ElectricChargingStationNetwork" />
       <module name="ElectricChargingStationNetwork" />
@@ -174,9 +172,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Cucumber Java.Feature: manage_customers" />
         <item itemvalue="Application.ElectricChargingStationNetwork" />
         <item itemvalue="JUnit.RunCucumberTest" />
-        <item itemvalue="Cucumber Java.Feature: manage_customers" />
         <item itemvalue="Cucumber Java.Feature: manage_chargers" />
         <item itemvalue="Cucumber Java.Feature: manage_locations" />
       </list>
@@ -201,6 +199,8 @@
       <workItem from="1762350464953" duration="3000" />
       <workItem from="1763378415669" duration="5268000" />
       <workItem from="1763453176828" duration="4950000" />
+      <workItem from="1763469930810" duration="6000" />
+      <workItem from="1763541365593" duration="4443000" />
     </task>
     <task id="LOCAL-00001" summary="add feature locations">
       <option name="closed" value="true" />
