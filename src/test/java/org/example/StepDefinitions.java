@@ -291,7 +291,7 @@ public class StepDefinitions {
 
     @And("the customer credit is {double}")
     public void theCustomerCreditIs(Double expected) {
-        assertEquals(expected, currentCustomer.getCredit());
+        assertEquals(expected, currentCustomer.getAccountBalance());
     }
 
 
@@ -309,7 +309,7 @@ public class StepDefinitions {
             Customer c = customerManager.createCustomer(row.get("Id"));
             c.setName(row.get("Name"));
             c.setEmail(row.get("Email"));
-            c.setCredit(Double.parseDouble(row.get("Credit")));
+            c.setAccountBalance(Double.parseDouble(row.get("Credit")));
         }
     }
 
@@ -334,7 +334,7 @@ public class StepDefinitions {
 
     @Given("the customer has a credit of {double}")
     public void customerHasCredit(Double amount) {
-        currentCustomer.setCredit(amount);
+        currentCustomer.setAccountBalance(amount);
     }
 
     @When("customer adds {double} credit to the customer account")
@@ -346,7 +346,7 @@ public class StepDefinitions {
     public void customerAccountHasCredit(String id, Double expected) {
         Customer c = customerManager.viewCustomer(id);
         assertNotNull(c);
-        assertEquals(expected, c.getCredit());
+        assertEquals(expected, c.getAccountBalance());
     }
 
 

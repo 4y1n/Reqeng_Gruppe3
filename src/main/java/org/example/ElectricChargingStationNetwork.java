@@ -65,12 +65,12 @@ public class ElectricChargingStationNetwork {
         Customer c1 = um.createCustomer("001");
         c1.setName("Alissa Strom");
         c1.setEmail("alissa@strom.at");
-        c1.setCredit(50.0);
+        c1.setAccountBalance(50.0);
 
         Customer c2 = um.createCustomer("002");
         c2.setName("Eduard Power");
         c2.setEmail("eduard@power.at");
-        c2.setCredit(0.0);
+        c2.setAccountBalance(0.0);
 
         System.out.println("\ncurrent customers:");
         System.out.println(um);
