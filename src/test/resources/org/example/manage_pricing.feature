@@ -4,48 +4,42 @@ Feature: Managing pricing
   so that my customers are charged adequately
 
   Background:
-    Given a location "Vienna West" exists
-    And has prices:
+    Given a new FillingStationNetwork
+    And the location "Vienna West Station" exists
+    And the location "Vienna West Station" has pricing:
       | Mode | Price per kWh | Price per Minute |
       | AC   | 0.30 EUR      | 0.05 EUR         |
       | DC   | 0.40 EUR      | 0.10 EUR         |
 
-  Scenario: Set a new price
-    When a new location "Vienna East" is created
-    And owner sets the price for location "Vienna East" to:
+  Scenario: Set a new price for a newly created location
+    When the owner creates a new location "Linz Center Garage"
+    And the owner sets the pricing for "Linz Center Garage" to:
       | Mode | Price per kWh | Price per Minute |
       | AC   | 0.32 EUR      | 0.06 EUR         |
       | DC   | 0.42 EUR      | 0.11 EUR         |
-    Then the new prices are stored
-    And all charging processes started after the at "Vienna East" use the prices
+    Then the pricing for "Linz Center Garage" is stored
+    And all charging processes started after the update at "Linz Center Garage" use the stored prices
+    And the pricing of "Vienna West Station" remains unchanged
 
   Scenario: Update an existing price
-    When owner sets the price for location "Vienna West" to:
+    When the owner sets the pricing for "Vienna West Station" to:
       | Mode | Price per kWh | Price per Minute |
       | AC   | 0.35 EUR      | 0.06 EUR         |
       | DC   | 0.45 EUR      | 0.12 EUR         |
-    Then the new prices are stored
-    And all charging processes started after the update use the new prices
-    And charging sessions already in progress continue with the old prices
+    Then the new pricing is stored
+    And all charging processes started after the update use the new pricing
+    And charging processes already in progress continue using the old pricing
 
-  Scenario: Multiple updates in one day
-    Given owner updated prices at "Vienna West" at 09:00
-    And owner updated prices again at 15:00
-    When a customer starts charging at 14:30
-    Then the system applies the 09:00 prices
-    And not the 15:00 prices
+  Scenario: Error case – negative pricing is not allowed
+    When the owner tries to set the pricing for "Vienna West Station" to:
+      | Mode | Price per kWh | Price per Minute |
+      | AC   | -0.10 EUR     | 0.05 EUR         |
+    Then the system rejects the pricing update
+    And an error message "Invalid price: negative values are not allowed" is shown
+    And the old pricing remains unchanged
 
-  Scenario: Different locations have different prices
-    Given location "Vienna East" has AC tariff 0.28 EUR/kWh
-    And location "Vienna West" has AC tariff 0.35 EUR/kWh
-    When a customer charges at "Vienna East"
-    Then the system applies the price of "Vienna East"
-    And does not apply price from "Vienna West"
-
-    Scenario: View pricing list for a location
-      When owner selects location "Vienna West"
-      And selects type AC
-      And selects price per minute
-      Then he is shown the price 0.05 EUR
-
-
+  Scenario: View pricing list for a location
+    When the owner selects location "Vienna West Station"
+    And the owner selects type AC
+    And the owner selects price per minute
+    Then the owner is shown the price 0.05 EUR

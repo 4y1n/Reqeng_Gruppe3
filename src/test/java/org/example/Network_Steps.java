@@ -10,5 +10,6 @@ public class Network_Steps {
         ChargerManager.getInstance().clearChargers();
         CustomerManager.getInstance().clearCustomers();
         InvoiceManager.getInstance().clearInvoices();
+        PricingManager.getInstance().clearPricing();
     }
 }

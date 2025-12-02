@@ -1,5 +1,8 @@
 package org.example;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Location {
 
     private final String name;
@@ -21,6 +24,25 @@ public class Location {
     public String getAddress() {
         return address;
     }
+
+    private List<Pricing> pricingList = new ArrayList<>();
+
+    public Location addPricing(Pricing p) {
+        pricingList.add(p);
+        return this;
+    }
+
+    public Pricing getPricingForMode(String mode) {
+        return pricingList.stream()
+                .filter(p -> p.getMode().equalsIgnoreCase(mode))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public List<Pricing> getPricingList() {
+        return pricingList;
+    }
+
 
     @Override
     public String toString() {
