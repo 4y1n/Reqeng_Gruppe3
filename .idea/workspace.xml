@@ -4,18 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a95d4356-2898-4a31-b425-34951fb3278f" name="Changes" comment="add feature locations">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/ChargerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/ChargerManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Customer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/ElectricChargingStationNetwork.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/ElectricChargingStationNetwork.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Location.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Location.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/LocationManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/LocationManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/Chargers_Steps.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/Chargers_Steps.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/Locations_Steps.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/Locations_Steps.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/resources/org/example/manage_chargers.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/org/example/manage_chargers.feature" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/resources/org/example/manage_locations.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/org/example/manage_locations.feature" afterDir="false" />
-    </list>
+    <list default="true" id="a95d4356-2898-4a31-b425-34951fb3278f" name="Changes" comment="add feature locations" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -29,14 +18,25 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory">{
-  &quot;lastFilter&quot;: {
-    &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;DominikS369&quot;
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "history": [
+    {
+      "state": "MERGED",
+      "assignee": "DominikS369"
+    }
+  ],
+  "lastFilter": {
+    "state": "MERGED",
+    "assignee": "DominikS369"
   }
-}</component>
+}]]></component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;git@github.com:4y1n/Reqeng_Gruppe3.git&quot;,
@@ -50,7 +50,7 @@
   &quot;associatedIndex&quot;: 5
 }</component>
   <component name="ProjectId" id="353tDYJy3S2I0VcN88sYIcbQvxi" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+  <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
@@ -67,7 +67,7 @@
     "Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "feature-feedback",
+    "git-widget-placeholder": "#42 on part2",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/Users/dominik/Documents/FH Technikum/WS25/REQEN/Project/fuelstation/ElectricChargingStationNetwork/src",
     "node.js.detected.package.eslint": "true",
