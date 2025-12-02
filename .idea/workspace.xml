@@ -4,7 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a95d4356-2898-4a31-b425-34951fb3278f" name="Changes" comment="add feature locations" />
+    <list default="true" id="a95d4356-2898-4a31-b425-34951fb3278f" name="Changes" comment="add feature locations">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Invoice.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/InvoiceManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/Invoices_Steps.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/org/example/manage_invoices.feature" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/StepDefinitions.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/ElectricChargingStationNetwork.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/ElectricChargingStationNetwork.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/Network_Steps.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/Network_Steps.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -25,18 +34,18 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "history": [
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;history&quot;: [
     {
-      "state": "MERGED",
-      "assignee": "DominikS369"
+      &quot;state&quot;: &quot;MERGED&quot;,
+      &quot;assignee&quot;: &quot;DominikS369&quot;
     }
   ],
-  "lastFilter": {
-    "state": "MERGED",
-    "assignee": "DominikS369"
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;MERGED&quot;,
+    &quot;assignee&quot;: &quot;DominikS369&quot;
   }
-}]]></component>
+}</component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;git@github.com:4y1n/Reqeng_Gruppe3.git&quot;,
@@ -50,7 +59,7 @@
   &quot;associatedIndex&quot;: 5
 }</component>
   <component name="ProjectId" id="353tDYJy3S2I0VcN88sYIcbQvxi" />
-  <component name="ProjectLevelVcsManager">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
@@ -62,12 +71,13 @@
     "Application.ElectricChargingStationNetwork.executor": "Run",
     "Cucumber Java.Feature: manage_chargers.executor": "Run",
     "Cucumber Java.Feature: manage_customers.executor": "Run",
+    "Cucumber Java.Feature: manage_invoices.executor": "Run",
     "Cucumber Java.Feature: manage_locations.executor": "Run",
     "JUnit.RunCucumberTest.executor": "Run",
     "Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "#42 on part2",
+    "git-widget-placeholder": "feature-invoice",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/Users/dominik/Documents/FH Technikum/WS25/REQEN/Project/fuelstation/ElectricChargingStationNetwork/src",
     "node.js.detected.package.eslint": "true",
@@ -90,7 +100,7 @@
       <recent name="org.example" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.RunCucumberTest">
+  <component name="RunManager" selected="Cucumber Java.Feature: manage_invoices">
     <configuration name="ElectricChargingStationNetwork" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.ElectricChargingStationNetwork" />
       <module name="ElectricChargingStationNetwork" />
@@ -122,14 +132,14 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Feature: manage_customers" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
+    <configuration name="Feature: manage_invoices" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
       <option name="CUCUMBER_CORE_VERSION" value="5" />
-      <option name="FILE_PATH" value="$PROJECT_DIR$/src/test/resources/org/example/manage_customers.feature" />
+      <option name="FILE_PATH" value="$PROJECT_DIR$/src/test/resources/org/example/manage_invoices.feature" />
       <option name="GLUE" value="org.example" />
       <option name="MAIN_CLASS_NAME" value="io.cucumber.core.cli.Main" />
       <module name="ElectricChargingStationNetwork" />
       <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter" />
-      <option name="SUGGESTED_NAME" value="Feature: manage_customers" />
+      <option name="SUGGESTED_NAME" value="Feature: manage_invoices" />
       <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
       <extension name="coverage">
         <pattern>
@@ -178,18 +188,18 @@
     </configuration>
     <list>
       <item itemvalue="Application.ElectricChargingStationNetwork" />
-      <item itemvalue="Cucumber Java.Feature: manage_customers" />
+      <item itemvalue="Cucumber Java.Feature: manage_invoices" />
       <item itemvalue="Cucumber Java.Feature: manage_chargers" />
       <item itemvalue="Cucumber Java.Feature: manage_locations" />
       <item itemvalue="JUnit.RunCucumberTest" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.RunCucumberTest" />
+        <item itemvalue="Cucumber Java.Feature: manage_invoices" />
         <item itemvalue="Application.ElectricChargingStationNetwork" />
-        <item itemvalue="Cucumber Java.Feature: manage_locations" />
         <item itemvalue="Cucumber Java.Feature: manage_chargers" />
-        <item itemvalue="Cucumber Java.Feature: manage_customers" />
+        <item itemvalue="JUnit.RunCucumberTest" />
+        <item itemvalue="Cucumber Java.Feature: manage_locations" />
       </list>
     </recent_temporary>
   </component>

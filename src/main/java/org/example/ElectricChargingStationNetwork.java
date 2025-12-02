@@ -1,5 +1,7 @@
 package org.example;
 
+import java.time.LocalDate;
+
 public class ElectricChargingStationNetwork {
 
     public static void main(String[] args) {
@@ -9,6 +11,7 @@ public class ElectricChargingStationNetwork {
         LocationManager lm = LocationManager.getInstance().clearLocations();
         ChargerManager cm = ChargerManager.getInstance().clearChargers();
         CustomerManager um = CustomerManager.getInstance().clearCustomers();
+        InvoiceManager im = InvoiceManager.getInstance().clearInvoices();
 
 
         Location loc1 = lm.createLocation("Vienna West Station")
@@ -56,5 +59,13 @@ public class ElectricChargingStationNetwork {
 
         System.out.println("\nCurrent Customers:");
         System.out.println(um);
+
+
+        im.createInvoice("1001", c1, LocalDate.of(2025, 1, 10), 12.50);
+        im.createInvoice("1002", c1, LocalDate.of(2025, 2, 1), 8.40);
+        im.createInvoice("2001", c2, LocalDate.of(2025, 2, 15), 15.90);
+
+        System.out.println("\nCurrent Invoices:");
+        System.out.println(im);
     }
 }

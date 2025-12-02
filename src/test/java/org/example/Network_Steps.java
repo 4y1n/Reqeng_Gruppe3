@@ -9,5 +9,6 @@ public class Network_Steps {
         LocationManager.getInstance().clearLocations();
         ChargerManager.getInstance().clearChargers();
         CustomerManager.getInstance().clearCustomers();
+        InvoiceManager.getInstance().clearInvoices();
     }
 }
