@@ -4,12 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a95d4356-2898-4a31-b425-34951fb3278f" name="Changes" comment="add feature locations">
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/Pricing_steps.java" afterDir="false" />
+    <list default="true" id="a95d4356-2898-4a31-b425-34951fb3278f" name="Changes" comment="changed naming">
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/Pricing_Steps.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/charge_vehicle_steps.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/Charge_vehicle_steps.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/pricing_steps.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/resources/org/example/charge_vehicle.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/org/example/charge_vehicle.feature" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/ChargingProcess.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/ChargingProcess.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Price.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Price.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/Pricing_steps.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/resources/org/example/manage_pricing.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/org/example/manage_pricing.feature" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -44,12 +44,12 @@
     &quot;assignee&quot;: &quot;DominikS369&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;git@github.com:4y1n/Reqeng_Gruppe3.git&quot;,
-    &quot;accountId&quot;: &quot;0a285c83-fa78-4242-bc22-8c215e15b1fb&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/4y1n/Reqeng_Gruppe3.git",
+    "accountId": "3f73a989-52c7-4bdf-b8f7-3fc011bd53f8"
   }
-}</component>
+}]]></component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
@@ -73,6 +73,8 @@
     "JUnit.RunCucumberTest.executor": "Run",
     "Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "pricing__steps",
     "kotlin-language-version-configured": "true",
@@ -222,7 +224,23 @@
       <option name="project" value="LOCAL" />
       <updated>1763381568529</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="changed naming in feature files">
+      <option name="closed" value="true" />
+      <created>1764690912797</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1764690912797</updated>
+    </task>
+    <task id="LOCAL-00003" summary="changed naming">
+      <option name="closed" value="true" />
+      <created>1764691012949</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1764691012949</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -241,6 +259,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="add feature locations" />
-    <option name="LAST_COMMIT_MESSAGE" value="add feature locations" />
+    <MESSAGE value="changed naming in feature files" />
+    <MESSAGE value="changed naming" />
+    <option name="LAST_COMMIT_MESSAGE" value="changed naming" />
   </component>
 </project>
