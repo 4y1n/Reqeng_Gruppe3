@@ -4,7 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a95d4356-2898-4a31-b425-34951fb3278f" name="Changes" comment="add feature locations" />
+    <list default="true" id="a95d4356-2898-4a31-b425-34951fb3278f" name="Changes" comment="add feature locations">
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/Pricing_steps.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/charge_vehicle_steps.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/Charge_vehicle_steps.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/pricing_steps.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/org/example/charge_vehicle.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/org/example/charge_vehicle.feature" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/org/example/manage_pricing.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/org/example/manage_pricing.feature" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -25,18 +32,18 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "history": [
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;history&quot;: [
     {
-      "state": "MERGED",
-      "assignee": "DominikS369"
+      &quot;state&quot;: &quot;MERGED&quot;,
+      &quot;assignee&quot;: &quot;DominikS369&quot;
     }
   ],
-  "lastFilter": {
-    "state": "MERGED",
-    "assignee": "DominikS369"
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;MERGED&quot;,
+    &quot;assignee&quot;: &quot;DominikS369&quot;
   }
-}]]></component>
+}</component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;git@github.com:4y1n/Reqeng_Gruppe3.git&quot;,
@@ -67,7 +74,7 @@
     "Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "#42 on part2",
+    "git-widget-placeholder": "pricing__steps",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/Users/dominik/Documents/FH Technikum/WS25/REQEN/Project/fuelstation/ElectricChargingStationNetwork/src",
     "node.js.detected.package.eslint": "true",
@@ -186,20 +193,12 @@
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.RunCucumberTest" />
-        <item itemvalue="Application.ElectricChargingStationNetwork" />
         <item itemvalue="Cucumber Java.Feature: manage_locations" />
         <item itemvalue="Cucumber Java.Feature: manage_chargers" />
         <item itemvalue="Cucumber Java.Feature: manage_customers" />
+        <item itemvalue="Application.ElectricChargingStationNetwork" />
       </list>
     </recent_temporary>
-  </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.26775.15" />
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.26775.15" />
-      </set>
-    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">

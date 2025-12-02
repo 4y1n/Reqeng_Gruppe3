@@ -12,12 +12,12 @@ Feature: Managing pricing
 
   Scenario: Set a new price
     When a new location "Vienna East" is created
-    And owner sets the price for location "Vienna East" to:
+    And owner sets the price for location "Graz Main Square" to:
       | Mode | Price per kWh | Price per Minute |
       | AC   | 0.32 EUR      | 0.06 EUR         |
       | DC   | 0.42 EUR      | 0.11 EUR         |
     Then the new prices are stored
-    And all charging processes started after the at "Vienna East" use the prices
+    And all charging processes started after the at "Graz Main Square" use the prices
 
   Scenario: Update an existing price
     When owner sets the price for location "Vienna West" to:
@@ -36,10 +36,10 @@ Feature: Managing pricing
     And not the 15:00 prices
 
   Scenario: Different locations have different prices
-    Given location "Vienna East" has AC tariff 0.28 EUR/kWh
+    Given location "Graz Main Square" has AC tariff 0.28 EUR/kWh
     And location "Vienna West" has AC tariff 0.35 EUR/kWh
-    When a customer charges at "Vienna East"
-    Then the system applies the price of "Vienna East"
+    When a customer charges at "Graz Main Square"
+    Then the system applies the price of "Graz Main Square"
     And does not apply price from "Vienna West"
 
     Scenario: View pricing list for a location

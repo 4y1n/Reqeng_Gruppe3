@@ -1,6 +1,5 @@
 package org.example;
 
-import io.cucumber.java.PendingException;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -11,7 +10,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class charge_vehicle_steps {
+public class Charge_vehicle_steps {
     private Map<String, Double> customerCredit = new HashMap<>();
     private Map<String, String> chargerStatus = new HashMap<>();
     private Map<String, Double> locationPricePerMinute = new HashMap<>();
