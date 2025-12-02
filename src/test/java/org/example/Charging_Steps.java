@@ -10,16 +10,15 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class charge_vehicle_steps {
+public class Charging_Steps {
 
     private Map<String, Double> customerCredit = new HashMap<>();
     private Map<String, String> chargerStatus = new HashMap<>();
     private Map<String, Double> chargingLocationPricePerMinute = new HashMap<>();
     private String lastErrorMessage;
 
-    // ───────────────────────────────────────────────
-    // GIVEN steps
-    // ───────────────────────────────────────────────
+
+
 
     @Given("a customer {string} with customer account balance of {double} exists")
     public void aCustomerWithCustomerAccountBalanceOfExists(String customer, double balance) {
@@ -41,9 +40,8 @@ public class charge_vehicle_steps {
         chargerStatus.put(charger, status);
     }
 
-    // ───────────────────────────────────────────────
-    // WHEN steps
-    // ───────────────────────────────────────────────
+
+
 
     @When("customer {string} starts charging at charger {string} for {int} minutes")
     public void customerStartsCharging(String customer, String charger, int minutes) {
@@ -53,8 +51,7 @@ public class charge_vehicle_steps {
             return;
         }
 
-        // Charging uses the FIRST registered charging location price.
-        // (simple mock logic for this feature only)
+
         double pricePerMinute = chargingLocationPricePerMinute.values().stream()
                 .findFirst()
                 .orElse(0.05);
@@ -78,9 +75,8 @@ public class charge_vehicle_steps {
         }
     }
 
-    // ───────────────────────────────────────────────
-    // THEN steps
-    // ───────────────────────────────────────────────
+
+
 
     @Then("the charging session for customer {string} at charger {string} is completed")
     public void theChargingSessionIsCompleted(String customer, String charger) {

@@ -12,6 +12,7 @@ public class ElectricChargingStationNetwork {
         ChargerManager cm = ChargerManager.getInstance().clearChargers();
         CustomerManager um = CustomerManager.getInstance().clearCustomers();
         InvoiceManager im = InvoiceManager.getInstance().clearInvoices();
+        PricingManager pm = PricingManager.getInstance().clearPricing();
 
 
         Location loc1 = lm.createLocation("Vienna West Station")
@@ -67,5 +68,66 @@ public class ElectricChargingStationNetwork {
 
         System.out.println("\nCurrent Invoices:");
         System.out.println(im);
+
+
+
+        Pricing pAC = pm.createPricing("AC", 0.10, 0.10);
+        loc1.addPricing(pAC);
+
+        Pricing pDC = pm.createPricing("DC", 0.40, 0.15);
+        loc1.addPricing(pDC);
+
+        System.out.println("\nPricing added at Vienna West Station:");
+        for (Pricing p : loc1.getPricingList()) {
+            System.out.println("  Mode: " + p.getMode()
+                    + " | kWh: " + p.getPricePerKwh()
+                    + " | min: " + p.getPricePerMinute());
+        }
+
+
+
+        // Alissa lädt
+        System.out.println("\n=== Chargin - success ===");
+
+        Charger charger = cm.viewCharger("CHG-001");
+
+        int minutes = 20;
+        double pricePerMinute = pAC.getPricePerMinute();
+        double cost = minutes * pricePerMinute;
+
+        if (!charger.getStatus().equals("available")) {
+            System.out.println("Charger not available.");
+        } else if (c1.getCredit() < cost) {
+            System.out.println("Insufficient credit for Alissa.");
+        } else {
+            c1.setCredit(c1.getCredit() - cost);
+            charger.setStatus("occupied");
+            System.out.println("Alissa charged for " + minutes + " minutes.");
+            System.out.println("Cost: " + cost + " EUR");
+            System.out.println("Remaining credit: " + c1.getCredit());
+            System.out.println("Charger status: " + charger.getStatus());
+        }
+
+
+
+        // Eduard lädt - fehlgeschlagen
+
+        System.out.println("\n=== Charging - error ===");
+
+        int minutesEduard = 60;
+        double costEduard = minutesEduard * pricePerMinute;
+
+        System.out.println("Eduard tries to charge...");
+
+        if (!charger.getStatus().equals("available")) {
+            System.out.println("ERROR: Charger not available.");
+        } else if (c2.getCredit() < costEduard) {
+            System.out.println("ERROR: Insufficient credit for Eduard");
+        } else {
+            System.out.println("Unexpected success (should not happen)");
+        }
+
+        System.out.println("\n=== END OF SIMULATION ===");
+
     }
 }

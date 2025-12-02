@@ -14,9 +14,7 @@ public class Pricing_Steps {
     private Location currentLocation;
     private String errorMessage;
 
-    // ───────────────────────────────────────────────
-    // Background: add pricing to an existing location
-    // ───────────────────────────────────────────────
+
 
     @And("the location {string} has pricing:")
     public void the_location_has_pricing(String name, DataTable table) {
@@ -33,9 +31,8 @@ public class Pricing_Steps {
         }
     }
 
-    // ───────────────────────────────────────────────
-    // Scenario: Create & Set Pricing
-    // ───────────────────────────────────────────────
+
+
 
     @When("the owner creates a new location {string}")
     public void owner_creates_new_location(String name) {
@@ -82,9 +79,8 @@ public class Pricing_Steps {
         assertEquals(0.05, ac.getPricePerMinute(), 0.0001);
     }
 
-    // ───────────────────────────────────────────────
-    // Scenario: Update existing pricing
-    // ───────────────────────────────────────────────
+
+
 
     @Then("the new pricing is stored")
     public void the_new_pricing_is_stored() {
@@ -107,9 +103,8 @@ public class Pricing_Steps {
         assertTrue(true);
     }
 
-    // ───────────────────────────────────────────────
-    // Scenario: Error case — negative pricing
-    // ───────────────────────────────────────────────
+
+
 
     @When("the owner tries to set the pricing for {string} to:")
     public void owner_tries_invalid_pricing(String name, DataTable table) {
@@ -142,9 +137,8 @@ public class Pricing_Steps {
         assertEquals(0.05, ac.getPricePerMinute(), 0.0001);
     }
 
-    // ───────────────────────────────────────────────
-    // Scenario: View pricing
-    // ───────────────────────────────────────────────
+
+
 
     @When("the owner selects location {string}")
     public void the_owner_selects_location(String name) {
@@ -166,9 +160,8 @@ public class Pricing_Steps {
         assertEquals(expectedPrice, ac.getPricePerMinute(), 0.0001);
     }
 
-    // ───────────────────────────────────────────────
-    // Helper
-    // ───────────────────────────────────────────────
+
+
 
     private double parsePrice(String s) {
         return Double.parseDouble(s.replace("EUR", "").trim());

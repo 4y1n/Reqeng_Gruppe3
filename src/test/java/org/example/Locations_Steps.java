@@ -20,9 +20,8 @@ public class Locations_Steps {
         this.locationManager = LocationManager.getInstance();
     }
 
-    // ───────────────────────────────────────────────
-    // Create multiple locations
-    // ───────────────────────────────────────────────
+
+
 
     @When("the following locations are created:")
     public void createMultipleLocations(DataTable table) {
@@ -34,9 +33,8 @@ public class Locations_Steps {
         }
     }
 
-    // ───────────────────────────────────────────────
-    // Locations exist (used in Chargers feature)
-    // ───────────────────────────────────────────────
+
+
 
     @Given("the following locations exist:")
     public void locationsExist(DataTable table) {
@@ -49,9 +47,8 @@ public class Locations_Steps {
         }
     }
 
-    // ───────────────────────────────────────────────
-    // View list of all locations
-    // ───────────────────────────────────────────────
+
+
 
     @When("owner views the list of all locations")
     public void viewLocationList() {
@@ -68,9 +65,8 @@ public class Locations_Steps {
         assertEquals(expected.trim(), viewedLocationListOutput.trim());
     }
 
-    // ───────────────────────────────────────────────
-    // Update a location
-    // ───────────────────────────────────────────────
+
+
 
     @Given("an existing location {string}")
     public void ensureLocationExists(String name) {
@@ -93,9 +89,8 @@ public class Locations_Steps {
         assertEquals(expected, locationManager.viewLocation(name).getAddress());
     }
 
-    // ───────────────────────────────────────────────
-    // Delete a location
-    // ───────────────────────────────────────────────
+
+
 
     @Given("the location {string} exists")
     public void locationExistsOnly(String name) {
