@@ -4,9 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a95d4356-2898-4a31-b425-34951fb3278f" name="Changes" comment="added feature files and steps for pricing and and charging process">
+    <list default="true" id="a95d4356-2898-4a31-b425-34951fb3278f" name="Changes" comment="add feature locations">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/ChargerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/ChargerManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Customer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/ElectricChargingStationNetwork.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/ElectricChargingStationNetwork.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Location.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Location.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/LocationManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/LocationManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/Chargers_Steps.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/Chargers_Steps.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/Locations_Steps.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/Locations_Steps.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/org/example/manage_chargers.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/org/example/manage_chargers.feature" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/org/example/manage_locations.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/org/example/manage_locations.feature" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,11 +29,6 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="main" />
-      </map>
-    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -36,8 +39,8 @@
 }</component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/4y1n/Reqeng_Gruppe3.git&quot;,
-    &quot;accountId&quot;: &quot;3f73a989-52c7-4bdf-b8f7-3fc011bd53f8&quot;
+    &quot;url&quot;: &quot;git@github.com:4y1n/Reqeng_Gruppe3.git&quot;,
+    &quot;accountId&quot;: &quot;0a285c83-fa78-4242-bc22-8c215e15b1fb&quot;
   }
 }</component>
   <component name="ProblemsViewState">
@@ -47,7 +50,7 @@
   &quot;associatedIndex&quot;: 5
 }</component>
   <component name="ProjectId" id="353tDYJy3S2I0VcN88sYIcbQvxi" />
-  <component name="ProjectLevelVcsManager">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
@@ -57,34 +60,37 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.ElectricChargingStationNetwork.executor": "Run",
-    "Cucumber Java.Feature: charge_vehicle.executor": "Run",
     "Cucumber Java.Feature: manage_chargers.executor": "Run",
     "Cucumber Java.Feature: manage_customers.executor": "Run",
     "Cucumber Java.Feature: manage_locations.executor": "Run",
-    "Cucumber Java.Feature: manage_pricing.executor": "Run",
     "JUnit.RunCucumberTest.executor": "Run",
     "Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "#41 on part2",
+    "git-widget-placeholder": "feature-feedback",
     "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/dominik/Documents/FH Technikum/WS25/REQEN/Project/fuelstation/ElectricChargingStationNetwork/src",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "ml.llm.LLMConfigurable",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src" />
+    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="org.example" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.ElectricChargingStationNetwork">
+  <component name="RunManager" selected="JUnit.RunCucumberTest">
     <configuration name="ElectricChargingStationNetwork" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.ElectricChargingStationNetwork" />
       <module name="ElectricChargingStationNetwork" />
@@ -98,13 +104,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Feature: charge_vehicle" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
-      <option name="CUCUMBER_CORE_VERSION" value="7" />
-      <option name="FILE_PATH" value="$PROJECT_DIR$/src/test/resources/org/example/charge_vehicle" />
+    <configuration name="Feature: manage_chargers" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
+      <option name="CUCUMBER_CORE_VERSION" value="5" />
+      <option name="FILE_PATH" value="$PROJECT_DIR$/src/test/resources/org/example/manage_chargers.feature" />
       <option name="MAIN_CLASS_NAME" value="io.cucumber.core.cli.Main" />
       <module name="ElectricChargingStationNetwork" />
-      <option name="PROGRAM_PARAMETERS" value=" --plugin teamcity" />
-      <option name="SUGGESTED_NAME" value="Feature: charge_vehicle" />
+      <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter" />
+      <option name="SUGGESTED_NAME" value="Feature: manage_chargers" />
       <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
       <extension name="coverage">
         <pattern>
@@ -135,13 +141,14 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Feature: manage_pricing" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
-      <option name="CUCUMBER_CORE_VERSION" value="7" />
-      <option name="FILE_PATH" value="$PROJECT_DIR$/src/test/resources/org/example/manage_pricing" />
+    <configuration name="Feature: manage_locations" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
+      <option name="CUCUMBER_CORE_VERSION" value="5" />
+      <option name="FILE_PATH" value="$PROJECT_DIR$/src/test/resources/org/example/manage_locations.feature" />
+      <option name="GLUE" value="org.example" />
       <option name="MAIN_CLASS_NAME" value="io.cucumber.core.cli.Main" />
       <module name="ElectricChargingStationNetwork" />
-      <option name="PROGRAM_PARAMETERS" value=" --plugin teamcity" />
-      <option name="SUGGESTED_NAME" value="Feature: manage_pricing" />
+      <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter" />
+      <option name="SUGGESTED_NAME" value="Feature: manage_locations" />
       <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
       <extension name="coverage">
         <pattern>
@@ -171,20 +178,28 @@
     </configuration>
     <list>
       <item itemvalue="Application.ElectricChargingStationNetwork" />
-      <item itemvalue="Cucumber Java.Feature: charge_vehicle" />
-      <item itemvalue="Cucumber Java.Feature: manage_pricing" />
       <item itemvalue="Cucumber Java.Feature: manage_customers" />
+      <item itemvalue="Cucumber Java.Feature: manage_chargers" />
+      <item itemvalue="Cucumber Java.Feature: manage_locations" />
       <item itemvalue="JUnit.RunCucumberTest" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Cucumber Java.Feature: manage_pricing" />
-        <item itemvalue="Cucumber Java.Feature: charge_vehicle" />
         <item itemvalue="JUnit.RunCucumberTest" />
-        <item itemvalue="Cucumber Java.Feature: manage_customers" />
         <item itemvalue="Application.ElectricChargingStationNetwork" />
+        <item itemvalue="Cucumber Java.Feature: manage_locations" />
+        <item itemvalue="Cucumber Java.Feature: manage_chargers" />
+        <item itemvalue="Cucumber Java.Feature: manage_customers" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.26775.15" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.26775.15" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -208,15 +223,7 @@
       <option name="project" value="LOCAL" />
       <updated>1763381568529</updated>
     </task>
-    <task id="LOCAL-00002" summary="added feature files and steps for pricing and and charging process">
-      <option name="closed" value="true" />
-      <created>1763553916053</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1763553916053</updated>
-    </task>
-    <option name="localTasksCounter" value="3" />
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -235,7 +242,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="add feature locations" />
-    <MESSAGE value="added feature files and steps for pricing and and charging process" />
-    <option name="LAST_COMMIT_MESSAGE" value="added feature files and steps for pricing and and charging process" />
+    <option name="LAST_COMMIT_MESSAGE" value="add feature locations" />
   </component>
 </project>

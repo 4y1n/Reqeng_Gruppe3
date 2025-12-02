@@ -7,34 +7,42 @@ Feature: Manage Locations
     Given a new FillingStationNetwork
 
 
-  Scenario: create a new location
-    When owner creates a location with the unique name "Vienna West Station"
-    And sets the address to "Mariahilfer Str. 120, 1070 Vienna"
-    And sets the number of chargers to 4
-    Then the location "Vienna West Station" is part of the location list
-    And the address is "Mariahilfer Str. 120, 1070 Vienna"
-    And the number of chargers is 4
-
-  Scenario: view all existing locations
-    Given the following locations exist:
-      | Name                | Address                              | Chargers |
-      | Vienna West Station | Mariahilfer Str. 120, 1070 Vienna    | 4        |
-      | Linz Center Garage  | Landstraße 45, 4020 Linz             | 2        |
-      | Graz Main Square    | Herrengasse 3, 8010 Graz             | 6        |
-    When owner views the list of all locations
-    Then the number of locations is 3
+  Scenario: create and view the base location list
+    When the following locations are created:
+      | Name                    | Address                                  |
+      | Vienna West Station     | Mariahilfer Str. 120, 1070 Vienna         |
+      | Linz Center Garage      | Landstraße 45, 4020 Linz                  |
+      | Graz Main Square        | Herrengasse 3, 8010 Graz                  |
+      | Salzburg Airport        | Innsbrucker Bundesstraße 95, 5020 Salzburg|
+      | St. Pölten Forum Garage | Kremser Gasse 22, 3100 St. Pölten         |
+      | Innsbruck City Mall     | Museumstraße 38, 6020 Innsbruck           |
+      | Klagenfurt Lakeside Park| Lakeside B02, 9020 Klagenfurt             |
+      | Villach Süd             | Maria-Gailer-Straße 42, 9500 Villach      |
+      | Wiener Neustadt Center  | Stadionstraße 13, 2700 Wr. Neustadt       |
+      | Eisenstadt Downtown     | Hauptstraße 4, 7000 Eisenstadt            |
+    And owner views the list of all locations
+    Then the number of locations is 10
     And viewing the location list shows the following output:
       """
       Locations:
-        Vienna West Station: Mariahilfer Str. 120, 1070 Vienna (4 chargers)
-        Linz Center Garage: Landstraße 45, 4020 Linz (2 chargers)
-        Graz Main Square: Herrengasse 3, 8010 Graz (6 chargers)
+        Vienna West Station: Mariahilfer Str. 120, 1070 Vienna
+        Linz Center Garage: Landstraße 45, 4020 Linz
+        Graz Main Square: Herrengasse 3, 8010 Graz
+        Salzburg Airport: Innsbrucker Bundesstraße 95, 5020 Salzburg
+        St. Pölten Forum Garage: Kremser Gasse 22, 3100 St. Pölten
+        Innsbruck City Mall: Museumstraße 38, 6020 Innsbruck
+        Klagenfurt Lakeside Park: Lakeside B02, 9020 Klagenfurt
+        Villach Süd: Maria-Gailer-Straße 42, 9500 Villach
+        Wiener Neustadt Center: Stadionstraße 13, 2700 Wr. Neustadt
+        Eisenstadt Downtown: Hauptstraße 4, 7000 Eisenstadt
       """
+
 
   Scenario: update a location
     Given an existing location "Vienna West Station"
     When owner updates the address to "Mariahilfer Gürtel 210, 1150 Vienna"
     Then the location "Vienna West Station" has the new address "Mariahilfer Gürtel 210, 1150 Vienna"
+
 
   Scenario: delete a location
     Given the location "Linz Center Garage" exists
