@@ -20,8 +20,9 @@ public class Locations_Steps {
         this.locationManager = LocationManager.getInstance();
     }
 
-
-
+    // ───────────────────────────────────────────────
+    // Create multiple locations
+    // ───────────────────────────────────────────────
 
     @When("the following locations are created:")
     public void createMultipleLocations(DataTable table) {
@@ -30,12 +31,12 @@ public class Locations_Steps {
         for (Map<String, String> row : table.asMaps()) {
             Location loc = locationManager.createLocation(row.get("Name"));
             loc.setAddress(row.get("Address"));
-            // No charger count → determined later by chargers
         }
     }
 
-
-
+    // ───────────────────────────────────────────────
+    // Locations exist (used in Chargers feature)
+    // ───────────────────────────────────────────────
 
     @Given("the following locations exist:")
     public void locationsExist(DataTable table) {
@@ -44,16 +45,13 @@ public class Locations_Steps {
         for (Map<String, String> row : table.asMaps()) {
             Location loc = locationManager.createLocation(row.get("Name"));
             loc.setAddress(row.get("Address"));
-
-            // For backwards compatibility with Chargers.feature
-            if (row.containsKey("Chargers")) {
-                int count = Integer.parseInt(row.get("Chargers"));
-            }
+            // Chargers handled elsewhere
         }
     }
 
-
-
+    // ───────────────────────────────────────────────
+    // View list of all locations
+    // ───────────────────────────────────────────────
 
     @When("owner views the list of all locations")
     public void viewLocationList() {
@@ -70,14 +68,19 @@ public class Locations_Steps {
         assertEquals(expected.trim(), viewedLocationListOutput.trim());
     }
 
-
-
-
+    // ───────────────────────────────────────────────
+    // Update a location
+    // ───────────────────────────────────────────────
 
     @Given("an existing location {string}")
     public void ensureLocationExists(String name) {
-        locationManager.clearLocations();
-        currentLocation = locationManager.createLocation(name);
+
+        // IMPORTANT: Do NOT clear the system here
+        Location loc = locationManager.viewLocation(name);
+        if (loc == null) {
+            loc = locationManager.createLocation(name);
+        }
+        currentLocation = loc;
     }
 
     @When("owner updates the address to {string}")
@@ -90,10 +93,9 @@ public class Locations_Steps {
         assertEquals(expected, locationManager.viewLocation(name).getAddress());
     }
 
-
-
-
-
+    // ───────────────────────────────────────────────
+    // Delete a location
+    // ───────────────────────────────────────────────
 
     @Given("the location {string} exists")
     public void locationExistsOnly(String name) {

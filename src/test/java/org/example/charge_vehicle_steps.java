@@ -1,6 +1,5 @@
 package org.example;
 
-import io.cucumber.java.PendingException;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -12,29 +11,41 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class charge_vehicle_steps {
+
     private Map<String, Double> customerCredit = new HashMap<>();
     private Map<String, String> chargerStatus = new HashMap<>();
-    private Map<String, Double> locationPricePerMinute = new HashMap<>();
+    private Map<String, Double> chargingLocationPricePerMinute = new HashMap<>();
     private String lastErrorMessage;
 
+    // ───────────────────────────────────────────────
+    // GIVEN steps
+    // ───────────────────────────────────────────────
 
     @Given("a customer {string} with customer account balance of {double} exists")
     public void aCustomerWithCustomerAccountBalanceOfExists(String customer, double balance) {
         customerCredit.put(customer, balance);
     }
-    @And("a location {string} exists")
-    public void aLocationExists(String location) {
-        locationPricePerMinute.putIfAbsent(location, 0.0);
+
+    @And("a charging location {string} exists")
+    public void aChargingLocationExists(String location) {
+        chargingLocationPricePerMinute.putIfAbsent(location, 0.0);
     }
-    @And("the price is {double} EUR per minute at {string}")
-    public void thePriceIsEURPerMinuteAtLocation(double price, String location) {
-        locationPricePerMinute.put(location, price);
+
+    @And("the price is {double} EUR per minute at charging location {string}")
+    public void thePriceIsEURPerMinuteAtChargingLocation(double price, String location) {
+        chargingLocationPricePerMinute.put(location, price);
     }
+
     @And("a charger {string} with type DC is {string}")
     public void aChargerWithTypeDCIs(String charger, String status) {
         chargerStatus.put(charger, status);
     }
-    @When("customer {string} starts charging at {string} for {int} minutes")
+
+    // ───────────────────────────────────────────────
+    // WHEN steps
+    // ───────────────────────────────────────────────
+
+    @When("customer {string} starts charging at charger {string} for {int} minutes")
     public void customerStartsCharging(String customer, String charger, int minutes) {
 
         if (!"available".equals(chargerStatus.getOrDefault(charger, ""))) {
@@ -42,12 +53,14 @@ public class charge_vehicle_steps {
             return;
         }
 
-        double pricePerMinute = locationPricePerMinute.values().stream()
-                .findFirst().orElse(0.05);
+        // Charging uses the FIRST registered charging location price.
+        // (simple mock logic for this feature only)
+        double pricePerMinute = chargingLocationPricePerMinute.values().stream()
+                .findFirst()
+                .orElse(0.05);
 
         double cost = pricePerMinute * minutes;
         double balance = customerCredit.getOrDefault(customer, 0.0);
-
 
         if (balance < cost) {
             lastErrorMessage = "Insufficient balance";
@@ -58,15 +71,18 @@ public class charge_vehicle_steps {
         chargerStatus.put(charger, "occupied");
     }
 
-    @When("the customer tries to start a charging session at {string}")
+    @When("the customer tries to start a charging session at charger {string}")
     public void theCustomerTriesToStartAChargingSessionAt(String charger) {
-        if (!"available".equals(chargerStatus.get(charger))) {
+        if (!"available".equals(chargerStatus.getOrDefault(charger, ""))) {
             lastErrorMessage = "Charger not available";
         }
     }
 
+    // ───────────────────────────────────────────────
+    // THEN steps
+    // ───────────────────────────────────────────────
 
-    @Then("the charging session for {string} at {string} is completed")
+    @Then("the charging session for customer {string} at charger {string} is completed")
     public void theChargingSessionIsCompleted(String customer, String charger) {
         assertEquals("occupied", chargerStatus.get(charger));
         assertTrue(customerCredit.get(customer) >= 0);
@@ -82,14 +98,13 @@ public class charge_vehicle_steps {
         assertEquals(expectedStatus, chargerStatus.get(charger));
     }
 
-    @Then("an error message is sent")
+    @Then("an error message is sent to the customer")
     public void anErrorMessageIsSent() {
         assertNotNull(lastErrorMessage);
     }
+
     @Then("the system denies the charging session")
     public void theSystemDeniesTheChargingSession() {
         assertNotNull(lastErrorMessage);
     }
-
-
 }
