@@ -10,7 +10,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class Charge_vehicle_steps {
+public class Charging_steps {
     private Map<String, Double> customerCredit = new HashMap<>();
     private Map<String, String> chargerStatus = new HashMap<>();
     private Map<String, Double> locationPricePerMinute = new HashMap<>();
