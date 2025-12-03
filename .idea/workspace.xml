@@ -5,11 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a95d4356-2898-4a31-b425-34951fb3278f" name="Changes" comment="add feature locations">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/NetworkStatus.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/Locations_Steps.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/Locations_Steps.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/Pricing_Steps.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/Pricing_Steps.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/charge_vehicle_steps.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/Charging_Steps.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/resources/org/example/charge_vehicle.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/org/example/manage_charging.feature" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/ElectricChargingStationNetwork.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/ElectricChargingStationNetwork.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/PricingManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/PricingManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/org/example/manage_pricing.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/org/example/manage_pricing.feature" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,7 +76,7 @@
     "Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "fix",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/Users/dominik/Documents/FH Technikum/WS25/REQEN/Project/fuelstation/ElectricChargingStationNetwork/src",
     "node.js.detected.package.eslint": "true",
@@ -99,7 +99,7 @@
       <recent name="org.example" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.ElectricChargingStationNetwork">
+  <component name="RunManager" selected="Cucumber Java.Feature: manage_pricing">
     <configuration name="ElectricChargingStationNetwork" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.ElectricChargingStationNetwork" />
       <module name="ElectricChargingStationNetwork" />
@@ -193,9 +193,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Cucumber Java.Feature: manage_pricing" />
         <item itemvalue="Application.ElectricChargingStationNetwork" />
         <item itemvalue="JUnit.RunCucumberTest" />
-        <item itemvalue="Cucumber Java.Feature: manage_pricing" />
         <item itemvalue="Cucumber Java.Feature: charge_vehicle" />
         <item itemvalue="Cucumber Java.Feature: manage_chargers" />
       </list>
@@ -251,5 +251,16 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="add feature locations" />
     <option name="LAST_COMMIT_MESSAGE" value="add feature locations" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/ElectricChargingStationNetwork.java</url>
+          <line>121</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

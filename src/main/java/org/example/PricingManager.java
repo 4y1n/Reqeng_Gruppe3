@@ -6,7 +6,7 @@ import java.util.List;
 public class PricingManager {
 
     private static PricingManager instance;
-    private final List<Pricing> allPricing = new ArrayList<>();
+    private final List<Pricing> pricingList = new ArrayList<>();
 
     private PricingManager() {}
 
@@ -16,11 +16,18 @@ public class PricingManager {
     }
 
     public PricingManager clearPricing() {
-        allPricing.clear();
+        pricingList.clear();
         return this;
     }
 
+    public List<Pricing> getPricingList() {
+        return pricingList;
+    }
+
     public Pricing createPricing(String mode, double kwh, double minute) {
-        return new Pricing(mode, kwh, minute);
+        Pricing p = new Pricing(mode, kwh, minute);
+        pricingList.add(p);
+        return p;
     }
 }
+

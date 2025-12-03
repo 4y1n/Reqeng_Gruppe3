@@ -127,7 +127,8 @@ public class ElectricChargingStationNetwork {
             System.out.println("Unexpected success (should not happen)");
         }
 
-        System.out.println("\n=== END OF SIMULATION ===");
+        NetworkStatus.print();
+
 
     }
 }

@@ -43,3 +43,5 @@ Feature: Managing pricing
     And the owner selects type AC
     And the owner selects price per minute
     Then the owner is shown the price 0.05 EUR
+
+
