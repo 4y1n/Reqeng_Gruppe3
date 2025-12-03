@@ -65,7 +65,7 @@ public class Charging_Steps {
         }
 
         customerCredit.put(customer, balance - cost);
-        chargerStatus.put(charger, "occupied");
+        chargerStatus.put(charger, "unavailable");
     }
 
     @When("the customer tries to start a charging session at charger {string}")
@@ -80,7 +80,7 @@ public class Charging_Steps {
 
     @Then("the charging session for customer {string} at charger {string} is completed")
     public void theChargingSessionIsCompleted(String customer, String charger) {
-        assertEquals("occupied", chargerStatus.get(charger));
+        assertEquals("unavailable", chargerStatus.get(charger));
         assertTrue(customerCredit.get(customer) >= 0);
     }
 
