@@ -25,7 +25,7 @@ public class Location {
         return address;
     }
 
-    private List<Pricing> pricingList = new ArrayList<>();
+    private final List<Pricing> pricingList = new ArrayList<>();
 
     public Location addPricing(Pricing p) {
         pricingList.add(p);
@@ -51,11 +51,11 @@ public class Location {
         sb.append(name).append(": ").append(address);
 
 
-        var chargers = ChargerManager.getInstance().getChargersByLocation(this);
+        var chargers = ChargersManager.getInstance().getChargersByLocation(this);
 
 
-        if (!chargers.isEmpty()) {
-            for (Charger c : chargers) {
+        if (chargers != null && !chargers.isEmpty()) {
+            for (Chargers c : chargers) {
                 sb.append("\n    - ")
                         .append(c.getId())
                         .append(": ")

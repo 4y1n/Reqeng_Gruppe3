@@ -1,13 +1,19 @@
 package org.example;
 
-public class Charger {
+public class Chargers {
+
+
+    public static final String STATUS_AVAILABLE = "available";
+    public static final String STATUS_OCCUPIED = "occupied";
+    public static final String STATUS_OUT_OF_ORDER = "out of order";
+    public static final String STATUS_UNAVAILABLE = "unavailable";
 
     private final String id;
-    private String type;   // AC / DC
-    private String status; // available / unavailable
+    private String type;
+    private String status;
     private Location location;
 
-    public Charger(String id, String type, String status, Location location) {
+    public Chargers(String id, String type, String status, Location location) {
         this.id = id;
         this.type = type;
         this.status = status;
@@ -40,6 +46,20 @@ public class Charger {
 
     public void setLocation(Location location) {
         this.location = location;
+    }
+
+
+    public boolean isAvailable() {
+        return STATUS_AVAILABLE.equalsIgnoreCase(this.status);
+    }
+
+    public boolean isOccupied() {
+        return STATUS_OCCUPIED.equalsIgnoreCase(this.status);
+    }
+
+    public boolean isOutOfOrder() {
+        return STATUS_OUT_OF_ORDER.equalsIgnoreCase(this.status)
+                || STATUS_UNAVAILABLE.equalsIgnoreCase(this.status);
     }
 
     @Override

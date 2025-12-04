@@ -1,7 +1,5 @@
 package org.example;
 
-import java.time.LocalDate;
-
 public class ElectricChargingStationNetwork {
 
     public static void main(String[] args) {
@@ -9,9 +7,9 @@ public class ElectricChargingStationNetwork {
         System.out.println("=== Electric Charging Station Network ===");
 
         LocationManager lm = LocationManager.getInstance().clearLocations();
-        ChargerManager cm = ChargerManager.getInstance().clearChargers();
+        ChargersManager cm = ChargersManager.getInstance().clearChargers();
         CustomerManager um = CustomerManager.getInstance().clearCustomers();
-        InvoiceManager im = InvoiceManager.getInstance().clearInvoices();
+        InvoiceManager.getInstance().clearInvoices();
         PricingManager pm = PricingManager.getInstance().clearPricing();
 
 
@@ -62,12 +60,6 @@ public class ElectricChargingStationNetwork {
         System.out.println(um);
 
 
-        im.createInvoice("1001", c1, LocalDate.of(2025, 1, 10), 12.50);
-        im.createInvoice("1002", c1, LocalDate.of(2025, 2, 1), 8.40);
-        im.createInvoice("2001", c2, LocalDate.of(2025, 2, 15), 15.90);
-
-        System.out.println("\nCurrent Invoices:");
-        System.out.println(im);
 
 
 
@@ -89,23 +81,23 @@ public class ElectricChargingStationNetwork {
         // Alissa lädt
         System.out.println("\n=== Chargin - success ===");
 
-        Charger charger = cm.viewCharger("CHG-001");
+        Chargers chargers = cm.viewCharger("CHG-001");
 
         int minutes = 20;
         double pricePerMinute = pAC.getPricePerMinute();
         double cost = minutes * pricePerMinute;
 
-        if (!charger.getStatus().equals("available")) {
+        if (!chargers.getStatus().equals("available")) {
             System.out.println("Charger not available.");
         } else if (c1.getCredit() < cost) {
             System.out.println("Insufficient credit for Alissa.");
         } else {
             c1.setCredit(c1.getCredit() - cost);
-            charger.setStatus("occupied");
+            chargers.setStatus("occupied");
             System.out.println("Alissa charged for " + minutes + " minutes.");
             System.out.println("Cost: " + cost + " EUR");
             System.out.println("Remaining credit: " + c1.getCredit());
-            System.out.println("Charger status: " + charger.getStatus());
+            System.out.println("Charger status: " + chargers.getStatus());
         }
 
 
@@ -119,7 +111,7 @@ public class ElectricChargingStationNetwork {
 
         System.out.println("Eduard tries to charge...");
 
-        if (!charger.getStatus().equals("available")) {
+        if (!chargers.getStatus().equals("available")) {
             System.out.println("ERROR: Charger not available.");
         } else if (c2.getCredit() < costEduard) {
             System.out.println("ERROR: Insufficient credit for Eduard");

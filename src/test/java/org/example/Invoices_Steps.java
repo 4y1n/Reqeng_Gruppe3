@@ -3,126 +3,185 @@ package org.example;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.*;
 
-import java.time.LocalDate;
-import java.util.Map;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class Invoices_Steps {
 
-    private final InvoiceManager invoiceManager;
-    private final CustomerManager customerManager;
-
-    private Invoice viewedInvoice;
-    private String viewedInvoiceListOutput;
-
-    public Invoices_Steps() {
-        this.invoiceManager = InvoiceManager.getInstance();
-        this.customerManager = CustomerManager.getInstance();
-    }
+    private Exception lastException;
+    private String lastViewedInvoicePrintout;   // gespeichert für "Then the invoice shows"
+    private final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
 
 
     @Given("the following customers exist:")
     public void the_following_customers_exist(DataTable table) {
-        customerManager.clearCustomers();
-
+        CustomerManager cm = CustomerManager.getInstance();
         for (Map<String, String> row : table.asMaps()) {
-            String id = row.get("Id");
-            String name = row.get("Name");
-            String email = row.get("Email");
-            double credit = Double.parseDouble(row.get("Credit"));
+            cm.createCustomer(row.get("Id"), row.get("Name"), row.get("Email"));
+        }
+    }
 
-            Customer c = customerManager.createCustomer(id);
-            c.setName(name);
-            c.setEmail(email);
-            c.setCredit(credit);
+    @Given("customer {string} tops up {double} EUR")
+    public void customer_tops_up(String id, double amount) {
+        CustomerManager.getInstance().viewCustomer(id).addCredit(amount);
+    }
+
+    @Given("owner sets pricing:")
+    public void owner_sets_pricing(DataTable table) {
+        PricingManager pm = PricingManager.getInstance();
+        for (Map<String, String> row : table.asMaps()) {
+            pm.createPricing(
+                    row.get("Mode"),
+                    Double.parseDouble(row.get("Price per kWh")),
+                    Double.parseDouble(row.get("Price per Minute"))
+            );
         }
     }
 
 
 
-    @Given("the following invoices exist:")
-    public void the_following_invoices_exist(DataTable table) {
-        invoiceManager.clearInvoices();
+    @When("customer {string} charges at charger {string} for:")
+    public void customer_charges(String customerId, String chargerId, String block) {
 
-        for (Map<String, String> row : table.asMaps()) {
-            String invoiceId = row.get("InvoiceId");
-            String customerId = row.get("CustomerId");
-            LocalDate date = LocalDate.parse(row.get("Date"));
-            double amount = Double.parseDouble(row.get("Amount"));
+        Map<String, String> data = parse(block);
 
-            Customer customer = customerManager.viewCustomer(customerId);
-            assertNotNull(customer, "Customer does not exist: " + customerId);
+        String mode = data.get("Mode");
+        double energy = Double.parseDouble(data.get("Energy").replace(" kWh", ""));
+        LocalDateTime start = LocalDateTime.parse(data.get("Start"), dtf);
+        LocalDateTime end = LocalDateTime.parse(data.get("End"), dtf);
 
-            invoiceManager.createInvoice(invoiceId, customer, date, amount);
+        Customer cust = CustomerManager.getInstance().viewCustomer(customerId);
+        Chargers chargers = ChargersManager.getInstance().viewCharger(chargerId);
+        Pricing pricing = PricingManager.getInstance().viewPricing(mode);
+
+
+        if (pricing == null) {
+            lastException = new RuntimeException("No pricing defined for mode " + mode);
+            return;
         }
+
+        ChargingProcess cp = new ChargingProcess(
+                customerId,
+                chargerId,
+                mode,
+                energy,
+                start,
+                end
+        );
+
+        double energyCost = cp.getEnergyKwh() * pricing.getPricePerKwh();
+        double minuteCost = cp.getDurationMinutes() * pricing.getPricePerMinute();
+        double total = energyCost + minuteCost;
+
+        cust.deductCredit(total);
+
+        String invoiceId = InvoiceManager.getInstance().nextInvoiceId();
+
+        Invoice inv = new Invoice(
+                invoiceId,
+                cust,
+                chargers,
+                mode,
+                cp.getEnergyKwh(),
+                cp.getDurationMinutes(),
+                end,
+                pricing,
+                total
+        );
+
+        InvoiceManager.getInstance().createInvoice(inv);
     }
 
 
 
     @When("customer with id {string} views invoice {string}")
     public void customer_views_invoice(String customerId, String invoiceId) {
-        Customer customer = customerManager.viewCustomer(customerId);
-        assertNotNull(customer, "Customer not found: " + customerId);
+        try {
+            Invoice inv = InvoiceManager.getInstance().viewInvoice(invoiceId);
 
-        viewedInvoice = invoiceManager.viewInvoice(invoiceId);
-        assertNotNull(viewedInvoice, "Invoice not found: " + invoiceId);
+            if (inv == null) {
+                throw new RuntimeException("Invoice not found: " + invoiceId);
+            }
 
-        assertEquals(customerId, viewedInvoice.getCustomer().getId(),
-                "Customer attempted to access invoice not belonging to them.");
-    }
-
-    @Then("the invoice amount is {double}")
-    public void the_invoice_amount_is(double expected) {
-        assertNotNull(viewedInvoice);
-        assertEquals(expected, viewedInvoice.getAmount(), 0.001);
-    }
-
-    @Then("the invoice date is {string}")
-    public void the_invoice_date_is(String expected) {
-        assertNotNull(viewedInvoice);
-        assertEquals(LocalDate.parse(expected), viewedInvoice.getDate());
-    }
-
-    @Then("the invoice belongs to customer {string}")
-    public void the_invoice_belongs_to_customer(String expectedCustomerId) {
-        assertNotNull(viewedInvoice);
-        assertEquals(expectedCustomerId, viewedInvoice.getCustomer().getId());
-    }
+            if (!inv.getCustomer().getId().equals(customerId)) {
+                throw new RuntimeException("Access denied: invoice does not belong to this customer.");
+            }
 
 
+            lastViewedInvoicePrintout = inv.generatePrintout();
 
-    @When("owner views all invoices")
-    public void owner_views_all_invoices() {
-        viewedInvoiceListOutput = invoiceManager.toString();
-    }
-
-    @Then("the invoice list shows:")
-    public void the_invoice_list_shows(String expected) {
-        assertEquals(expected.trim(), viewedInvoiceListOutput.trim());
-    }
-
-
-
-    @When("customer with id {string} attempts to view invoice {string}")
-    public void customer_attempts_to_view_invoice(String customerId, String invoiceId) {
-
-        Customer customer = customerManager.viewCustomer(customerId);
-        assertNotNull(customer, "Customer not found: " + customerId);
-
-        Invoice invoice = invoiceManager.viewInvoice(invoiceId);
-        assertNotNull(invoice, "Invoice not found: " + invoiceId);
-
-
-        if (!invoice.getCustomer().getId().equals(customerId)) {
-            viewedInvoice = null;
+        } catch (Exception e) {
+            lastException = e;
         }
     }
 
+    @When("owner views all invoices")
+    public void owner_views_all_invoices() {
+        lastViewedInvoicePrintout = InvoiceManager.getInstance().toString();
+    }
+
+
+
+    @Then("invoice {string} is created for customer {string}")
+    public void invoice_created_for(String invoiceId, String customerId) {
+        Invoice inv = InvoiceManager.getInstance().viewInvoice(invoiceId);
+        assertNotNull(inv);
+        assertEquals(customerId, inv.getCustomer().getId());
+    }
+
     @Then("an access error occurs with message {string}")
-    public void access_error_occurs_with_message(String expectedMessage) {
-        assertNull(viewedInvoice); // we expect access to fail
-        assertEquals("Access denied: invoice does not belong to this customer.", expectedMessage);
+    public void access_error(String expected) {
+        assertNotNull(lastException);
+        assertEquals(expected, lastException.getMessage());
+    }
+
+    @Then("the invoice list shows:")
+    public void invoice_list_shows(String expected) {
+        String actual = InvoiceManager.getInstance().toString();
+        if (lastViewedInvoicePrintout != null) actual = lastViewedInvoicePrintout;
+
+        assertEquals(
+                normalize(expected),
+                normalize(actual)
+        );
+    }
+
+    @Then("the invoice shows:")
+    public void the_invoice_shows(String expected) {
+        assertNotNull(lastViewedInvoicePrintout, "No invoice was viewed.");
+        assertEquals(
+                normalize(expected),
+                normalize(lastViewedInvoicePrintout)
+        );
+    }
+
+
+
+    private Map<String, String> parse(String block) {
+        Map<String, String> m = new LinkedHashMap<>();
+        for (String line : block.split("\n")) {
+            if (line.contains(":")) {
+                String[] p = line.split(":", 2);
+                m.put(p[0].trim(), p[1].trim());
+            }
+        }
+        return m;
+    }
+
+    private String normalize(String s) {
+        if (s == null) return "";
+        String t = s.replace("\r\n", "\n").replace("\r", "\n");
+        String[] lines = t.split("\n");
+        StringBuilder sb = new StringBuilder();
+        for (String line : lines) {
+            sb.append(line.replaceAll("^[ \t]+", "").replaceAll("[ \t]+$", "")).append("\n");
+        }
+        String noTrailingSpaces = sb.toString().trim();
+        String collapsed = noTrailingSpaces.replaceAll("\n{3,}", "\n\n");
+        return collapsed.replace(",", ".").trim();
     }
 }
