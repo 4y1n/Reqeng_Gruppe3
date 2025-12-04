@@ -71,7 +71,7 @@ public class Locations_Steps {
     @Given("an existing location {string}")
     public void ensureLocationExists(String name) {
 
-        // IMPORTANT: Do NOT clear the system here
+        // IMPORTANT: Do NOT clearInvoices the system here
         Location loc = locationManager.viewLocation(name);
         if (loc == null) {
             loc = locationManager.createLocation(name);

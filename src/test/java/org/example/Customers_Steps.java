@@ -80,20 +80,17 @@ public class Customers_Steps {
 
 
 
-
     @When("customer updates the customer name of {string} to {string}")
     public void updateCustomerName(String id, String newName) {
-        Customer c = customerManager.viewCustomer(id);
+        Customer c = customerManager.updateCustomer(id, newName, null);
         assertNotNull(c);
-        c.setName(newName);
         currentCustomer = c;
     }
 
     @When("customer updates the customer email of {string} to {string}")
     public void updateCustomerEmail(String id, String newEmail) {
-        Customer c = customerManager.viewCustomer(id);
+        Customer c = customerManager.updateCustomer(id, null, newEmail);
         assertNotNull(c);
-        c.setEmail(newEmail);
         currentCustomer = c;
     }
 
@@ -113,7 +110,6 @@ public class Customers_Steps {
     public void theNumberOfCustomerAccountsIs(Integer expectedCount) {
         assertEquals(expectedCount.intValue(), customerManager.getNumberOfCustomers());
     }
-
 
 
 

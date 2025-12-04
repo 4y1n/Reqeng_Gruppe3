@@ -19,6 +19,13 @@ public class Customer {
         this.credit = credit;
     }
 
+    public Customer(String id, String name, String email) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.credit = 0.0;
+    }
+
     public String getId() {
         return id;
     }
@@ -53,6 +60,14 @@ public class Customer {
     public void addCredit(double amount) {
         this.credit += amount;
     }
+
+    public void deductCredit(double amount) {
+        if (amount > this.credit) {
+            throw new IllegalArgumentException("Insufficient credit.");
+        }
+        this.credit -= amount;
+    }
+
 
     @Override
     public String toString() {

@@ -9,14 +9,14 @@ import static org.junit.jupiter.api.Assertions.*;
 public class Chargers_Steps {
 
     private final LocationManager locationManager;
-    private final ChargerManager chargerManager;
+    private final ChargersManager chargerManager;
 
-    private Charger currentCharger;
+    private Chargers currentChargers;
     private String viewedChargerListOutput;
 
     public Chargers_Steps() {
         this.locationManager = LocationManager.getInstance();
-        this.chargerManager = ChargerManager.getInstance();
+        this.chargerManager = ChargersManager.getInstance();
     }
 
 
@@ -35,17 +35,17 @@ public class Chargers_Steps {
         Location loc = locationManager.viewLocation(locationName);
         assertNotNull(loc);
 
-        currentCharger = chargerManager.createCharger(id, loc);
+        currentChargers = chargerManager.createCharger(id, loc);
     }
 
     @And("sets the charger type to {string}")
     public void setChargerType(String type) {
-        currentCharger.setType(type);
+        currentChargers.setType(type);
     }
 
     @And("sets the charger status to {string}")
     public void setChargerStatus(String status) {
-        currentCharger.setStatus(status);
+        currentChargers.setStatus(status);
     }
 
     @Then("the charger {string} is part of the charger list")
@@ -69,7 +69,7 @@ public class Chargers_Steps {
                 loc.setAddress("Unknown");
             }
 
-            Charger c = chargerManager.createCharger(row.get("ID"), loc);
+            Chargers c = chargerManager.createCharger(row.get("ID"), loc);
             c.setType(row.get("Type"));
             c.setStatus(row.get("Status"));
         }
@@ -93,9 +93,11 @@ public class Chargers_Steps {
 
     @When("owner updates the status of charger {string} to {string}")
     public void updateChargerStatus(String id, String newStatus) {
-        Charger c = chargerManager.viewCharger(id);
+        Chargers c = chargerManager.viewCharger(id);
         assertNotNull(c);
-        c.setStatus(newStatus);
+        Chargers updated = chargerManager.updateCharger(id, null, newStatus, null);
+        assertNotNull(updated);
+        currentChargers = updated;
     }
 
     @Then("the charger {string} has status {string}")

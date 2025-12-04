@@ -5,14 +5,13 @@ import java.util.List;
 
 public class PricingManager {
 
-    private static PricingManager instance;
+    private static final PricingManager INSTANCE = new PricingManager();
     private final List<Pricing> pricingList = new ArrayList<>();
 
     private PricingManager() {}
 
     public static PricingManager getInstance() {
-        if (instance == null) instance = new PricingManager();
-        return instance;
+        return INSTANCE;
     }
 
     public PricingManager clearPricing() {
@@ -20,14 +19,21 @@ public class PricingManager {
         return this;
     }
 
-    public List<Pricing> getPricingList() {
-        return pricingList;
-    }
 
     public Pricing createPricing(String mode, double kwh, double minute) {
         Pricing p = new Pricing(mode, kwh, minute);
         pricingList.add(p);
         return p;
     }
-}
 
+    public Pricing viewPricing(String mode) {
+        return pricingList.stream()
+                .filter(p -> p.getMode().equalsIgnoreCase(mode))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public List<Pricing> getPricingList() {
+        return pricingList;
+    }
+}

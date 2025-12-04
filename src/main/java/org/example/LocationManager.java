@@ -44,6 +44,14 @@ public class LocationManager {
         return locations.size();
     }
 
+    /**
+     * Return the internal list of locations so callers can iterate locations.
+     * NOTE: this returns the live list (no defensive copy) for simplicity.
+     */
+    public List<Location> getAllLocations() {
+        return locations;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("Locations:\n");
