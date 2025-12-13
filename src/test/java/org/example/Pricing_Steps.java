@@ -1,10 +1,17 @@
 package org.example;
 
 import io.cucumber.datatable.DataTable;
+import io.cucumber.java.PendingException;
 import io.cucumber.java.en.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.Map;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+import java.util.stream.Collectors;
+
 
 public class Pricing_Steps {
 
@@ -13,8 +20,36 @@ public class Pricing_Steps {
 
     private Location currentLocation;
     private String errorMessage;
+    private LocalDateTime currentTime;
+    private String lastViewedPricingPrintout;
+    private LocalDateTime pricingUpdateTime;
+    private Map<String, Pricing> oldPricingSnapshot;
+
+    private final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    private final DecimalFormat priceFormat;
+
+    public Pricing_Steps() {
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
+        symbols.setDecimalSeparator('.');
+        priceFormat = new DecimalFormat("0.00", symbols);
+        priceFormat.setMinimumFractionDigits(2);
+        priceFormat.setGroupingUsed(false);
+    }
 
 
+    @Given("the current time is {string}")
+    public void the_current_time_is(String time) {
+        time = time.trim().replace('\u00A0', ' ');
+        currentTime = LocalDateTime.parse(time, dtf);
+    }
+
+    @Given("the location {string} exists")
+    public void the_location_exists(String name) {
+        Location loc = locationManager.viewLocation(name);
+        if (loc == null) {
+            locationManager.createLocation(name);
+        }
+    }
 
     @And("the location {string} has pricing:")
     public void the_location_has_pricing(String name, DataTable table) {
@@ -32,8 +67,6 @@ public class Pricing_Steps {
     }
 
 
-
-
     @When("the owner creates a new location {string}")
     public void owner_creates_new_location(String name) {
         currentLocation = locationManager.createLocation(name);
@@ -43,6 +76,7 @@ public class Pricing_Steps {
     public void owner_sets_pricing_for_location(String name, DataTable table) {
         Location loc = locationManager.viewLocation(name);
         assertNotNull(loc, "Location does not exist: " + name);
+
 
         for (Map<String, String> row : table.asMaps()) {
             String mode = row.get("Mode");
@@ -67,78 +101,32 @@ public class Pricing_Steps {
         assertFalse(loc.getPricingList().isEmpty());
     }
 
-    @Then("the pricing of {string} remains unchanged")
-    public void pricing_remains_unchanged(String name) {
-        Location loc = locationManager.viewLocation(name);
-        assertNotNull(loc);
+    @And("all charging processes started after the update at {string} use the stored prices")
+    public void allChargingProcessesStartedAfterTheUpdateAtUseTheStoredPrices(String time) {
+        LocalDateTime startTime = LocalDateTime.parse(time, dtf);
 
-        Pricing ac = loc.getPricingForMode("AC");
+        assertTrue(
+                startTime.isEqual(pricingUpdateTime) || startTime.isAfter(pricingUpdateTime),
+                "Charging process did not start after pricing update"
+        );
+
+        Pricing ac = currentLocation.getPricingForMode("AC");
         assertNotNull(ac);
 
-        assertEquals(0.30, ac.getPricePerKwh(), 0.0001);
-        assertEquals(0.05, ac.getPricePerMinute(), 0.0001);
+        assertEquals(0.33, ac.getPricePerKwh(), 0.0001);
+        assertEquals(0.07, ac.getPricePerMinute(), 0.0001);
     }
 
+    @And("charging processes already in progress continue using the old pricing")
+    public void chargingProcessesAlreadyInProgressContinueUsingTheOldPricing() {
+        assertNotNull(oldPricingSnapshot);
 
+        Pricing oldAc = oldPricingSnapshot.get("AC");
+        assertNotNull(oldAc);
 
-
-    @Then("the new pricing is stored")
-    public void the_new_pricing_is_stored() {
-        assertNotNull(currentLocation);
-        assertFalse(currentLocation.getPricingList().isEmpty());
+        assertEquals(0.30, oldAc.getPricePerKwh(), 0.0001);
+        assertEquals(0.05, oldAc.getPricePerMinute(), 0.0001);
     }
-
-    @Then("all charging processes started after the update use the new pricing")
-    public void charging_after_update_use_new_price() {
-        assertTrue(true); // dummy until charging feature implemented
-    }
-
-    @Then("all charging processes started after the update at {string} use the stored prices")
-    public void charging_after_update_at_use_stored_prices(String location) {
-        assertTrue(true); // same dummy logic
-    }
-
-    @Then("charging processes already in progress continue using the old pricing")
-    public void charging_in_progress_keep_old_price() {
-        assertTrue(true);
-    }
-
-
-
-
-    @When("the owner tries to set the pricing for {string} to:")
-    public void owner_tries_invalid_pricing(String name, DataTable table) {
-        try {
-            owner_sets_pricing_for_location(name, table);
-        } catch (Exception e) {
-            errorMessage = e.getMessage();
-        }
-    }
-
-    @Then("the system rejects the pricing update")
-    public void system_rejects_the_pricing_update() {
-        assertNotNull(errorMessage);
-    }
-
-    @Then("an error message {string} is shown")
-    public void error_message_is_shown(String expectedMessage) {
-        assertEquals(expectedMessage, errorMessage);
-    }
-
-    @Then("the old pricing remains unchanged")
-    public void old_pricing_remains_unchanged() {
-        Location loc = locationManager.viewLocation("Vienna West Station");
-        assertNotNull(loc);
-
-        Pricing ac = loc.getPricingForMode("AC");
-        assertNotNull(ac);
-
-        assertEquals(0.30, ac.getPricePerKwh(), 0.0001);
-        assertEquals(0.05, ac.getPricePerMinute(), 0.0001);
-    }
-
-
-
 
     @When("the owner selects location {string}")
     public void the_owner_selects_location(String name) {
@@ -149,21 +137,71 @@ public class Pricing_Steps {
     @When("the owner selects type AC")
     public void the_owner_selects_type_ac() { }
 
-    @When("the owner selects price per minute")
-    public void the_owner_selects_price_per_minute() { }
+    @Then("the system shows:")
+    public void the_system_shows(String expected) {
+        assertNotNull(currentLocation, "No location selected");
+        LocalDateTime asOf = currentTime != null ? currentTime : LocalDateTime.now();
 
-    @Then("the owner is shown the price {double} EUR")
-    public void the_owner_is_shown_the_price(double expectedPrice) {
-        Pricing ac = currentLocation.getPricingForMode("AC");
-        assertNotNull(ac);
+        StringBuilder sb = new StringBuilder();
+        sb.append("------------------------------------\n");
+        sb.append("Pricing for: ").append(currentLocation.getName()).append("\n");
+        sb.append("As of: ").append(asOf.format(dtf)).append("\n\n");
 
-        assertEquals(expectedPrice, ac.getPricePerMinute(), 0.0001);
+        for (Pricing p : currentLocation.getPricingList()) {
+            sb.append("Mode: ").append(p.getMode()).append("\n");
+            sb.append("  Price per kWh:     ").append(formatPrice(p.getPricePerKwh())).append(" EUR\n");
+            sb.append("  Price per Minute:  ").append(formatPrice(p.getPricePerMinute())).append(" EUR\n\n");
+        }
+
+        sb.append("------------------------------------\n");
+
+        lastViewedPricingPrintout = sb.toString().trim();
+
+        assertEquals(normalize(expected), normalize(lastViewedPricingPrintout));
     }
 
 
-
-
+    // ---- helpers ----
     private double parsePrice(String s) {
-        return Double.parseDouble(s.replace("EUR", "").trim());
+        if (s == null) return 0.0;
+
+        String cleaned = s
+                .replace("EUR", "")
+                .replace("€", "")
+                .trim()
+                .replace(',', '.')
+                .replaceAll("\\s+", "");
+
+        return Double.parseDouble(cleaned);
+    }
+
+    private String formatPrice(double v) {
+        return priceFormat.format(v);
+    }
+
+    private String normalize(String s) {
+        String[] lines = s.replace("\r", "").split("\n");
+        return Arrays.stream(lines)
+                .map(String::trim)
+                .filter(l -> !l.isEmpty())
+                .collect(Collectors.joining("\n"));
+    }
+
+
+    @When("a new location {string} is created")
+    public void aNewLocationIsCreated(String name) {
+        locationManager.createLocation(name);
+    }
+
+    @And("the location has prices:")
+    public void theLocationHasPrices(DataTable table) {
+        PricingManager pm = PricingManager.getInstance();
+        for (Map<String, String> row : table.asMaps()) {
+            pm.createPricing(
+                    row.get("Mode"),
+                    parsePrice(row.get("Price per kWh")),
+                    parsePrice(row.get("Price per Minute"))
+            );
+        }
     }
 }

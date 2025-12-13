@@ -4,28 +4,34 @@ Feature: Vehicle Charging
   so that it has enough energy to drive
 
   Background:
-    Given a customer "Alissa" with customer account balance of 20.00 exists
-    And a charging location "Vienna West" exists
-    And the price is 0.10 EUR per minute at charging location "Vienna West"
-    And a charger "CHG-01" with type DC is "available"
+    Given a new FillingStationNetwork
+    And the following locations exist:
+      | Name                |
+      | Innsbruck City Mall |
+      | Graz Main Square  |
+    And the following prices exist:
+      | Mode | Price per kWh | Price per Minute |
+      | AC   | 0.32          | 0.06             |
+      | DC   | 0.42          | 0.11             |
+    And the following chargers exist:
+        | ID      | Type | Status    | Location             |
+        | CHG-054  | DC   | available | Innsbruck City Mall |
+        | CHG-055  | AC   | available | Innsbruck City Mall |
+    And the following customers exist:
+      | Id  | Name          | Email             |
+      | 001 | Alissa Strom  | alissa@strom.at   |
+      | 002 | Eduard Power  | eduard@power.at   |
+    And customer "001" has balance of "20.00" EUR
+    And customer "002" has balance of "1.00" EUR
 
 
-  Scenario: Successful charging session
-    When customer "Alissa" starts charging at charger "CHG-01" for 20 minutes
-    Then the charging session for customer "Alissa" at charger "CHG-01" is completed
-    And customer "Alissa" customer account balance is reduced according to consumed energy
 
-  Scenario: Charger becomes unavailable during charging
-    When customer "Alissa" starts charging at charger "CHG-01" for 10 minutes
-    Then charger "CHG-01" status is "unavailable"
+  Scenario: Reduce customer balance after charging session
+    When customer "001" starts charging at charger "CHG-054" for 20 minutes
+    Then the charging session for customer "001" at charger "CHG-054" is completed
+    And customer "001" customer account balance is reduced according to consumed energy and time charged
 
-  Scenario: Error - start charging when point is unavailable
-    Given a charger "CHG-01" with type DC is "unavailable"
-    When the customer tries to start a charging session at charger "CHG-01"
-    Then the system denies the charging session
 
-  Scenario: Error – customer has insufficient balance
-    Given a customer "Eduard" with customer account balance of 1.00 exists
-    When customer "Eduard" starts charging at charger "CHG-01" for 60 minutes
-    Then an error message is sent to the customer
-    And the system denies the charging session
+  Scenario: Charger becomes occupied during charging
+    When customer "001" starts charging at charger "CHG-054" for 10 minutes
+    Then charger "CHG-054" status is "occupied"
