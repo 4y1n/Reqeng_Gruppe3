@@ -48,9 +48,11 @@ public class ChargersManager {
         if (c == null) {
             throw new RuntimeException("Charger not found: " + id);
         }
+        System.out.println("[DEBUG] ChargersManager.updateCharger called for id=" + id + " type=" + type + " status=" + status + " location=" + (location == null ? "<null>" : location.getName()));
         if (type != null) c.setType(type);
         if (status != null) c.setStatus(status);
         if (location != null) c.setLocation(location);
+        System.out.println("[DEBUG] ChargersManager.updateCharger: charger now status='" + c.getStatus() + "' (object id=" + c.getId() + ")");
         return c;
     }
 
@@ -64,7 +66,7 @@ public class ChargersManager {
 
     public List<Chargers> getChargersByLocation(Location location) {
         return chargers.stream()
-                .filter(c -> c.getLocation().equals(location))
+                .filter(c -> c.getLocation() != null && c.getLocation().equals(location))
                 .collect(Collectors.toList());
     }
 
