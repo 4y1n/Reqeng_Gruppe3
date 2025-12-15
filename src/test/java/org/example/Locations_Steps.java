@@ -15,6 +15,7 @@ public class Locations_Steps {
     private final LocationManager locationManager;
     private Location currentLocation;
     private String viewedLocationListOutput;
+    private String lastErrorMessage;
 
     public Locations_Steps() {
         this.locationManager = LocationManager.getInstance();
@@ -106,5 +107,38 @@ public class Locations_Steps {
     @Then("the location {string} is no longer part of the location list")
     public void locationNotExists(String name) {
         assertNull(locationManager.viewLocation(name));
+    }
+
+
+    // Error und Edge Cases:
+    @When("owner attempts to create a location {string}")
+    public void ownerAttemptsToCreateLocation(String name) {
+        try {
+            locationManager.createLocation(name);
+            lastErrorMessage = null;
+        } catch (IllegalArgumentException ex) {
+            lastErrorMessage = ex.getMessage();
+        }
+    }
+
+    @Then("an error about duplicate location is raised")
+    public void errorAboutDuplicateLocationRaised() {
+        assertNotNull(lastErrorMessage);
+        assertTrue(lastErrorMessage.contains("already exists"));
+    }
+
+    @When("owner renames the location from {string} to {string}")
+    public void ownerRenamesLocation(String oldName, String newName) {
+        try {
+            locationManager.updateLocation(oldName, newName);
+            lastErrorMessage = null;
+        } catch (IllegalArgumentException ex) {
+            lastErrorMessage = ex.getMessage();
+        }
+    }
+
+    @Then("the location {string} still exists")
+    public void theLocationStillExists(String name) {
+        assertNotNull(locationManager.viewLocation(name));
     }
 }

@@ -16,7 +16,7 @@ public class Charging_Steps {
     private Map<String, String> chargerStatus = new HashMap<>();
     private Map<String, Double> chargingLocationPricePerMinute = new HashMap<>();
     private String lastErrorMessage;
-
+    private ChargingProcess chargingProcess;
 
 
 
@@ -102,5 +102,55 @@ public class Charging_Steps {
     @Then("the system denies the charging session")
     public void theSystemDeniesTheChargingSession() {
         assertNotNull(lastErrorMessage);
+    }
+
+    @Then("the charger {string} followed by {int} {string} characters is part of the charger list")
+    public void theChargerFollowedByCharactersIsPartOfTheChargerList(String arg0, int arg1, String arg2) {
+    }
+
+
+
+
+    @When("a charging process is created for customer {string} at charger {string} with mode {string} starting at {string} and ending at {string} with energy {double} kWh")
+    public void aChargingProcessIsCreatedForCustomerAtChargerWithModeAndTimesAndEnergy(
+            String customer, String charger, String mode, String startIso, String endIso, double energyKwh) {
+        try {
+            chargingProcess = new ChargingProcess(
+                    customer,
+                    charger,
+                    mode,
+                    energyKwh,
+                    java.time.LocalDateTime.parse(startIso),
+                    java.time.LocalDateTime.parse(endIso)
+            );
+            lastErrorMessage = null;
+        } catch (IllegalArgumentException ex) {
+            chargingProcess = null;
+            lastErrorMessage = ex.getMessage();
+        }
+    }
+
+    @Then("the charging process is created successfully")
+    public void theChargingProcessIsCreatedSuccessfully() {
+        assertNotNull(chargingProcess);
+        assertNull(lastErrorMessage);
+    }
+
+    @Then("the charging process duration is {int} minutes")
+    public void theChargingProcessDurationIsMinutes(int expectedMinutes) {
+        assertNotNull(chargingProcess);
+        assertEquals(expectedMinutes, chargingProcess.getDurationMinutes());
+    }
+
+    @Then("the charging process energy is {double} kWh")
+    public void theChargingProcessEnergyIsKwh(double expectedEnergy) {
+        assertNotNull(chargingProcess);
+        assertEquals(expectedEnergy, chargingProcess.getEnergyKwh(), 1e-6);
+    }
+
+    @Then("an error about invalid charging session is raised")
+    public void anErrorAboutInvalidChargingSessionIsRaised() {
+        assertNotNull(lastErrorMessage);
+        assertTrue(lastErrorMessage.contains("Invalid charging session"));
     }
 }

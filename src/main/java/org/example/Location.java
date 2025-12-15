@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Location {
 
-    private final String name;
+    private String name;
     private String address;
 
     public Location(String name) {
@@ -14,6 +14,13 @@ public class Location {
 
     public String getName() {
         return name;
+    }
+
+
+    public void setName(String name) {
+        if (name == null)
+            throw new IllegalArgumentException("Location name must not be null.");
+        this.name = name;
     }
 
     public Location setAddress(String address) {

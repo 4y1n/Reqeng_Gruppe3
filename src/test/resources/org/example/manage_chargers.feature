@@ -61,3 +61,19 @@ Feature: Manage Chargers
       | CHG-500 | AC   | available | Klagenfurt Lakeside  |
     When owner deletes the charger "CHG-500"
     Then the charger "CHG-500" no longer exists in the charger list
+
+# Error und Edge Cases:
+  Scenario: ERROR - create a charger with duplicate ID
+    Given the following charger exists:
+      | ID      | Type | Status    | Location      |
+      | CHG-001 | AC   | available | Vienna Center |
+    When owner attempts to create a charger with ID "CHG-001" at location "Vienna Center"
+    Then an error message for charger is shown: "Charger already exists: CHG-001"
+
+
+  Scenario: EDGE - create a charger with extremely long ID
+    Given the following charger exists:
+      | ID      | Type | Status    | Location      |
+      | CHG-BASE | AC   | available | Vienna Center |
+    When owner attempts to create a charger with long ID "CHG-" followed by 500 "A" characters at location "Vienna Center"
+    Then the charger with long ID "CHG-" followed by 500 "A" characters is part of the charger list

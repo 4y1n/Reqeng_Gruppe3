@@ -15,7 +15,7 @@ public class Customers_Steps {
 
     private final CustomerManager customerManager;
     private Customer currentCustomer;
-
+    private String lastErrorMessage;
 
     public Customers_Steps() {
         this.customerManager = CustomerManager.getInstance();
@@ -134,5 +134,35 @@ public class Customers_Steps {
         Customer c = customerManager.viewCustomer(id);
         assertNotNull(c);
         assertEquals(expected, c.getCredit());
+    }
+
+    // error und Egde Cases:
+
+    // Step: Versuch, eine bereits existierende Kundennummer zu erstellen
+    @When("customer attempts to create a customer account with the existing id {string}")
+    public void customerAttemptsToCreateExistingCustomer(String id) {
+        try {
+            customerManager.createCustomer(id);
+            lastErrorMessage = null;
+        } catch (IllegalArgumentException ex) {
+            lastErrorMessage = ex.getMessage();
+        }
+    }
+
+    // Then-Step: prüft auf Duplicate-Fehler
+    @Then("an error about duplicate customer is raised")
+    public void errorAboutDuplicateCustomerRaised() {
+        assertNotNull(lastErrorMessage);
+        assertTrue(lastErrorMessage.contains("Customer already exists"));
+    }
+
+    // Edge-Step: update mit null-Werten (soll nichts ändern)
+    @When("customer updates the customer name of {string} to null")
+    public void updateCustomerNameToNull(String id) {
+        Customer before = customerManager.viewCustomer(id);
+        assertNotNull(before);
+        Customer updated = customerManager.updateCustomer(id, null, null);
+        assertNotNull(updated);
+        currentCustomer = updated;
     }
 }

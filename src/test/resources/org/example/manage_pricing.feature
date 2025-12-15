@@ -44,4 +44,18 @@ Feature: Managing pricing
     And the owner selects price per minute
     Then the owner is shown the price 0.05 EUR
 
+    # Error und Edge Cases:
+
+  Scenario: Edge Case - request pricing for a mode that does not exist
+    Given a new FillingStationNetwork
+    And the location "Vienna West Station" exists
+    When the owner requests pricing for mode "CHAdeMO" at "Vienna West Station"
+    Then no pricing is returned
+
+  Scenario: Error Case - creating a duplicate pricing for same mode
+    Given a new FillingStationNetwork
+    And the location "Vienna West Station" exists
+    And the owner creates pricing for mode "AC" with 0.30 EUR per kWh and 0.05 EUR per minute
+    When the owner attempts to create pricing for mode "AC" with 0.32 EUR per kWh and 0.06 EUR per minute
+    Then an error about duplicate pricing is raised
 

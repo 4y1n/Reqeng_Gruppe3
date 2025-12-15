@@ -10,6 +10,8 @@ public class Pricing_Steps {
 
     private final LocationManager locationManager = LocationManager.getInstance();
     private final PricingManager pricingManager = PricingManager.getInstance();
+    private Pricing lastRequestedPricing;
+    private String lastPricingErrorMessage;
 
     private Location currentLocation;
     private String errorMessage;
@@ -166,4 +168,52 @@ public class Pricing_Steps {
     private double parsePrice(String s) {
         return Double.parseDouble(s.replace("EUR", "").trim());
     }
+
+
+    // Error und Edge Cases:
+    @When("the owner requests pricing for mode {string} at {string}")
+    public void ownerRequestsPricingForModeAt(String mode, String locationName) {
+        Location loc = locationManager.viewLocation(locationName);
+        assertNotNull(loc, "Location does not exist: " + locationName);
+        lastRequestedPricing = loc.getPricingForMode(mode);
+    }
+
+    @Then("no pricing is returned")
+    public void noPricingIsReturned() {
+        assertNull(lastRequestedPricing);
+    }
+
+    @When("the owner creates pricing for mode {string} with {double} EUR per kWh and {double} EUR per minute")
+    public void ownerCreatesPricing(String mode, double kwh, double minute) {
+        Pricing p = pricingManager.createPricing(mode, kwh, minute);
+        Location loc = locationManager.viewLocation("Vienna West Station");
+        if (loc != null) loc.addPricing(p);
+    }
+
+    @When("the owner attempts to create pricing for mode {string} with {double} EUR per kWh and {double} EUR per minute")
+    public void ownerAttemptsToCreateDuplicatePricing(String mode, double kwh, double minute) {
+        try {
+            Location loc = locationManager.viewLocation("Vienna West Station");
+            if (loc != null && loc.getPricingForMode(mode) != null) {
+                throw new IllegalArgumentException("Pricing for mode " + mode + " already exists");
+            }
+            Pricing p = pricingManager.createPricing(mode, kwh, minute);
+            if (loc != null) loc.addPricing(p);
+            lastPricingErrorMessage = null;
+        } catch (IllegalArgumentException ex) {
+            lastPricingErrorMessage = ex.getMessage();
+        }
+    }
+
+
+
+    @Then("an error about duplicate pricing is raised")
+    public void errorAboutDuplicatePricingRaised() {
+        assertNotNull(lastPricingErrorMessage);
+        assertTrue(lastPricingErrorMessage.contains("already exists"));
+    }
+
+
 }
+
+

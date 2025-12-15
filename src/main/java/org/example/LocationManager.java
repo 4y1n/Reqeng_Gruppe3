@@ -10,7 +10,6 @@ public class LocationManager {
     private final List<Location> locations = new ArrayList<>();
 
     private LocationManager() {}
-
     public static LocationManager getInstance() {
         return INSTANCE;
     }
@@ -35,6 +34,26 @@ public class LocationManager {
                 .findFirst()
                 .orElse(null);
     }
+
+    /**
+     * Update the name of an existing location.
+     * Throws IllegalArgumentException if the source doesn't exist or the target name is already used.
+     */
+    public Location updateLocation(String oldName, String newName) {
+        if (oldName == null || newName == null)
+            throw new IllegalArgumentException("Location names must not be null.");
+        if (oldName.equals(newName))
+            return viewLocation(oldName);
+        Location existing = viewLocation(oldName);
+        if (existing == null)
+            throw new IllegalArgumentException("Location \"" + oldName + "\" does not exist.");
+        if (viewLocation(newName) != null)
+            throw new IllegalArgumentException("Location \"" + newName + "\" already exists.");
+        existing.setName(newName);
+        return existing;
+    }
+
+
 
     public void deleteLocation(String name) {
         locations.remove(viewLocation(name));

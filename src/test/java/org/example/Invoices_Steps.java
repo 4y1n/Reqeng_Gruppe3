@@ -184,4 +184,21 @@ public class Invoices_Steps {
         String collapsed = noTrailingSpaces.replaceAll("\n{3,}", "\n\n");
         return collapsed.replace(",", ".").trim();
     }
+
+
+    @When("owner attempts to create an invoice with id {string} for customer {string} at charger {string}")
+    public void ownerAttemptsToCreateInvoiceWithId(String invoiceId, String customerId, String chargerId) {
+        try {
+            Customer cust = CustomerManager.getInstance().viewCustomer(customerId);
+            Chargers chargers = ChargersManager.getInstance().viewCharger(chargerId);
+            Pricing pricing = PricingManager.getInstance().viewPricing("AC");
+            // Erzeuge eine kleine Dummy-Rechnung (Datum im Format der vorhandenen dtf)
+            LocalDateTime end = LocalDateTime.parse("2025-01-01 10:01", dtf);
+            Invoice inv = new Invoice(invoiceId, cust, chargers, "AC", 1.0, 1, end, pricing, 0.0);
+            InvoiceManager.getInstance().createInvoice(inv);
+            lastException = null;
+        } catch (Exception e) {
+            lastException = e;
+        }
+    }
 }
