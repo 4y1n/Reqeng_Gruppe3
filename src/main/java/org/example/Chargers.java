@@ -3,20 +3,15 @@ package org.example;
 public class Chargers {
 
 
-    public static final String STATUS_AVAILABLE = "available";
-    public static final String STATUS_OCCUPIED = "occupied";
-    public static final String STATUS_OUT_OF_ORDER = "out of order";
-    public static final String STATUS_UNAVAILABLE = "unavailable";
-
     private final String id;
     private String type;
-    private String status;
+    private ChargerStatus status;
     private Location location;
 
     public Chargers(String id, String type, String status, Location location) {
         this.id = id;
         this.type = type;
-        this.status = status;
+        this.status = ChargerStatus.fromString(status);
         this.location = location;
     }
 
@@ -29,7 +24,7 @@ public class Chargers {
     }
 
     public String getStatus() {
-        return status;
+        return status == null ? null : status.toString();
     }
 
     public Location getLocation() {
@@ -37,7 +32,7 @@ public class Chargers {
     }
 
     public void setStatus(String status) {
-        this.status = status;
+        this.status = ChargerStatus.fromString(status);
     }
 
     public void setType(String type) {
@@ -50,20 +45,19 @@ public class Chargers {
 
 
     public boolean isAvailable() {
-        return STATUS_AVAILABLE.equalsIgnoreCase(this.status);
+        return this.status == ChargerStatus.AVAILABLE;
     }
 
     public boolean isOccupied() {
-        return STATUS_OCCUPIED.equalsIgnoreCase(this.status);
+        return this.status == ChargerStatus.OCCUPIED;
     }
 
     public boolean isOutOfOrder() {
-        return STATUS_OUT_OF_ORDER.equalsIgnoreCase(this.status)
-                || STATUS_UNAVAILABLE.equalsIgnoreCase(this.status);
+        return this.status == ChargerStatus.OUT_OF_ORDER || this.status == ChargerStatus.UNAVAILABLE;
     }
 
     @Override
     public String toString() {
-        return id + ": " + type + " - " + status + " (Location: " + location.getName() + ")";
+        return id + ": " + type + " - " + (status == null ? "<no-status>" : status.toString()) + " (Location: " + (location == null ? "<no-location>" : location.getName()) + ")";
     }
 }
