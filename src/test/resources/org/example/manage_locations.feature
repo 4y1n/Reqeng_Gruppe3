@@ -48,3 +48,19 @@ Feature: Manage Locations
     Given the location "Linz Center Garage" exists
     When owner deletes the location "Linz Center Garage"
     Then the location "Linz Center Garage" is no longer part of the location list
+
+
+# Error und Edge Cases:
+
+  Scenario: Edge Case - rename location to the same name
+    Given an existing location "Vienna West Station"
+    When owner renames the location from "Vienna West Station" to "Vienna West Station"
+    Then the location "Vienna West Station" still exists
+    And the number of locations is 1
+
+  Scenario: Error Case - creating a duplicate location
+    When the following locations are created:
+      | Name           | Address        |
+      | Duplicate Spot | Test Address 1 |
+    And owner attempts to create a location "Duplicate Spot"
+    Then an error about duplicate location is raised

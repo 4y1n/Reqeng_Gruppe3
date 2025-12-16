@@ -70,7 +70,6 @@ public class ChargersManager {
                 .collect(Collectors.toList());
     }
 
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

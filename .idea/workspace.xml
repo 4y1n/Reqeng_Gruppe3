@@ -4,12 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a95d4356-2898-4a31-b425-34951fb3278f" name="Changes" comment="add feature pricing and charging">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/ChargerStatus.java" afterDir="false" />
+    <list default="true" id="a95d4356-2898-4a31-b425-34951fb3278f" name="Changes" comment="add feature locations">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_02_12_2025_16_12_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_02_12_2025_16_12__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Chargers.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Chargers.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/ChargersManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/ChargersManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Location.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Location.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/LocationManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/LocationManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/Chargers_Steps.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/Chargers_Steps.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/org/example/Charging_Steps.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/Charging_Steps.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/Customers_Steps.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/Customers_Steps.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/Invoices_Steps.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/Invoices_Steps.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/Locations_Steps.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/Locations_Steps.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/Pricing_Steps.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/Pricing_Steps.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/org/example/manage_chargers.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/org/example/manage_chargers.feature" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/org/example/manage_charging.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/org/example/manage_charging.feature" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/org/example/manage_customers.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/org/example/manage_customers.feature" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/org/example/manage_invoices.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/org/example/manage_invoices.feature" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/org/example/manage_locations.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/org/example/manage_locations.feature" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/org/example/manage_pricing.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/org/example/manage_pricing.feature" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,20 +57,10 @@
     &quot;assignee&quot;: &quot;DominikS369&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "git@github.com:4y1n/Reqeng_Gruppe3.git",
-    "accountId": "0a285c83-fa78-4242-bc22-8c215e15b1fb"
-  },
-  "recentNewPullRequestHead": {
-    "server": {
-      "useHttp": false,
-      "host": "github.com",
-      "port": null,
-      "suffix": null
-    },
-    "owner": "4y1n",
-    "repository": "Reqeng_Gruppe3"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/4y1n/Reqeng_Gruppe3.git&quot;,
+    &quot;accountId&quot;: &quot;c3ac007d-3e22-4009-a5d3-f248f90de4ad&quot;
   }
 }]]></component>
   <component name="ProblemsViewState">
@@ -73,35 +77,54 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.ElectricChargingStationNetwork.executor": "Run",
-    "Cucumber Java.Feature: charge_vehicle.executor": "Run",
-    "Cucumber Java.Feature: manage_chargers.executor": "Run",
-    "Cucumber Java.Feature: manage_charging.executor": "Run",
-    "Cucumber Java.Feature: manage_customers.executor": "Run",
-    "Cucumber Java.Feature: manage_invoices.executor": "Run",
-    "Cucumber Java.Feature: manage_locations.executor": "Run",
-    "Cucumber Java.Feature: manage_pricing.executor": "Run",
-    "JUnit.RunCucumberTest.executor": "Run",
-    "Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "feature-fix",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/dominik/Documents/FH Technikum/WS25/REQEN/Project/fuelstation/ElectricChargingStationNetwork/src",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "com.github.copilot.settings.chat.ChatConfigurable",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.ElectricChargingStationNetwork.executor&quot;: &quot;Run&quot;,
+    &quot;Cucumber Java.Feature: charge_vehicle.executor&quot;: &quot;Run&quot;,
+    &quot;Cucumber Java.Feature: manage_chargers.executor&quot;: &quot;Run&quot;,
+    &quot;Cucumber Java.Feature: manage_charging.executor&quot;: &quot;Run&quot;,
+    &quot;Cucumber Java.Feature: manage_customers.executor&quot;: &quot;Run&quot;,
+    &quot;Cucumber Java.Feature: manage_invoices.executor&quot;: &quot;Run&quot;,
+    &quot;Cucumber Java.Feature: manage_locations.executor&quot;: &quot;Run&quot;,
+    &quot;Cucumber Java.Feature: manage_pricing.executor&quot;: &quot;Run&quot;,
+    &quot;Cucumber Java.Scenario: EDGE - create a charger with extremely long ID.executor&quot;: &quot;Run&quot;,
+    &quot;Cucumber Java.Scenario: EDGE CASE - create charger with special characters in ID.executor&quot;: &quot;Run&quot;,
+    &quot;Cucumber Java.Scenario: ERROR - create a charger with duplicate ID.executor&quot;: &quot;Run&quot;,
+    &quot;Cucumber Java.Scenario: ERROR CASE - create charger with invalid type.executor&quot;: &quot;Run&quot;,
+    &quot;Cucumber Java.Scenario: Edge Case - null duration und 0 kWh (gültig).executor&quot;: &quot;Run&quot;,
+    &quot;Cucumber Java.Scenario: Edge Case - owner views all invoices when none exist.executor&quot;: &quot;Run&quot;,
+    &quot;Cucumber Java.Scenario: Edge Case - rename location to the same name (1).executor&quot;: &quot;Run&quot;,
+    &quot;Cucumber Java.Scenario: Edge Case - rename location to the same name.executor&quot;: &quot;Run&quot;,
+    &quot;Cucumber Java.Scenario: Edge Case - updateCustomer mit null-Werten ändert nichts.executor&quot;: &quot;Run&quot;,
+    &quot;Cucumber Java.Scenario: Error Case - creating a duplicate customer id.executor&quot;: &quot;Run&quot;,
+    &quot;Cucumber Java.Scenario: Error Case - creating a duplicate invoice id.executor&quot;: &quot;Run&quot;,
+    &quot;Cucumber Java.Scenario: Error Case - creating a duplicate location (1).executor&quot;: &quot;Run&quot;,
+    &quot;Cucumber Java.Scenario: Error Case - creating a duplicate location.executor&quot;: &quot;Run&quot;,
+    &quot;Cucumber Java.Scenario: Error Case - creating a duplicate pricing for same mode.executor&quot;: &quot;Run&quot;,
+    &quot;Cucumber Java.Scenario: Error Case - end time before start time (invalid).executor&quot;: &quot;Run&quot;,
+    &quot;Cucumber Java.Scenario: create charger with ID at maximum allowed length (50 chars).executor&quot;: &quot;Run&quot;,
+    &quot;Cucumber Java.Scenario: create charger with hyphens and digits (allowed characters).executor&quot;: &quot;Run&quot;,
+    &quot;Cucumber Java.Scenario: error when creating a charger with empty ID.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.RunCucumberTest.executor&quot;: &quot;Run&quot;,
+    &quot;Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;updates__errors__edge&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/dominik/Documents/FH Technikum/WS25/REQEN/Project/fuelstation/ElectricChargingStationNetwork/src&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.github.copilot.settings.general.GeneralConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src" />
@@ -110,53 +133,16 @@
       <recent name="org.example" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.RunCucumberTest">
-    <configuration name="Feature: manage_charging" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
-      <option name="CUCUMBER_CORE_VERSION" value="5" />
-      <option name="FILE_PATH" value="$PROJECT_DIR$/src/test/resources/org/example/manage_charging.feature" />
-      <option name="GLUE" value="org.example" />
-      <option name="MAIN_CLASS_NAME" value="io.cucumber.core.cli.Main" />
-      <module name="ElectricChargingStationNetwork" />
-      <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter" />
-      <option name="SUGGESTED_NAME" value="Feature: manage_charging" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="io.cucumber.core.cli.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Feature: manage_invoices" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
-      <option name="CUCUMBER_CORE_VERSION" value="5" />
-      <option name="FILE_PATH" value="$PROJECT_DIR$/src/test/resources/org/example/manage_invoices.feature" />
-      <option name="GLUE" value="org.example" />
-      <option name="MAIN_CLASS_NAME" value="io.cucumber.core.cli.Main" />
-      <module name="ElectricChargingStationNetwork" />
-      <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter" />
-      <option name="SUGGESTED_NAME" value="Feature: manage_invoices" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="io.cucumber.core.cli.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Feature: manage_locations" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Cucumber Java.Scenario: Error Case - creating a duplicate pricing for same mode">
+    <configuration name="Scenario: Edge Case - rename location to the same name (1)" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
       <option name="CUCUMBER_CORE_VERSION" value="5" />
       <option name="FILE_PATH" value="$PROJECT_DIR$/src/test/resources/org/example/manage_locations.feature" />
       <option name="GLUE" value="org.example" />
       <option name="MAIN_CLASS_NAME" value="io.cucumber.core.cli.Main" />
       <module name="ElectricChargingStationNetwork" />
-      <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter" />
-      <option name="SUGGESTED_NAME" value="Feature: manage_locations" />
+      <option name="NAME_FILTER" value="^Edge Case \- rename location to the same name$" />
+      <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter --name &quot;^Edge Case \- rename location to the same name$&quot;" />
+      <option name="SUGGESTED_NAME" value="Scenario: Edge Case - rename location to the same name" />
       <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
       <extension name="coverage">
         <pattern>
@@ -168,14 +154,55 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Feature: manage_pricing" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
+    <configuration name="Scenario: Edge Case - rename location to the same name" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
+      <option name="CUCUMBER_CORE_VERSION" value="5" />
+      <option name="FILE_PATH" value="$PROJECT_DIR$/src/test/resources/org/example/manage_invoices.feature" />
+      <option name="GLUE" value="org.example" />
+      <option name="MAIN_CLASS_NAME" value="io.cucumber.core.cli.Main" />
+      <module name="ElectricChargingStationNetwork" />
+      <option name="NAME_FILTER" value="^Edge Case \- rename location to the same name$" />
+      <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter --name &quot;^Edge Case \- rename location to the same name$&quot;" />
+      <option name="SUGGESTED_NAME" value="Scenario: Edge Case - rename location to the same name" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="io.cucumber.core.cli.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Scenario: Error Case - creating a duplicate location (1)" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
+      <option name="CUCUMBER_CORE_VERSION" value="5" />
+      <option name="FILE_PATH" value="$PROJECT_DIR$/src/test/resources/org/example/manage_locations.feature" />
+      <option name="GLUE" value="org.example" />
+      <option name="MAIN_CLASS_NAME" value="io.cucumber.core.cli.Main" />
+      <module name="ElectricChargingStationNetwork" />
+      <option name="NAME_FILTER" value="^Error Case \- creating a duplicate location$" />
+      <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter --name &quot;^Error Case \- creating a duplicate location$&quot;" />
+      <option name="SUGGESTED_NAME" value="Scenario: Error Case - creating a duplicate location" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="io.cucumber.core.cli.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Scenario: Error Case - creating a duplicate location" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
       <option name="CUCUMBER_CORE_VERSION" value="5" />
       <option name="FILE_PATH" value="$PROJECT_DIR$/src/test/resources/org/example/manage_pricing.feature" />
       <option name="GLUE" value="org.example" />
       <option name="MAIN_CLASS_NAME" value="io.cucumber.core.cli.Main" />
       <module name="ElectricChargingStationNetwork" />
-      <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter" />
-      <option name="SUGGESTED_NAME" value="Feature: manage_pricing" />
+      <option name="NAME_FILTER" value="^Error Case \- creating a duplicate location$" />
+      <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter --name &quot;^Error Case \- creating a duplicate location$&quot;" />
+      <option name="SUGGESTED_NAME" value="Scenario: Error Case - creating a duplicate location" />
       <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
       <extension name="coverage">
         <pattern>
@@ -187,43 +214,48 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="RunCucumberTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="Scenario: Error Case - creating a duplicate pricing for same mode" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
+      <option name="CUCUMBER_CORE_VERSION" value="5" />
+      <option name="FILE_PATH" value="$PROJECT_DIR$/src/test/resources/org/example/manage_pricing.feature" />
+      <option name="GLUE" value="org.example" />
+      <option name="MAIN_CLASS_NAME" value="io.cucumber.core.cli.Main" />
       <module name="ElectricChargingStationNetwork" />
+      <option name="NAME_FILTER" value="^Error Case \- creating a duplicate pricing for same mode$" />
+      <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter --name &quot;^Error Case \- creating a duplicate pricing for same mode$&quot;" />
+      <option name="SUGGESTED_NAME" value="Scenario: Error Case - creating a duplicate pricing for same mode" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.example.*" />
+          <option name="PATTERN" value="io.cucumber.core.cli.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="org.example" />
-      <option name="MAIN_CLASS_NAME" value="org.example.RunCucumberTest" />
-      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <list>
-      <item itemvalue="Cucumber Java.Feature: manage_locations" />
-      <item itemvalue="Cucumber Java.Feature: manage_pricing" />
-      <item itemvalue="Cucumber Java.Feature: manage_charging" />
-      <item itemvalue="Cucumber Java.Feature: manage_invoices" />
-      <item itemvalue="JUnit.RunCucumberTest" />
+      <item itemvalue="Cucumber Java.Scenario: Edge Case - rename location to the same name" />
+      <item itemvalue="Cucumber Java.Scenario: Edge Case - rename location to the same name (1)" />
+      <item itemvalue="Cucumber Java.Scenario: Error Case - creating a duplicate location" />
+      <item itemvalue="Cucumber Java.Scenario: Error Case - creating a duplicate location (1)" />
+      <item itemvalue="Cucumber Java.Scenario: Error Case - creating a duplicate pricing for same mode" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.RunCucumberTest" />
-        <item itemvalue="Cucumber Java.Feature: manage_pricing" />
-        <item itemvalue="Cucumber Java.Feature: manage_charging" />
-        <item itemvalue="Cucumber Java.Feature: manage_locations" />
-        <item itemvalue="Cucumber Java.Feature: manage_invoices" />
+        <item itemvalue="Cucumber Java.Scenario: Error Case - creating a duplicate pricing for same mode" />
+        <item itemvalue="Cucumber Java.Scenario: Error Case - creating a duplicate location (1)" />
+        <item itemvalue="Cucumber Java.Scenario: Edge Case - rename location to the same name (1)" />
+        <item itemvalue="Cucumber Java.Scenario: Edge Case - rename location to the same name" />
+        <item itemvalue="Cucumber Java.Scenario: Error Case - creating a duplicate location" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.26775.15" />
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.26775.15" />
+        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.21829.142" />
+        <option value="bundled-js-predefined-d6986cc7102b-7c0b70fcd90d-JavaScript-IU-242.21829.142" />
       </set>
     </attachedChunks>
   </component>
@@ -241,6 +273,9 @@
       <workItem from="1763469930810" duration="6000" />
       <workItem from="1763541365593" duration="4443000" />
       <workItem from="1764832716711" duration="19894000" />
+      <workItem from="1765802472372" duration="105000" />
+      <workItem from="1765802616675" duration="5661000" />
+      <workItem from="1765808355518" duration="3433000" />
     </task>
     <task id="LOCAL-00001" summary="add feature locations">
       <option name="closed" value="true" />
@@ -279,6 +314,10 @@
     <MESSAGE value="add feature locations" />
     <MESSAGE value="add feature pricing and charging" />
     <option name="LAST_COMMIT_MESSAGE" value="add feature pricing and charging" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
