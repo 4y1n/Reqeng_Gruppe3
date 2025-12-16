@@ -16,11 +16,6 @@ public class Pricing {
         return mode;
     }
 
-    public Pricing setMode(String mode) {
-        this.mode = mode;
-        return this;
-    }
-
     public double getPricePerKwh() {
         return pricePerKwh;
     }

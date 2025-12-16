@@ -48,7 +48,7 @@ Feature: Managing pricing
   """
   
   Scenario: Edge Case - request pricing for a mode that does not exist
-    When the owner requests pricing for mode "CHAdeMO" at "Vienna West Station"
+    When the owner requests pricing for mode "ACDC" at "Vienna West Station"
     Then no pricing is returned
 
   Scenario: Error Case - creating a duplicate pricing for same mode
