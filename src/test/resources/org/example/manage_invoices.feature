@@ -164,28 +164,24 @@ Feature: Manage Invoices
 
     Then an access error occurs with message "No pricing defined for mode FAST"
 
+
+
   # Error und Edge Cases:
 
   Scenario: Edge Case - owner views all invoices when none exist
-    Given a new FillingStationNetwork
+    Given no invoices exist
     When owner views all invoices
     Then the invoice list shows:
       """
       Invoices:
       """
 
-  Scenario: Error Case - creating a duplicate invoice id
-    Given a new FillingStationNetwork
-    And the following customers exist:
-      | Id  | Name         | Email           |
-      | 001 | Alissa Strom | alissa@strom.at |
-    And owner sets pricing:
-      | Mode | Price per kWh | Price per Minute |
-      | AC   | 0.32          | 0.06             |
-    And the following chargers exist:
-      | ID      | Type | Status    | Location             |
-      | CHG-001 | AC   | available | Vienna West Station  |
-    And customer "001" tops up 1.00 EUR
+  Scenario: Error Case - customer views non-existing invoice
+    When customer with id "001" views invoice "INV-999"
+    Then an access error occurs with message "Invoice not found: INV-999"
+
+
+  Scenario: Error Case - duplicate invoice id created
     When customer "001" charges at charger "CHG-001" for:
     """
     Mode: AC
@@ -193,6 +189,7 @@ Feature: Manage Invoices
     Start: 2025-01-01 10:00
     End:   2025-01-01 10:01
     """
-    And owner attempts to create an invoice with id "INV-001" for customer "001" at charger "CHG-001"
+    Then invoice "INV-001" is created for customer "001"
+    When owner attempts to create invoice "INV-001" for customer "001"
     Then an access error occurs with message "Invoice with ID INV-001 already exists."
-
+    And only one invoice "INV-001" is present for customer "001"
