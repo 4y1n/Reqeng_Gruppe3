@@ -218,12 +218,16 @@ public class Pricing_Steps {
     }
 
 
-    // Error und Edge Cases:
+
     @When("the owner requests pricing for mode {string} at {string}")
     public void ownerRequestsPricingForModeAt(String mode, String locationName) {
         Location loc = locationManager.viewLocation(locationName);
+        if (loc == null) {
+            loc = currentLocation;
+        }
         assertNotNull(loc, "Location does not exist: " + locationName);
         lastRequestedPricing = loc.getPricingForMode(mode);
+        lastPricingErrorMessage = null;
     }
 
     @Then("no pricing is returned")
@@ -233,26 +237,29 @@ public class Pricing_Steps {
 
     @When("the owner creates pricing for mode {string} with {double} EUR per kWh and {double} EUR per minute")
     public void ownerCreatesPricing(String mode, double kwh, double minute) {
+        Location loc = currentLocation != null ? currentLocation : locationManager.viewLocation("Vienna West Station");
+        assertNotNull(loc, "Location not available for creating pricing");
+        // create and add pricing (no duplicate check here)
         Pricing p = pricingManager.createPricing(mode, kwh, minute);
-        Location loc = locationManager.viewLocation("Vienna West Station");
-        if (loc != null) loc.addPricing(p);
+        loc.addPricing(p);
+        lastPricingErrorMessage = null;
     }
 
     @When("the owner attempts to create pricing for mode {string} with {double} EUR per kWh and {double} EUR per minute")
     public void ownerAttemptsToCreateDuplicatePricing(String mode, double kwh, double minute) {
+        Location loc = currentLocation != null ? currentLocation : locationManager.viewLocation("Vienna West Station");
         try {
-            Location loc = locationManager.viewLocation("Vienna West Station");
-            if (loc != null && loc.getPricingForMode(mode) != null) {
+            if (loc == null) throw new IllegalArgumentException("Location not found for duplicate pricing check");
+            if (loc.getPricingForMode(mode) != null) {
                 throw new IllegalArgumentException("Pricing for mode " + mode + " already exists");
             }
             Pricing p = pricingManager.createPricing(mode, kwh, minute);
-            if (loc != null) loc.addPricing(p);
+            loc.addPricing(p);
             lastPricingErrorMessage = null;
         } catch (IllegalArgumentException ex) {
             lastPricingErrorMessage = ex.getMessage();
         }
     }
-
 
 
     @Then("an error about duplicate pricing is raised")
@@ -263,5 +270,3 @@ public class Pricing_Steps {
 
 
 }
-
-

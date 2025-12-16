@@ -22,9 +22,7 @@ public class Chargers_Steps {
         this.chargerManager = ChargersManager.getInstance();
     }
 
-    // ----------------------
-    // GIVEN STEPS
-    // ----------------------
+
 
     @Given("a location {string} exists for chargers")
     public void chargerLocationExists(String locationName) {
@@ -55,14 +53,13 @@ public class Chargers_Steps {
         chargersExist(table); // Reuse the existing method
     }
 
-    // ----------------------
-    // WHEN STEPS
-    // ----------------------
+
 
     @When("owner creates a charger with ID {string} at location {string}")
     public void ownerCreatesCharger(String id, String locationName) {
         Location loc = locationManager.viewLocation(locationName);
         assertNotNull(loc);
+
         currentCharger = chargerManager.createCharger(id, loc);
     }
 
@@ -125,9 +122,19 @@ public class Chargers_Steps {
         viewedChargerListOutput = chargerManager.toString();
     }
 
-    // ----------------------
-    // THEN STEPS
-    // ----------------------
+    @And("sets the charger type to {string}")
+    public void setChargerType(String type) {
+        assertNotNull(currentCharger, "No charger was created or selected to set type");
+        currentCharger.setType(type);
+    }
+
+    @And("sets the charger status to {string}")
+    public void setChargerStatus(String status) {
+        assertNotNull(currentCharger, "No charger was created or selected to set status");
+        currentCharger.setStatus(status);
+    }
+
+
 
     @Then("the charger {string} is part of the charger list")
     public void chargerExists(String id) {
