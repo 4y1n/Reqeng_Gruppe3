@@ -12,8 +12,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class Charging_Steps {
 
-    private String lastErrorMessage;
-    private Exception lastChargingException;
+    private static String lastErrorMessage;
+    private static Exception lastChargingException;
+
+    // store the last created charging process (used by some verification steps)
+    private static ChargingProcess chargingProcess;
+
+    // record customer credits at charging start so we can verify billing later
+    private static Map<String, Double> customerCredit = new HashMap<>();
 
     private String normalizeStatus(String status) {
         if (status == null) return null;
@@ -82,13 +88,17 @@ public class Charging_Steps {
         System.out.println("[DEBUG] Starting charge: chargerId=" + chargerId + " status=" + charger.getStatus());
 
         double pricePerMinute = 0.05; // fallback
+        Pricing p = null;
         if (charger.getLocation() != null) {
-            Pricing p = charger.getLocation().getPricingForMode(charger.getType());
-            if (p != null) pricePerMinute = p.getPricePerMinute();
+            p = charger.getLocation().getPricingForMode(charger.getType());
+            if (p == null) {
+                // fallback to global pricing manager if location has no pricing for this mode
+                p = PricingManager.getInstance().viewPricing(charger.getType());
+            }
         } else {
-            Pricing p = PricingManager.getInstance().viewPricing(charger.getType());
-            if (p != null) pricePerMinute = p.getPricePerMinute();
+            p = PricingManager.getInstance().viewPricing(charger.getType());
         }
+        if (p != null) pricePerMinute = p.getPricePerMinute();
 
         double cost = pricePerMinute * minutes;
 
@@ -99,9 +109,31 @@ public class Charging_Steps {
             lastErrorMessage = "Customer not found";
             return;
         }
+        // record customer's credit prior to charging so we can verify billing later
+        customerCredit.put(customer, cust.getCredit());
+
+        // create a ChargingProcess representing this minute-based session (energy unknown -> 0.0 kWh)
+        java.time.LocalDateTime start = java.time.LocalDateTime.now();
+        java.time.LocalDateTime end = start.plusMinutes(minutes);
+        try {
+            System.out.println("[DEBUG] creating ChargingProcess with start=" + start + " end=" + end + " energy=0.0");
+            chargingProcess = new ChargingProcess(customer, chargerId, charger.getType(), 0.0, start, end);
+            System.out.println("[DEBUG] chargingProcess created in customerStartsCharging: " + chargingProcess);
+        } catch (Exception ex) {
+            // shouldn't happen, but store the exception for later assertions
+            lastChargingException = ex;
+            System.out.println("[ERROR] Failed to create chargingProcess in customerStartsCharging. customer='" + customer + "' chargerId='" + chargerId + "' type='" + (charger == null ? "<null>" : charger.getType()) + "' minutes=" + minutes);
+            ex.printStackTrace(System.out);
+            // abort if creation failed
+            lastErrorMessage = "Invalid charging process";
+            return;
+        }
+
         try {
             cust.deductCredit(cost);
         } catch (IllegalArgumentException e) {
+            // remove the created chargingProcess if payment fails
+            chargingProcess = null;
             lastErrorMessage = "Insufficient balance";
             return;
         }
@@ -127,6 +159,7 @@ public class Charging_Steps {
 
     @When("customer {string} charges at charger {string} for {int} minutes")
     public void customerChargesAtChargerForMinutes(String customer, String charger, int minutes) {
+        System.out.println("[DEBUG] customerChargesAtChargerForMinutes called: customer=" + customer + " charger=" + charger + " minutes=" + minutes);
         customerStartsCharging(customer, charger, minutes);
     }
 
@@ -179,23 +212,45 @@ public class Charging_Steps {
         assertNotNull(lastErrorMessage);
     }
 
-    @Then("customer {string} customer account balance is reduced according to consumed energy")
-    public void customerBalanceReduced(String customer) {
-        Customer c = CustomerManager.getInstance().viewCustomer(customer);
-        assertNotNull(c, "Customer not found: " + customer);
-        assertTrue(c.getCredit() >= 0);
-    }
+    @And("customer {string} customer account balance is reduced according to consumed energy")
+    public void customerCustomerAccountBalanceIsReducedAccordingToConsumedEnergy(String customerId) {
+        System.out.println("[DEBUG] Verifying customer balance; chargingProcess=" + chargingProcess + " lastChargingException=" + lastChargingException + " lastErrorMessage=" + lastErrorMessage);
+        // chargingProcess must be present to compute expected cost
+        assertNotNull(chargingProcess, "No charging process available to verify billing");
 
-    @Then("the charging session for customer {string} at charger {string} is completed")
-    public void theChargingSessionForCustomerAtChargerIsCompleted(String customer, String chargerId) {
-        Chargers ch = ChargersManager.getInstance().viewCharger(chargerId);
-        assertNotNull(ch, "Charger not found: " + chargerId);
+        // determine pricing (prefer price per kWh, otherwise price per minute)
+        String mode = chargingProcess.getMode();
+        String chargerId = chargingProcess.getChargerId();
 
-        Customer cust = CustomerManager.getInstance().viewCustomer(customer);
-        assertNotNull(cust, "Customer not found: " + customer);
+        Pricing p = null;
+        if (chargerId != null) {
+            Chargers ch = ChargersManager.getInstance().viewCharger(chargerId);
+            if (ch != null && ch.getLocation() != null) {
+                p = ch.getLocation().getPricingForMode(mode);
+                if (p == null) p = PricingManager.getInstance().viewPricing(mode);
+            }
+        }
+        if (p == null && mode != null) {
+            p = PricingManager.getInstance().viewPricing(mode);
+        }
 
-        assertTrue(cust.getCredit() >= 0, "Customer credit should be non-negative after charging");
-        assertNotNull(ch.getStatus(), "Charger status should be set after charging");
+        double cost;
+        // prefer kWh-based pricing only when energy is specified (>0), otherwise use price per minute
+        if (p != null && chargingProcess.getEnergyKwh() > 1e-9 && p.getPricePerKwh() > 1e-9) {
+            cost = p.getPricePerKwh() * chargingProcess.getEnergyKwh();
+        } else {
+            double ppm = (p != null) ? p.getPricePerMinute() : 0.05;
+            cost = ppm * chargingProcess.getDurationMinutes();
+        }
+
+        Customer cust = CustomerManager.getInstance().viewCustomer(customerId);
+        assertNotNull(cust, "Customer not found: " + customerId);
+
+        Double before = customerCredit.get(customerId);
+        assertNotNull(before, "Original customer credit not recorded; ensure charging start stored it in customerCredit map");
+
+        double expected = before - cost;
+        assertEquals(expected, cust.getCredit(), 1e-6, "Customer balance was not reduced by the expected amount");
     }
 
     @When("a charging process is created for customer {string} at charger {string} with mode {string} starting at {string} and ending at {string} with energy {double} kWh")
@@ -203,10 +258,13 @@ public class Charging_Steps {
         try {
             java.time.LocalDateTime start = java.time.LocalDateTime.parse(startIso);
             java.time.LocalDateTime end = java.time.LocalDateTime.parse(endIso);
-            new ChargingProcess(customerId, chargerId, mode, energyKwh, start, end);
+            // store created process so later checks can inspect it
+            chargingProcess = new ChargingProcess(customerId, chargerId, mode, energyKwh, start, end);
+            System.out.println("[DEBUG] chargingProcess created in createChargingProcess: " + chargingProcess);
             lastChargingException = null;
         } catch (Exception ex) {
-            lastChargingException = ex;
+            System.out.println("[ERROR] Failed to create chargingProcess in createChargingProcess: " + ex.getMessage());
+             lastChargingException = ex;
         }
     }
 
@@ -222,6 +280,13 @@ public class Charging_Steps {
         Chargers c = ChargersManager.getInstance().viewCharger(chargerId);
         assertNotNull(c, "Charger not found: " + chargerId);
 
+        Customer cust = CustomerManager.getInstance().viewCustomer(customerId);
+        assertNotNull(cust, "Customer not found: " + customerId);
+
+        // basic post-conditions
+        assertTrue(cust.getCredit() >= 0, "Customer credit should be non-negative after charging");
+        assertNotNull(c.getStatus(), "Charger status should be set after charging");
+
         // set charger available via manager and ensure internal list entries reflect the change
         try {
             ChargersManager.getInstance().updateCharger(chargerId, null, ChargerStatus.AVAILABLE.toString(), null);
@@ -233,43 +298,5 @@ public class Charging_Steps {
         Chargers after = ChargersManager.getInstance().viewCharger(chargerId);
         assertNotNull(after, "Charger disappeared after completion: " + chargerId);
         assertTrue(after.isAvailable(), "Charger should be available after completion");
-    }
-
-    @And("customer {string} customer account balance is reduced according to consumed energy")
-    public void customerCustomerAccountBalanceIsReducedAccordingToConsumedEnergy(String customerId) {
-        // chargingProcess must be present to compute expected cost
-        assertNotNull(chargingProcess, "No charging process available to verify billing");
-
-        // determine pricing (prefer price per kWh, otherwise price per minute)
-        String mode = chargingProcess.getMode();
-        String chargerId = chargingProcess.getChargerId();
-
-        Pricing p = null;
-        if (chargerId != null) {
-            Chargers ch = ChargersManager.getInstance().viewCharger(chargerId);
-            if (ch != null && ch.getLocation() != null) {
-                p = ch.getLocation().getPricingForMode(mode);
-            }
-        }
-        if (p == null && mode != null) {
-            p = PricingManager.getInstance().viewPricing(mode);
-        }
-
-        double cost;
-        if (p != null && p.getPricePerKwh() > 1e-9) {
-            cost = p.getPricePerKwh() * chargingProcess.getEnergyKwh();
-        } else {
-            double ppm = (p != null) ? p.getPricePerMinute() : 0.05;
-            cost = ppm * chargingProcess.getDurationMinutes();
-        }
-
-        Customer cust = CustomerManager.getInstance().viewCustomer(customerId);
-        assertNotNull(cust, "Customer not found: " + customerId);
-
-        Double before = customerCredit.get(customerId);
-        assertNotNull(before, "Original customer credit not recorded; ensure charging start stored it in customerCredit map");
-
-        double expected = before - cost;
-        assertEquals(expected, cust.getCredit(), 1e-6, "Customer balance was not reduced by the expected amount");
     }
 }
