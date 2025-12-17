@@ -59,7 +59,7 @@ Feature: Manage Locations
 
   Scenario: Error Case - creating a duplicate location
     When the following locations are created:
-      | Name           | Address        |
-      | Duplicate Spot | Test Address 1 |
-    And owner attempts to create a location "Duplicate Spot"
+      | Name                | Address                           |
+      | Vienna West Station | Mariahilfer Str. 120, 1070 Vienna |
+    And owner attempts to create a location "Vienna West Station"
     Then an error about duplicate location is raised

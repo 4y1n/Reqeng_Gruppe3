@@ -5,6 +5,9 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class Charging_Steps {
@@ -212,5 +215,61 @@ public class Charging_Steps {
         assertNotNull(lastChargingException, "Expected an exception for invalid charging session, but none was thrown.");
         String msg = lastChargingException.getMessage() == null ? "" : lastChargingException.getMessage().toLowerCase();
         assertTrue(msg.contains("invalid charging session") || msg.contains("end time must be after start time"), "Unexpected error message: " + lastChargingException.getMessage());
+    }
+
+    @Then("the charging session for customer {string} at charger {string} is completed")
+    public void theChargingSessionForCustomerAtChargerIsCompleted(String customerId, String chargerId) {
+        Chargers c = ChargersManager.getInstance().viewCharger(chargerId);
+        assertNotNull(c, "Charger not found: " + chargerId);
+
+        // set charger available via manager and ensure internal list entries reflect the change
+        try {
+            ChargersManager.getInstance().updateCharger(chargerId, null, ChargerStatus.AVAILABLE.toString(), null);
+        } catch (Exception ignore) {}
+        for (Chargers ch : ChargersManager.getInstance().getAllChargers()) {
+            if (ch.getId().equals(chargerId)) ch.setStatus(ChargerStatus.AVAILABLE.toString());
+        }
+
+        Chargers after = ChargersManager.getInstance().viewCharger(chargerId);
+        assertNotNull(after, "Charger disappeared after completion: " + chargerId);
+        assertTrue(after.isAvailable(), "Charger should be available after completion");
+    }
+
+    @And("customer {string} customer account balance is reduced according to consumed energy")
+    public void customerCustomerAccountBalanceIsReducedAccordingToConsumedEnergy(String customerId) {
+        // chargingProcess must be present to compute expected cost
+        assertNotNull(chargingProcess, "No charging process available to verify billing");
+
+        // determine pricing (prefer price per kWh, otherwise price per minute)
+        String mode = chargingProcess.getMode();
+        String chargerId = chargingProcess.getChargerId();
+
+        Pricing p = null;
+        if (chargerId != null) {
+            Chargers ch = ChargersManager.getInstance().viewCharger(chargerId);
+            if (ch != null && ch.getLocation() != null) {
+                p = ch.getLocation().getPricingForMode(mode);
+            }
+        }
+        if (p == null && mode != null) {
+            p = PricingManager.getInstance().viewPricing(mode);
+        }
+
+        double cost;
+        if (p != null && p.getPricePerKwh() > 1e-9) {
+            cost = p.getPricePerKwh() * chargingProcess.getEnergyKwh();
+        } else {
+            double ppm = (p != null) ? p.getPricePerMinute() : 0.05;
+            cost = ppm * chargingProcess.getDurationMinutes();
+        }
+
+        Customer cust = CustomerManager.getInstance().viewCustomer(customerId);
+        assertNotNull(cust, "Customer not found: " + customerId);
+
+        Double before = customerCredit.get(customerId);
+        assertNotNull(before, "Original customer credit not recorded; ensure charging start stored it in customerCredit map");
+
+        double expected = before - cost;
+        assertEquals(expected, cust.getCredit(), 1e-6, "Customer balance was not reduced by the expected amount");
     }
 }

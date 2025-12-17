@@ -185,7 +185,6 @@ public class Invoices_Steps {
         return collapsed.replace(",", ".").trim();
     }
 
-
     @When("owner attempts to create an invoice with id {string} for customer {string} at charger {string}")
     public void ownerAttemptsToCreateInvoiceWithId(String invoiceId, String customerId, String chargerId) {
         try {
@@ -200,5 +199,35 @@ public class Invoices_Steps {
         } catch (Exception e) {
             lastException = e;
         }
+    }
+
+    @And("only one invoice {string} is created for customer {string}")
+    public void onlyOneInvoiceIsCreatedForCustomer(String invoiceId, String customerId) {
+        List<Invoice> all = InvoiceManager.getInstance().viewAllInvoices();
+        long matching = all.stream()
+                .filter(inv -> invoiceId.equals(inv.getInvoiceId()) && customerId.equals(inv.getCustomer().getId()))
+                .count();
+        assertEquals(1, matching);
+        // zusätzlich sicherstellen, dass insgesamt nur eine Rechnung existiert (Szenario-spezifisch)
+        assertEquals(1, InvoiceManager.getInstance().getNumberOfInvoices());
+    }
+
+    @When("owner attempts to create invoice {string} for customer {string}")
+    public void ownerAttemptsToCreateInvoiceForCustomer(String invoiceId, String customerId) {
+        // Charger nicht in Schritt angegeben — benutze Standard-CHG-001 aus Background
+        ownerAttemptsToCreateInvoiceWithId(invoiceId, customerId, "CHG-001");
+    }
+
+    @And("only one invoice {string} is present for customer {string}")
+    public void onlyOneInvoiceIsPresentForCustomer(String invoiceId, String customerId) {
+        // Delegiere an die vorhandene Prüf-Methode, um Logik nicht zu duplizieren
+        onlyOneInvoiceIsCreatedForCustomer(invoiceId, customerId);
+    }
+
+    @Given("no invoices exist")
+    public void noInvoicesExist() {
+        InvoiceManager.getInstance().clearInvoices();
+        lastException = null;
+        lastViewedInvoicePrintout = null;
     }
 }
