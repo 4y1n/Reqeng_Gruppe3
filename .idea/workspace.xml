@@ -5,13 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d18baca4-ba8c-41b1-b95b-0d2ce0c3a48d" name="Changes" comment="add feature pricing and charging fix">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/org/example/Charging_Steps.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/Charging_Steps.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/Invoices_Steps.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/Invoices_Steps.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/resources/org/example/manage_customers.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/org/example/manage_customers.feature" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/resources/org/example/manage_invoices.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/org/example/manage_invoices.feature" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/resources/org/example/manage_locations.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/org/example/manage_locations.feature" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,11 +29,14 @@
     "Cucumber Java.Scenario: Edge Case - owner views all invoices when none exist.executor": "Run",
     "Cucumber Java.Scenario: Error Case - duplicate invoice id created automatically.executor": "Run",
     "Cucumber Java.Scenario: Error Case - end time before start time (invalid).executor": "Run",
-    "git-widget-placeholder": "updates__errors__edge",
+    "JUnit.RunCucumberTest.executor": "Run",
+    "git-widget-placeholder": "main",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)"
   }
 }]]></component>
-  <component name="RunManager" selected="Cucumber Java.Scenario: Edge Case - owner views all invoices when none exist">
+  <component name="RunManager" selected="JUnit.RunCucumberTest">
     <configuration name="Scenario: Edge Case - owner views all invoices when none exist" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
       <option name="CUCUMBER_CORE_VERSION" value="5" />
       <option name="FILE_PATH" value="$PROJECT_DIR$/src/test/resources/org/example/manage_invoices.feature" />
@@ -48,26 +46,6 @@
       <option name="NAME_FILTER" value="^Edge Case \- owner views all invoices when none exist$" />
       <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter --name &quot;^Edge Case \- owner views all invoices when none exist$&quot;" />
       <option name="SUGGESTED_NAME" value="Scenario: Edge Case - owner views all invoices when none exist" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="io.cucumber.core.cli.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Scenario: Error Case - creating a duplicate location (1)" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
-      <option name="CUCUMBER_CORE_VERSION" value="5" />
-      <option name="FILE_PATH" value="$PROJECT_DIR$/src/test/resources/org/example/manage_locations.feature" />
-      <option name="GLUE" value="org.example" />
-      <option name="MAIN_CLASS_NAME" value="io.cucumber.core.cli.Main" />
-      <module name="ElectricChargingStationNetwork" />
-      <option name="NAME_FILTER" value="^Error Case \- creating a duplicate location$" />
-      <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter --name &quot;^Error Case \- creating a duplicate location$&quot;" />
-      <option name="SUGGESTED_NAME" value="Scenario: Error Case - creating a duplicate location" />
       <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
       <extension name="coverage">
         <pattern>
@@ -123,12 +101,24 @@
       <option name="CUCUMBER_CORE_VERSION" value="5" />
       <option name="FILE_PATH" value="$PROJECT_DIR$/src/test/resources/org/example/manage_charging.feature" />
       <option name="GLUE" value="org.example" />
-      <option name="MAIN_CLASS_NAME" value="io.cucumber.core.cli.Main" />
+      <option name="MAIN_CLASS_NAME" value="org.example.RunCucumberTest" />
       <module name="ElectricChargingStationNetwork" />
       <option name="NAME_FILTER" value="^Error Case \- end time before start time \(invalid\)$" />
       <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter --name &quot;^Error Case \- end time before start time \(invalid\)$&quot;" />
       <option name="SUGGESTED_NAME" value="Scenario: Error Case - end time before start time (invalid)" />
       <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="RunCucumberTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ElectricChargingStationNetwork" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="org.example.*" />
@@ -144,18 +134,18 @@
     </configuration>
     <list>
       <item itemvalue="Cucumber Java.Scenario: Edge Case - owner views all invoices when none exist" />
-      <item itemvalue="Cucumber Java.Scenario: Error Case - creating a duplicate location (1)" />
       <item itemvalue="Cucumber Java.Scenario: Error Case - creating a duplicate pricing for same mode" />
       <item itemvalue="Cucumber Java.Scenario: Error Case - duplicate invoice id created automatically" />
       <item itemvalue="Cucumber Java.Scenario: Error Case - end time before start time (invalid)" />
+      <item itemvalue="JUnit.RunCucumberTest" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.RunCucumberTest" />
         <item itemvalue="Cucumber Java.Scenario: Edge Case - owner views all invoices when none exist" />
         <item itemvalue="Cucumber Java.Scenario: Error Case - end time before start time (invalid)" />
         <item itemvalue="Cucumber Java.Scenario: Error Case - duplicate invoice id created automatically" />
         <item itemvalue="Cucumber Java.Scenario: Error Case - creating a duplicate pricing for same mode" />
-        <item itemvalue="Cucumber Java.Scenario: Error Case - creating a duplicate location (1)" />
       </list>
     </recent_temporary>
   </component>

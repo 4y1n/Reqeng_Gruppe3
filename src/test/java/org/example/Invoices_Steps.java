@@ -21,7 +21,20 @@ public class Invoices_Steps {
     public void the_following_customers_exist(DataTable table) {
         CustomerManager cm = CustomerManager.getInstance();
         for (Map<String, String> row : table.asMaps()) {
-            cm.createCustomer(row.get("Id"), row.get("Name"), row.get("Email"));
+            String id = row.get("Id");
+            String name = row.get("Name");
+            String email = row.get("Email");
+            cm.createCustomer(id, name, email);
+            // optional Credit column: set initial credit if provided
+            if (row.containsKey("Credit") && row.get("Credit") != null && !row.get("Credit").trim().isEmpty()) {
+                try {
+                    String creditStr = row.get("Credit").replace(" EUR", "").trim();
+                    double credit = Double.parseDouble(creditStr);
+                    Customer c = cm.viewCustomer(id);
+                    if (c != null) c.setCredit(credit);
+                } catch (NumberFormatException ignore) {
+                }
+            }
         }
     }
 
@@ -231,3 +244,4 @@ public class Invoices_Steps {
         lastViewedInvoicePrintout = null;
     }
 }
+
