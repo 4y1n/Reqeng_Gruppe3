@@ -51,6 +51,7 @@ Feature: Managing pricing
     When the owner requests pricing for mode "ACDC" at "Vienna West Station"
     Then no pricing is returned
 
+
   Scenario: Error Case - creating a duplicate pricing for same mode
     When the owner attempts to create pricing for mode "AC" with 0.32 EUR per kWh and 0.06 EUR per minute
     Then an error about duplicate pricing is raised

@@ -5,8 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d18baca4-ba8c-41b1-b95b-0d2ce0c3a48d" name="Changes" comment="add feature pricing and charging fix">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_16_12_2025_14_47_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_16_12_2025_14_47__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_16_12_2025_14_54_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_16_12_2025_14_54__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_15_12_2025_12_54_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_15_12_2025_12_54__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_16_12_2025_14_28_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_16_12_2025_14_28__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_16_12_2025_14_50_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_16_12_2025_14_50__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/org/example/Charging_Steps.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/Charging_Steps.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/Pricing_Steps.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/Pricing_Steps.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/org/example/manage_charging.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/org/example/manage_charging.feature" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/org/example/manage_pricing.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/org/example/manage_pricing.feature" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,8 +34,28 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "4y1n"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/4y1n/Reqeng_Gruppe3.git",
+    "accountId": "3f73a989-52c7-4bdf-b8f7-3fc011bd53f8"
+  }
+}]]></component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 8
+}]]></component>
+  <component name="ProjectId" id="37nhdYnJOLcuxq0G8MgkxLAIGiT" />
+  <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
@@ -30,7 +63,11 @@
     "Cucumber Java.Scenario: Error Case - duplicate invoice id created automatically.executor": "Run",
     "Cucumber Java.Scenario: Error Case - end time before start time (invalid).executor": "Run",
     "JUnit.RunCucumberTest.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)"
@@ -150,10 +187,25 @@
     </recent_temporary>
   </component>
   <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d18baca4-ba8c-41b1-b95b-0d2ce0c3a48d" name="Changes" comment="add feature pricing and charging fix" />
+      <created>1767544834619</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1767544834619</updated>
+    </task>
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="add feature pricing and charging fix" />
     <option name="LAST_COMMIT_MESSAGE" value="add feature pricing and charging fix" />
+  </component>
+  <component name="github-copilot-workspace">
+    <instructionFileLocations>
+      <option value=".github/instructions" />
+    </instructionFileLocations>
+    <promptFileLocations>
+      <option value=".github/prompts" />
+    </promptFileLocations>
   </component>
 </project>
