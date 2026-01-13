@@ -12,6 +12,7 @@ public class NetworkStatus {
         ChargersManager cm = ChargersManager.getInstance();
         CustomerManager um = CustomerManager.getInstance();
         PricingManager pm = PricingManager.getInstance();
+        InvoiceManager im = InvoiceManager.getInstance();
 
         System.out.println("Locations: " + lm.getNumberOfLocations());
         System.out.println("Chargers: " + cm.getAllChargers().size());
@@ -35,6 +36,11 @@ public class NetworkStatus {
         System.out.println("\n-- Chargers (id : type - status) --");
         for (Chargers ch : cm.getAllChargers()) {
             System.out.println("  " + ch.getId() + ": " + ch.getType() + " - " + ch.getStatus() + " (Location: " + ch.getLocation().getName() + ")");
+        }
+
+        System.out.println("\n-- All Invoices --");
+        for (Invoice invoice : im.getAllInvoices()) {
+            System.out.println(invoice.toPrint());
         }
 
         System.out.println("\n========================");

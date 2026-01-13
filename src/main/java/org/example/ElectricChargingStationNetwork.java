@@ -13,22 +13,82 @@ public class ElectricChargingStationNetwork {
         PricingManager pm = PricingManager.getInstance().clearPricing();
 
 
-        Location loc1 = lm.createLocation("Vienna West Station")
-                .setAddress("Mariahilfer Str. 130, 1070 Vienna");
 
-        Location loc2 = lm.createLocation("Linz Center Garage")
-                .setAddress("Landstraße 45, 4020 Linz");
+        Location loc1 = lm.createLocation("Vienna West Station").setAddress("Mariahilfer Str. 120, 1070 Vienna");
+        Location loc2 = lm.createLocation("Linz Center Garage").setAddress("Landstraße 45, 4020 Linz");
+        Location loc3 = lm.createLocation("Graz Main Square").setAddress("Herrengasse 3, 8010 Graz");
+        Location loc4 = lm.createLocation("Salzburg Airport").setAddress("Innsbrucker Bundesstraße 95, 5020 Salzburg");
+        Location loc5 = lm.createLocation("St. Pölten Forum Garage").setAddress("Kremser Gasse 22, 3100 St. Pölten");
+        Location loc6 = lm.createLocation("Innsbruck City Mall").setAddress("Museumstraße 38, 6020 Innsbruck");
+        Location loc7 = lm.createLocation("Klagenfurt Lakeside Park").setAddress("Lakeside B02, 9020 Klagenfurt");
+        Location loc8 = lm.createLocation("Villach Süd").setAddress("Maria-Gailer-Straße 42, 9500 Villach");
+        Location loc9 = lm.createLocation("Wiener Neustadt Center").setAddress("Stadionstraße 13, 2700 Wr. Neustadt");
+        Location loc10 = lm.createLocation("Eisenstadt Downtown").setAddress("Hauptstraße 4, 7000 Eisenstadt");
 
 
         cm.createCharger("CHG-001", "AC", "available", loc1);
-        cm.createCharger("CHG-002", "DC", "unavailable", loc1);
+        cm.createCharger("CHG-002", "DC", "out of order", loc1);
+
         cm.createCharger("CHG-003", "AC", "available", loc2);
+        cm.createCharger("CHG-004", "DC", "available", loc2);
+        cm.createCharger("CHG-005", "AC", "out of order", loc2);
 
+        cm.createCharger("CHG-006", "AC", "available", loc3);
 
-        System.out.println("\nCurrent Locations (with chargers):");
+        cm.createCharger("CHG-007", "DC", "out of order", loc4);
+        cm.createCharger("CHG-008", "AC", "available", loc4);
+
+        cm.createCharger("CHG-009", "AC", "available", loc5);
+        cm.createCharger("CHG-010", "DC", "out of order", loc5);
+
+        cm.createCharger("CHG-011", "AC", "available", loc6);
+
+        cm.createCharger("CHG-012", "DC", "available", loc7);
+        cm.createCharger("CHG-013", "AC", "out of order", loc7);
+
+        cm.createCharger("CHG-014", "AC", "available", loc8);
+        cm.createCharger("CHG-015", "DC", "out of order", loc8);
+
+        cm.createCharger("CHG-016", "AC", "available", loc9);
+
+        cm.createCharger("CHG-017", "DC", "out of order", loc10);
+        cm.createCharger("CHG-018", "AC", "available", loc10);
+
+        System.out.println("\nLocations and chargers initialized:");
         System.out.println(lm);
 
 
+        loc1.addPricing(pm.createPricing("AC", 0.10, 0.05));
+        loc1.addPricing(pm.createPricing("DC", 0.20, 0.10));
+
+        loc2.addPricing(pm.createPricing("AC", 0.12, 0.06));
+        loc2.addPricing(pm.createPricing("DC", 0.22, 0.11));
+
+        loc3.addPricing(pm.createPricing("AC", 0.11, 0.05));
+
+        loc4.addPricing(pm.createPricing("AC", 0.13, 0.07));
+        loc4.addPricing(pm.createPricing("DC", 0.25, 0.12));
+
+        loc5.addPricing(pm.createPricing("AC", 0.09, 0.04));
+        loc5.addPricing(pm.createPricing("DC", 0.18, 0.09));
+
+        loc6.addPricing(pm.createPricing("AC", 0.14, 0.06));
+
+        loc7.addPricing(pm.createPricing("AC", 0.15, 0.07));
+        loc7.addPricing(pm.createPricing("DC", 0.28, 0.14));
+
+        loc8.addPricing(pm.createPricing("AC", 0.10, 0.05));
+        loc8.addPricing(pm.createPricing("DC", 0.20, 0.10));
+
+        loc9.addPricing(pm.createPricing("AC", 0.08, 0.04));
+
+        loc10.addPricing(pm.createPricing("AC", 0.18, 0.09));
+        loc10.addPricing(pm.createPricing("DC", 0.30, 0.15));
+
+        System.out.println("\nUnique pricing added for each location:");
+
+
+        pm.displayLocationsWithPricing(lm);
 
         System.out.println("\nUpdating CHG-002 status to available");
         cm.viewCharger("CHG-002").setStatus("available");
@@ -56,68 +116,74 @@ public class ElectricChargingStationNetwork {
                 .setEmail("eduard@power.at")
                 .setCredit(0.0);
 
-        System.out.println("\nCurrent Customers:");
+        Customer c3 = um.createCustomer("003")
+                .setName("Jasmin Green")
+                .setEmail("jasmin@green.at")
+                .setCredit(30.0);
+
         System.out.println(um);
 
 
 
+        System.out.println("\n=== Charging - Alissa ===");
+        Chargers alissaCharger = cm.viewCharger("CHG-001");
+        int alissaMinutes = 20;
+        Pricing alissaPricing = loc1.getPricingForMode(alissaCharger.getType());
+        double alissaCost = alissaMinutes * alissaPricing.getPricePerMinute();
 
-
-        Pricing pAC = pm.createPricing("AC", 0.10, 0.10);
-        loc1.addPricing(pAC);
-
-        Pricing pDC = pm.createPricing("DC", 0.40, 0.15);
-        loc1.addPricing(pDC);
-
-        System.out.println("\nPricing added at Vienna West Station:");
-        for (Pricing p : loc1.getPricingList()) {
-            System.out.println("  Mode: " + p.getMode()
-                    + " | kWh: " + p.getPricePerKwh()
-                    + " | min: " + p.getPricePerMinute());
-        }
-
-
-
-        // Alissa lädt
-        System.out.println("\n=== Chargin - success ===");
-
-        Chargers chargers = cm.viewCharger("CHG-001");
-
-        int minutes = 20;
-        double pricePerMinute = pAC.getPricePerMinute();
-        double cost = minutes * pricePerMinute;
-
-        if (!chargers.getStatus().equals("available")) {
+        System.out.println("Alissa tries to charge at charger: " + alissaCharger.getId());
+        if (!alissaCharger.getStatus().equals("available")) {
             System.out.println("Charger not available.");
-        } else if (c1.getCredit() < cost) {
+        } else if (c1.getCredit() < alissaCost) {
             System.out.println("Insufficient credit for Alissa.");
         } else {
-            c1.setCredit(c1.getCredit() - cost);
-            chargers.setStatus("occupied");
-            System.out.println("Alissa charged for " + minutes + " minutes.");
-            System.out.println("Cost: " + cost + " EUR");
+            c1.setCredit(c1.getCredit() - alissaCost);
+            alissaCharger.setStatus("occupied");
+            System.out.println("Alissa charged for " + alissaMinutes + " minutes.");
+            System.out.println("Cost: " + alissaCost + " EUR");
             System.out.println("Remaining credit: " + c1.getCredit());
-            System.out.println("Charger status: " + chargers.getStatus());
+            System.out.println("Charger status: " + alissaCharger.getStatus());
+            System.out.println();
+
+
+            InvoiceManager im = InvoiceManager.getInstance();
+            Invoice alissaInvoice = im.createInvoice(c1.getId(), alissaCharger.getId(), alissaCost);
+            System.out.println("Invoice created for Alissa:\n" + alissaInvoice.toPrint());
         }
 
 
+        System.out.println("\n=== Charging - Eduard ===");
+        Chargers eduardCharger = cm.viewCharger("CHG-002");
+        int eduardMinutes = 60;
+        Pricing eduardPricing = loc1.getPricingForMode(eduardCharger.getType());
+        double eduardCost = eduardMinutes * eduardPricing.getPricePerMinute();
 
-        // Eduard lädt - fehlgeschlagen
-
-        System.out.println("\n=== Charging - error ===");
-
-        int minutesEduard = 60;
-        double costEduard = minutesEduard * pricePerMinute;
-
-        System.out.println("Eduard tries to charge...");
-
-        if (!chargers.getStatus().equals("available")) {
+        System.out.println("Eduard tries to charge at charger: " + eduardCharger.getId());
+        if (!eduardCharger.getStatus().equals("available")) {
             System.out.println("ERROR: Charger not available.");
-        } else if (c2.getCredit() < costEduard) {
-            System.out.println("ERROR: Insufficient credit for Eduard");
+        } else if (c2.getCredit() < eduardCost) {
+            System.out.println("ERROR: Insufficient credit for Eduard.");
         } else {
             System.out.println("Unexpected success (should not happen)");
         }
+
+
+        System.out.println("\n=== Charging - Jasmin ===");
+        Chargers jasminCharger = cm.viewCharger("CHG-013");
+        int jasminMinutes = 30;
+        Pricing jasminPricing = loc7.getPricingForMode(jasminCharger.getType());
+        double jasminCost = jasminMinutes * jasminPricing.getPricePerMinute();
+
+        System.out.println("Jasmin tries to charge at charger: " + jasminCharger.getId());
+        if (!jasminCharger.getStatus().equals("available")) {
+            System.out.println("ERROR: Charger not available (out of order).");
+        } else if (c3.getCredit() < jasminCost) {
+            System.out.println("ERROR: Insufficient credit for Jasmin.");
+        } else {
+            System.out.println("Unexpected success (should not happen)");
+        }
+
+
 
         NetworkStatus.print();
 
