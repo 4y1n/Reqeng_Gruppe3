@@ -33,6 +33,15 @@ public class PricingManager {
                 .orElse(null);
     }
 
+    public Pricing updatePricing(String mode, double newKwh, double newMinute) {
+        Pricing pricing = viewPricing(mode);
+        if (pricing != null) {
+            pricing.setPricePerKwh(newKwh);
+            pricing.setPricePerMinute(newMinute);
+        }
+        return pricing;
+    }
+
     public List<Pricing> getPricingList() {
         return pricingList;
     }

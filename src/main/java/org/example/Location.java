@@ -50,6 +50,29 @@ public class Location {
         return pricingList;
     }
 
+    public Location setPricing(String mode, double pricePerKWh, double pricePerMinute) {
+        Pricing pricing = getPricingForMode(mode);
+        if (pricing == null) {
+            pricing = new Pricing(mode, pricePerKWh, pricePerMinute);
+            addPricing(pricing);
+        } else {
+            pricing.setPricePerKwh(pricePerKWh);
+            pricing.setPricePerMinute(pricePerMinute);
+        }
+        return this;
+    }
+
+    public Location updatePricing(String mode, double pricePerKWh, double pricePerMinute) {
+        Pricing pricing = getPricingForMode(mode);
+        if (pricing != null) {
+            pricing.setPricePerKwh(pricePerKWh);
+            pricing.setPricePerMinute(pricePerMinute);
+        } else {
+            throw new IllegalArgumentException("Pricing for mode " + mode + " does not exist.");
+        }
+        return this;
+    }
+
 
     @Override
     public String toString() {

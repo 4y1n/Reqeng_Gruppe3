@@ -1,5 +1,7 @@
 package org.example;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -29,8 +31,7 @@ public class Invoice {
             double energyKwh,
             long minutes,
             LocalDateTime end,
-            Pricing pricing,
-            double totalPrice
+            Pricing pricing
     ) {
         this.invoiceId = invoiceId;
         this.customer = customer;
@@ -40,7 +41,7 @@ public class Invoice {
         this.minutes = minutes;
         this.end = end;
         this.pricing = pricing;
-        this.totalPrice = totalPrice;
+        this.totalPrice = calculateTotalPrice(pricing.getPricePerKwh(), pricing.getPricePerMinute());
 
         this.balanceAfter = customer.getCredit();
     }
@@ -88,5 +89,29 @@ public class Invoice {
                 ", amount=" + totalPrice +
                 ", date=" + end.format(dtf) +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Invoice invoice = (Invoice) obj;
+        return invoiceId.equals(invoice.invoiceId);
+    }
+
+    @Override
+    public int hashCode() {
+        return invoiceId.hashCode();
+    }
+
+    public double calculateTotalPrice(double pricePerKwh, double pricePerMinute) {
+        double totalPrice = (pricePerKwh * energyKwh) + (pricePerMinute * minutes);
+        return roundToTwoDecimalPlaces(totalPrice);
+    }
+
+    private double roundToTwoDecimalPlaces(double value) {
+        BigDecimal bd = BigDecimal.valueOf(value);
+        bd = bd.setScale(2, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 }
