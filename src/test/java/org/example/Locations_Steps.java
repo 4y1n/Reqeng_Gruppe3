@@ -23,7 +23,6 @@ public class Locations_Steps {
 
 
 
-
     @When("the following locations are created:")
     public void createMultipleLocations(DataTable table) {
         locationManager.clearLocations();
@@ -33,7 +32,6 @@ public class Locations_Steps {
             loc.setAddress(row.get("Address"));
         }
     }
-
 
 
 
@@ -47,7 +45,6 @@ public class Locations_Steps {
             // Chargers handled elsewhere
         }
     }
-
 
 
 
@@ -68,11 +65,8 @@ public class Locations_Steps {
 
 
 
-
     @Given("an existing location {string}")
     public void ensureLocationExists(String name) {
-
-        // IMPORTANT: Do NOT clearInvoices the system here
         Location loc = locationManager.viewLocation(name);
         if (loc == null) {
             loc = locationManager.createLocation(name);
@@ -89,7 +83,6 @@ public class Locations_Steps {
     public void locationHasNewAddress(String name, String expected) {
         assertEquals(expected, locationManager.viewLocation(name).getAddress());
     }
-
 
 
 
@@ -110,7 +103,6 @@ public class Locations_Steps {
     }
 
 
-    // Error und Edge Cases:
     @When("owner attempts to create a location {string}")
     public void ownerAttemptsToCreateLocation(String name) {
         try {

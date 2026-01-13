@@ -62,7 +62,6 @@ Feature: Manage Chargers
     When owner deletes the charger "CHG-500"
     Then the charger "CHG-500" no longer exists in the charger list
 
-# Error und Edge Cases:
   Scenario: ERROR - create a charger with duplicate ID
     Given the following charger exists:
       | ID      | Type | Status    | Location      |

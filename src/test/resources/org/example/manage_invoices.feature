@@ -165,9 +165,6 @@ Feature: Manage Invoices
     Then an access error occurs with message "No pricing defined for mode FAST"
 
 
-
-  # Error und Edge Cases:
-
   Scenario: Edge Case - owner views all invoices when none exist
     Given no invoices exist
     When owner views all invoices

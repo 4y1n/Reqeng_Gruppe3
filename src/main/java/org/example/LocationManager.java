@@ -35,10 +35,7 @@ public class LocationManager {
                 .orElse(null);
     }
 
-    /**
-     * Update the name of an existing location.
-     * Throws IllegalArgumentException if the source doesn't exist or the target name is already used.
-     */
+
     public Location updateLocation(String oldName, String newName) {
         if (oldName == null || newName == null)
             throw new IllegalArgumentException("Location names must not be null.");
@@ -63,10 +60,6 @@ public class LocationManager {
         return locations.size();
     }
 
-    /**
-     * Return the internal list of locations so callers can iterate locations.
-     * NOTE: this returns the live list (no defensive copy) for simplicity.
-     */
     public List<Location> getAllLocations() {
         return locations;
     }

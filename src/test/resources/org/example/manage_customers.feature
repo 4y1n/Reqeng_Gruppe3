@@ -50,14 +50,13 @@ Feature: Manage customer accounts
     And the number of customer accounts is 1
 
 
-
   Scenario: add credit to an existing customer account
     Given an existing customer account with id "003"
     And the customer has a credit of 10.0
     When customer adds 15.0 credit to the customer account
     Then the customer account "003" has a credit of 25.0
 
-# Error und Edge Cases:
+
   Scenario: Edge Case - updateCustomer with null name does not change name
     Given an existing customer account with id "001"
     And sets the customer name to "Alissa Strom"
