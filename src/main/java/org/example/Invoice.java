@@ -79,4 +79,14 @@ public class Invoice {
     private String format(double v) {
         return String.format(java.util.Locale.US, "%.2f", v);
     }
+
+    @Override
+    public String toString() {
+        return "Invoice{" +
+                "customerId='" + customer.getId() + '\'' +
+                ", chargerId='" + chargers.getId() + '\'' +
+                ", amount=" + totalPrice +
+                ", date=" + end.format(dtf) +
+                '}';
+    }
 }

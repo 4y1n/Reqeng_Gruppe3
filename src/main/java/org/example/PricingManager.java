@@ -36,4 +36,18 @@ public class PricingManager {
     public List<Pricing> getPricingList() {
         return pricingList;
     }
+
+    public void displayLocationsWithPricing(LocationManager locationManager) {
+        System.out.println("\nLocations with Pricing:");
+        for (Location location : locationManager.getAllLocations()) {
+            System.out.println("Location: " + location.getName());
+            System.out.println("Address: " + location.getAddress());
+            for (Pricing pricing : location.getPricingList()) {
+                System.out.println("  Mode: " + pricing.getMode()
+                        + " | kWh: " + pricing.getPricePerKwh()
+                        + " | min: " + pricing.getPricePerMinute());
+            }
+            System.out.println();
+        }
+    }
 }
