@@ -73,7 +73,6 @@ public class Invoice {
                 "------------------------------------"
         };
 
-        // Join with newline to produce identical output to previous implementation
         return String.join("\n", lines);
     }
 

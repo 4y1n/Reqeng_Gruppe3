@@ -25,7 +25,6 @@ public class Invoices_Steps {
             String name = row.get("Name");
             String email = row.get("Email");
             cm.createCustomer(id, name, email);
-            // optional Credit column: set initial credit if provided
             if (row.containsKey("Credit") && row.get("Credit") != null && !row.get("Credit").trim().isEmpty()) {
                 try {
                     String creditStr = row.get("Credit").replace(" EUR", "").trim();
@@ -204,7 +203,6 @@ public class Invoices_Steps {
             Customer cust = CustomerManager.getInstance().viewCustomer(customerId);
             Chargers chargers = ChargersManager.getInstance().viewCharger(chargerId);
             Pricing pricing = PricingManager.getInstance().viewPricing("AC");
-            // Erzeuge eine kleine Dummy-Rechnung (Datum im Format der vorhandenen dtf)
             LocalDateTime end = LocalDateTime.parse("2025-01-01 10:01", dtf);
             Invoice inv = new Invoice(invoiceId, cust, chargers, "AC", 1.0, 1, end, pricing, 0.0);
             InvoiceManager.getInstance().createInvoice(inv);
@@ -221,19 +219,16 @@ public class Invoices_Steps {
                 .filter(inv -> invoiceId.equals(inv.getInvoiceId()) && customerId.equals(inv.getCustomer().getId()))
                 .count();
         assertEquals(1, matching);
-        // zusätzlich sicherstellen, dass insgesamt nur eine Rechnung existiert (Szenario-spezifisch)
         assertEquals(1, InvoiceManager.getInstance().getNumberOfInvoices());
     }
 
     @When("owner attempts to create invoice {string} for customer {string}")
     public void ownerAttemptsToCreateInvoiceForCustomer(String invoiceId, String customerId) {
-        // Charger nicht in Schritt angegeben — benutze Standard-CHG-001 aus Background
         ownerAttemptsToCreateInvoiceWithId(invoiceId, customerId, "CHG-001");
     }
 
     @And("only one invoice {string} is present for customer {string}")
     public void onlyOneInvoiceIsPresentForCustomer(String invoiceId, String customerId) {
-        // Delegiere an die vorhandene Prüf-Methode, um Logik nicht zu duplizieren
         onlyOneInvoiceIsCreatedForCustomer(invoiceId, customerId);
     }
 

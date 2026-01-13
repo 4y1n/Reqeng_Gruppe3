@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="d18baca4-ba8c-41b1-b95b-0d2ce0c3a48d" name="Changes" comment="add feature pricing and charging fix">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/Charging_Steps.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/Charging_Steps.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,18 +23,18 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Cucumber Java.Scenario: Edge Case - owner views all invoices when none exist.executor": "Run",
-    "Cucumber Java.Scenario: Error Case - duplicate invoice id created automatically.executor": "Run",
-    "Cucumber Java.Scenario: Error Case - end time before start time (invalid).executor": "Run",
-    "JUnit.RunCucumberTest.executor": "Run",
-    "git-widget-placeholder": "main",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Cucumber Java.Scenario: Edge Case - owner views all invoices when none exist.executor&quot;: &quot;Run&quot;,
+    &quot;Cucumber Java.Scenario: Error Case - duplicate invoice id created automatically.executor&quot;: &quot;Run&quot;,
+    &quot;Cucumber Java.Scenario: Error Case - end time before start time (invalid).executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.RunCucumberTest.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="JUnit.RunCucumberTest">
     <configuration name="Scenario: Edge Case - owner views all invoices when none exist" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
       <option name="CUCUMBER_CORE_VERSION" value="5" />
@@ -150,6 +149,15 @@
     </recent_temporary>
   </component>
   <component name="TaskManager">
+    <task id="LOCAL-00001" summary="add feature pricing and charging fix">
+      <option name="closed" value="true" />
+      <created>1765975813545</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1765975813545</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

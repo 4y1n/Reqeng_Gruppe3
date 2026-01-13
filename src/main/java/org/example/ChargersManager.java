@@ -1,4 +1,4 @@
-// java
+
 package org.example;
 
 

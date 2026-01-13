@@ -14,11 +14,7 @@ public class Charging_Steps {
 
     private static String lastErrorMessage;
     private static Exception lastChargingException;
-
-    // store the last created charging process (used by some verification steps)
     private static ChargingProcess chargingProcess;
-
-    // record customer credits at charging start so we can verify billing later
     private static Map<String, Double> customerCredit = new HashMap<>();
 
     private String normalizeStatus(String status) {
@@ -92,7 +88,6 @@ public class Charging_Steps {
         if (charger.getLocation() != null) {
             p = charger.getLocation().getPricingForMode(charger.getType());
             if (p == null) {
-                // fallback to global pricing manager if location has no pricing for this mode
                 p = PricingManager.getInstance().viewPricing(charger.getType());
             }
         } else {
@@ -109,10 +104,8 @@ public class Charging_Steps {
             lastErrorMessage = "Customer not found";
             return;
         }
-        // record customer's credit prior to charging so we can verify billing later
         customerCredit.put(customer, cust.getCredit());
 
-        // create a ChargingProcess representing this minute-based session (energy unknown -> 0.0 kWh)
         java.time.LocalDateTime start = java.time.LocalDateTime.now();
         java.time.LocalDateTime end = start.plusMinutes(minutes);
         try {
@@ -120,11 +113,9 @@ public class Charging_Steps {
             chargingProcess = new ChargingProcess(customer, chargerId, charger.getType(), 0.0, start, end);
             System.out.println("[DEBUG] chargingProcess created in customerStartsCharging: " + chargingProcess);
         } catch (Exception ex) {
-            // shouldn't happen, but store the exception for later assertions
             lastChargingException = ex;
             System.out.println("[ERROR] Failed to create chargingProcess in customerStartsCharging. customer='" + customer + "' chargerId='" + chargerId + "' type='" + (charger == null ? "<null>" : charger.getType()) + "' minutes=" + minutes);
             ex.printStackTrace(System.out);
-            // abort if creation failed
             lastErrorMessage = "Invalid charging process";
             return;
         }
@@ -132,7 +123,6 @@ public class Charging_Steps {
         try {
             cust.deductCredit(cost);
         } catch (IllegalArgumentException e) {
-            // remove the created chargingProcess if payment fails
             chargingProcess = null;
             lastErrorMessage = "Insufficient balance";
             return;
@@ -215,10 +205,8 @@ public class Charging_Steps {
     @And("customer {string} customer account balance is reduced according to consumed energy")
     public void customerCustomerAccountBalanceIsReducedAccordingToConsumedEnergy(String customerId) {
         System.out.println("[DEBUG] Verifying customer balance; chargingProcess=" + chargingProcess + " lastChargingException=" + lastChargingException + " lastErrorMessage=" + lastErrorMessage);
-        // chargingProcess must be present to compute expected cost
         assertNotNull(chargingProcess, "No charging process available to verify billing");
 
-        // determine pricing (prefer price per kWh, otherwise price per minute)
         String mode = chargingProcess.getMode();
         String chargerId = chargingProcess.getChargerId();
 
@@ -235,7 +223,6 @@ public class Charging_Steps {
         }
 
         double cost;
-        // prefer kWh-based pricing only when energy is specified (>0), otherwise use price per minute
         if (p != null && chargingProcess.getEnergyKwh() > 1e-9 && p.getPricePerKwh() > 1e-9) {
             cost = p.getPricePerKwh() * chargingProcess.getEnergyKwh();
         } else {
@@ -258,7 +245,6 @@ public class Charging_Steps {
         try {
             java.time.LocalDateTime start = java.time.LocalDateTime.parse(startIso);
             java.time.LocalDateTime end = java.time.LocalDateTime.parse(endIso);
-            // store created process so later checks can inspect it
             chargingProcess = new ChargingProcess(customerId, chargerId, mode, energyKwh, start, end);
             System.out.println("[DEBUG] chargingProcess created in createChargingProcess: " + chargingProcess);
             lastChargingException = null;
@@ -283,11 +269,9 @@ public class Charging_Steps {
         Customer cust = CustomerManager.getInstance().viewCustomer(customerId);
         assertNotNull(cust, "Customer not found: " + customerId);
 
-        // basic post-conditions
         assertTrue(cust.getCredit() >= 0, "Customer credit should be non-negative after charging");
         assertNotNull(c.getStatus(), "Charger status should be set after charging");
 
-        // set charger available via manager and ensure internal list entries reflect the change
         try {
             ChargersManager.getInstance().updateCharger(chargerId, null, ChargerStatus.AVAILABLE.toString(), null);
         } catch (Exception ignore) {}
