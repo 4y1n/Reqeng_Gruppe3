@@ -51,7 +51,6 @@ public class LocationManager {
     }
 
 
-
     public void deleteLocation(String name) {
         locations.remove(viewLocation(name));
     }

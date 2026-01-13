@@ -85,24 +85,25 @@ public class Invoices_Steps {
                 end
         );
 
-        double energyCost = cp.getEnergyKwh() * pricing.getPricePerKwh();
-        double minuteCost = cp.getDurationMinutes() * pricing.getPricePerMinute();
-        double total = energyCost + minuteCost;
+        double totalCost = (cp.getEnergyKwh() * pricing.getPricePerKwh()) + (cp.getDurationMinutes() * pricing.getPricePerMinute());
+        totalCost = Math.round(totalCost * 100.0) / 100.0; // Round to two decimal places
 
-        cust.deductCredit(total);
+        if (cust.getCredit() < totalCost) {
+            lastException = new RuntimeException("Insufficient credit for this transaction.");
+            return;
+        }
 
-        String invoiceId = InvoiceManager.getInstance().nextInvoiceId();
+        cust.setCredit(cust.getCredit() - totalCost);
 
         Invoice inv = new Invoice(
-                invoiceId,
+                InvoiceManager.getInstance().nextInvoiceId(),
                 cust,
                 chargers,
                 mode,
                 cp.getEnergyKwh(),
                 cp.getDurationMinutes(),
                 end,
-                pricing,
-                total
+                pricing
         );
 
         InvoiceManager.getInstance().createInvoice(inv);
@@ -204,7 +205,7 @@ public class Invoices_Steps {
             Chargers chargers = ChargersManager.getInstance().viewCharger(chargerId);
             Pricing pricing = PricingManager.getInstance().viewPricing("AC");
             LocalDateTime end = LocalDateTime.parse("2025-01-01 10:01", dtf);
-            Invoice inv = new Invoice(invoiceId, cust, chargers, "AC", 1.0, 1, end, pricing, 0.0);
+            Invoice inv = new Invoice(invoiceId, cust, chargers, "AC", 1.0, 1L, end, pricing);
             InvoiceManager.getInstance().createInvoice(inv);
             lastException = null;
         } catch (Exception e) {
@@ -224,7 +225,27 @@ public class Invoices_Steps {
 
     @When("owner attempts to create invoice {string} for customer {string}")
     public void ownerAttemptsToCreateInvoiceForCustomer(String invoiceId, String customerId) {
-        ownerAttemptsToCreateInvoiceWithId(invoiceId, customerId, "CHG-001");
+        try {
+            Customer customer = CustomerManager.getInstance().viewCustomer(customerId);
+            Chargers charger = ChargersManager.getInstance().viewCharger("CHG-001"); // Example charger
+            Pricing pricing = PricingManager.getInstance().viewPricing("AC"); // Example mode
+            LocalDateTime end = LocalDateTime.now();
+
+            Invoice inv = new Invoice(
+                invoiceId,
+                customer,
+                charger,
+                "AC", // Example mode
+                1.0, // Example energy
+                1L, // Example minutes
+                end,
+                pricing
+            );
+
+            InvoiceManager.getInstance().createInvoice(inv);
+        } catch (RuntimeException e) {
+            lastException = e; // Capture the exception
+        }
     }
 
     @And("only one invoice {string} is present for customer {string}")
@@ -239,4 +260,3 @@ public class Invoices_Steps {
         lastViewedInvoicePrintout = null;
     }
 }
-

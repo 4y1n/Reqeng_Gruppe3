@@ -57,40 +57,7 @@ public class ElectricChargingStationNetwork {
         System.out.println("\nLocations and chargers initialized:");
         System.out.println(lm);
 
-
-        loc1.addPricing(pm.createPricing("AC", 0.10, 0.05));
-        loc1.addPricing(pm.createPricing("DC", 0.20, 0.10));
-
-        loc2.addPricing(pm.createPricing("AC", 0.12, 0.06));
-        loc2.addPricing(pm.createPricing("DC", 0.22, 0.11));
-
-        loc3.addPricing(pm.createPricing("AC", 0.11, 0.05));
-
-        loc4.addPricing(pm.createPricing("AC", 0.13, 0.07));
-        loc4.addPricing(pm.createPricing("DC", 0.25, 0.12));
-
-        loc5.addPricing(pm.createPricing("AC", 0.09, 0.04));
-        loc5.addPricing(pm.createPricing("DC", 0.18, 0.09));
-
-        loc6.addPricing(pm.createPricing("AC", 0.14, 0.06));
-
-        loc7.addPricing(pm.createPricing("AC", 0.15, 0.07));
-        loc7.addPricing(pm.createPricing("DC", 0.28, 0.14));
-
-        loc8.addPricing(pm.createPricing("AC", 0.10, 0.05));
-        loc8.addPricing(pm.createPricing("DC", 0.20, 0.10));
-
-        loc9.addPricing(pm.createPricing("AC", 0.08, 0.04));
-
-        loc10.addPricing(pm.createPricing("AC", 0.18, 0.09));
-        loc10.addPricing(pm.createPricing("DC", 0.30, 0.15));
-
-        System.out.println("\nUnique pricing added for each location:");
-
-
-        pm.displayLocationsWithPricing(lm);
-
-        System.out.println("\nUpdating CHG-002 status to available");
+        System.out.println("\nUpdating CHG-002 status to available...");
         cm.viewCharger("CHG-002").setStatus("available");
 
         System.out.println("\nLocations after charger update:");
@@ -98,13 +65,55 @@ public class ElectricChargingStationNetwork {
 
 
 
-        System.out.println("\nDeleting charger CHG-003");
+        System.out.println("\nDeleting charger CHG-003...");
         cm.deleteCharger("CHG-003");
 
         System.out.println("\nLocations after charger deletion:");
         System.out.println(lm);
 
 
+
+
+        loc1.setPricing("AC", 0.10, 0.05);
+        loc1.setPricing("DC", 0.20, 0.10);
+
+        loc2.setPricing("AC", 0.12, 0.06);
+        loc2.setPricing("DC", 0.22, 0.11);
+
+        loc3.setPricing("AC", 0.11, 0.05);
+
+        loc4.setPricing("AC", 0.13, 0.07);
+        loc4.setPricing("DC", 0.25, 0.12);
+
+        loc5.setPricing("AC", 0.09, 0.04);
+        loc5.setPricing("DC", 0.18, 0.09);
+
+        loc6.setPricing("AC", 0.14, 0.06);
+
+        loc7.setPricing("AC", 0.15, 0.07);
+        loc7.setPricing("DC", 0.28, 0.14);
+
+        loc8.setPricing("AC", 0.10, 0.05);
+        loc8.setPricing("DC", 0.20, 0.10);
+
+        loc9.setPricing("AC", 0.08, 0.04);
+
+        loc10.setPricing("AC", 0.18, 0.09);
+        loc10.setPricing("DC", 0.30, 0.15);
+
+
+        System.out.println("\nAdd unique pricing for each location...");
+
+        pm.displayLocationsWithPricing(lm);
+
+        System.out.println("\nUpdate pricing for  Vienna West Station...");
+        loc1.updatePricing("AC", 0.14, 0.07);
+        loc1.updatePricing("DC", 0.25, 0.12);
+
+        System.out.println("\nLocations after pricing update:");
+        pm.displayLocationsWithPricing(lm);
+
+        System.out.println("Adding customers...\n");
 
         Customer c1 = um.createCustomer("001")
                 .setName("Alissa Strom")
@@ -129,9 +138,10 @@ public class ElectricChargingStationNetwork {
         Chargers alissaCharger = cm.viewCharger("CHG-001");
         int alissaMinutes = 20;
         Pricing alissaPricing = loc1.getPricingForMode(alissaCharger.getType());
-        double alissaCost = alissaMinutes * alissaPricing.getPricePerMinute();
+        double alissaCost = Math.round((alissaMinutes * alissaPricing.getPricePerMinute()) * 100.0) / 100.0;
 
         System.out.println("Alissa tries to charge at charger: " + alissaCharger.getId());
+        System.out.println("Charging mode: " + alissaCharger.getType());
         if (!alissaCharger.getStatus().equals("available")) {
             System.out.println("Charger not available.");
         } else if (c1.getCredit() < alissaCost) {
@@ -147,7 +157,9 @@ public class ElectricChargingStationNetwork {
 
 
             InvoiceManager im = InvoiceManager.getInstance();
-            Invoice alissaInvoice = im.createInvoice(c1.getId(), alissaCharger.getId(), alissaCost);
+            double alissaEnergyKwh = Math.round((alissaCost / alissaPricing.getPricePerKwh()) * 100.0) / 100.0;
+            long alissaChargingMinutes = Math.round(alissaCost / alissaPricing.getPricePerMinute());
+            Invoice alissaInvoice = im.createInvoice(c1.getId(), alissaCharger.getId(), alissaEnergyKwh, alissaChargingMinutes);
             System.out.println("Invoice created for Alissa:\n" + alissaInvoice.toPrint());
         }
 
@@ -156,15 +168,40 @@ public class ElectricChargingStationNetwork {
         Chargers eduardCharger = cm.viewCharger("CHG-002");
         int eduardMinutes = 60;
         Pricing eduardPricing = loc1.getPricingForMode(eduardCharger.getType());
-        double eduardCost = eduardMinutes * eduardPricing.getPricePerMinute();
+        double eduardCost = Math.round((eduardMinutes * eduardPricing.getPricePerMinute()) * 100.0) / 100.0;
 
         System.out.println("Eduard tries to charge at charger: " + eduardCharger.getId());
         if (!eduardCharger.getStatus().equals("available")) {
             System.out.println("ERROR: Charger not available.");
         } else if (c2.getCredit() < eduardCost) {
             System.out.println("ERROR: Insufficient credit for Eduard.");
+            c2.addCredit(20.0); // Eduard tops up credit
+            System.out.println("Eduard tops up 20.0 EUR.");
+
+            if (c2.getCredit() >= eduardCost) {
+                c2.deductCredit(eduardCost);
+                eduardCharger.setStatus("occupied");
+                System.out.println("Eduard charged for " + eduardMinutes + " minutes.");
+                System.out.println("Cost: " + eduardCost + " EUR");
+                System.out.println("Remaining credit: " + c2.getCredit());
+                System.out.println("Charger status: " + eduardCharger.getStatus());
+            } else {
+                System.out.println("ERROR: Still insufficient credit for Eduard.");
+            }
         } else {
             System.out.println("Unexpected success (should not happen)");
+        }
+
+
+        System.out.println("\n=== Creating Invoice for Eduard ===");
+        if (eduardCharger.getStatus().equals("occupied")) {
+            InvoiceManager im = InvoiceManager.getInstance();
+            double eduardEnergyKwh = Math.round((eduardCost / eduardPricing.getPricePerKwh()) * 100.0) / 100.0;
+            long eduardChargingMinutes = Math.round(eduardCost / eduardPricing.getPricePerMinute());
+            Invoice eduardInvoice = im.createInvoice(c2.getId(), eduardCharger.getId(), eduardEnergyKwh, eduardChargingMinutes);
+            System.out.println("Invoice created for Eduard:\n" + eduardInvoice.toPrint());
+        } else {
+            System.out.println("ERROR: Cannot create invoice for Eduard as the charging session was not completed.");
         }
 
 
@@ -172,7 +209,7 @@ public class ElectricChargingStationNetwork {
         Chargers jasminCharger = cm.viewCharger("CHG-013");
         int jasminMinutes = 30;
         Pricing jasminPricing = loc7.getPricingForMode(jasminCharger.getType());
-        double jasminCost = jasminMinutes * jasminPricing.getPricePerMinute();
+        double jasminCost = Math.round((jasminMinutes * jasminPricing.getPricePerMinute()) * 100.0) / 100.0;
 
         System.out.println("Jasmin tries to charge at charger: " + jasminCharger.getId());
         if (!jasminCharger.getStatus().equals("available")) {

@@ -43,6 +43,11 @@ public class NetworkStatus {
             System.out.println(invoice.toPrint());
         }
 
+        System.out.println("\n-- Customers with Balance --");
+        for (Customer customer : um.getAllCustomers().values()) {
+            System.out.println(customer.getId() + " | " + customer.getName() + " | Balance: " + String.format("%.2f", customer.getCredit()) + " EUR");
+        }
+
         System.out.println("\n========================");
     }
 }
