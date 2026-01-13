@@ -44,3 +44,9 @@ Feature: Vehicle Charging
   Scenario: Error Case - end time before start time (invalid)
     When a charging process is created for customer "005" at charger "CHG-055" with mode "AC" starting at "2025-01-01T10:00" and ending at "2025-01-01T09:59" with energy 5.0 kWh
     Then an error about invalid charging session is raised
+
+    Scenario: Edge Case - pricing changes during charging session
+      Given customer "005" starts charging at charger "CHG-055" at "2025-01-01T10:00" with mode "AC"
+      And at "2025-01-01T10:30" the price for mode "AC" changes to 0.40 EUR per kWh and 0.08 EUR per minute
+      When customer "005" ends charging at charger "CHG-055" at "2025-01-01T11:00" having consumed 10 kWh
+      Then customer "005" customer account balance is reduced according to consumed energy
