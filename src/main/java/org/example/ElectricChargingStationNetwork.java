@@ -138,7 +138,10 @@ public class ElectricChargingStationNetwork {
         Chargers alissaCharger = cm.viewCharger("CHG-001");
         int alissaMinutes = 20;
         Pricing alissaPricing = loc1.getPricingForMode(alissaCharger.getType());
-        double alissaCost = Math.round((alissaMinutes * alissaPricing.getPricePerMinute()) * 100.0) / 100.0;
+
+        double assumedKwhPerMinute = 0.2;
+        double alissaEnergyKwh = Math.round((alissaMinutes * assumedKwhPerMinute) * 100.0) / 100.0;
+        double alissaCost = Math.round((alissaEnergyKwh * alissaPricing.getPricePerKwh() + alissaMinutes * alissaPricing.getPricePerMinute()) * 100.0) / 100.0;
 
         System.out.println("Alissa tries to charge at charger: " + alissaCharger.getId());
         System.out.println("Charging mode: " + alissaCharger.getType());
@@ -157,9 +160,7 @@ public class ElectricChargingStationNetwork {
 
 
             InvoiceManager im = InvoiceManager.getInstance();
-            double alissaEnergyKwh = Math.round((alissaCost / alissaPricing.getPricePerKwh()) * 100.0) / 100.0;
-            long alissaChargingMinutes = Math.round(alissaCost / alissaPricing.getPricePerMinute());
-            Invoice alissaInvoice = im.createInvoice(c1.getId(), alissaCharger.getId(), alissaEnergyKwh, alissaChargingMinutes);
+            Invoice alissaInvoice = im.createInvoice(c1.getId(), alissaCharger.getId(), alissaEnergyKwh, alissaMinutes);
             System.out.println("Invoice created for Alissa:\n" + alissaInvoice.toPrint());
         }
 
@@ -168,14 +169,16 @@ public class ElectricChargingStationNetwork {
         Chargers eduardCharger = cm.viewCharger("CHG-002");
         int eduardMinutes = 60;
         Pricing eduardPricing = loc1.getPricingForMode(eduardCharger.getType());
-        double eduardCost = Math.round((eduardMinutes * eduardPricing.getPricePerMinute()) * 100.0) / 100.0;
+
+        double eduardEnergyKwh = Math.round((eduardMinutes * assumedKwhPerMinute) * 100.0) / 100.0;
+        double eduardCost = Math.round((eduardEnergyKwh * eduardPricing.getPricePerKwh() + eduardMinutes * eduardPricing.getPricePerMinute()) * 100.0) / 100.0;
 
         System.out.println("Eduard tries to charge at charger: " + eduardCharger.getId());
         if (!eduardCharger.getStatus().equals("available")) {
             System.out.println("ERROR: Charger not available.");
         } else if (c2.getCredit() < eduardCost) {
             System.out.println("ERROR: Insufficient credit for Eduard.");
-            c2.addCredit(20.0); // Eduard tops up credit
+            c2.addCredit(20.0);
             System.out.println("Eduard tops up 20.0 EUR.");
 
             if (c2.getCredit() >= eduardCost) {
@@ -196,9 +199,7 @@ public class ElectricChargingStationNetwork {
         System.out.println("\n=== Creating Invoice for Eduard ===");
         if (eduardCharger.getStatus().equals("occupied")) {
             InvoiceManager im = InvoiceManager.getInstance();
-            double eduardEnergyKwh = Math.round((eduardCost / eduardPricing.getPricePerKwh()) * 100.0) / 100.0;
-            long eduardChargingMinutes = Math.round(eduardCost / eduardPricing.getPricePerMinute());
-            Invoice eduardInvoice = im.createInvoice(c2.getId(), eduardCharger.getId(), eduardEnergyKwh, eduardChargingMinutes);
+            Invoice eduardInvoice = im.createInvoice(c2.getId(), eduardCharger.getId(), eduardEnergyKwh, eduardMinutes);
             System.out.println("Invoice created for Eduard:\n" + eduardInvoice.toPrint());
         } else {
             System.out.println("ERROR: Cannot create invoice for Eduard as the charging session was not completed.");
@@ -209,7 +210,9 @@ public class ElectricChargingStationNetwork {
         Chargers jasminCharger = cm.viewCharger("CHG-013");
         int jasminMinutes = 30;
         Pricing jasminPricing = loc7.getPricingForMode(jasminCharger.getType());
-        double jasminCost = Math.round((jasminMinutes * jasminPricing.getPricePerMinute()) * 100.0) / 100.0;
+
+        double jasminEnergyKwh = Math.round((jasminMinutes * assumedKwhPerMinute) * 100.0) / 100.0;
+        double jasminCost = Math.round((jasminEnergyKwh * jasminPricing.getPricePerKwh() + jasminMinutes * jasminPricing.getPricePerMinute()) * 100.0) / 100.0;
 
         System.out.println("Jasmin tries to charge at charger: " + jasminCharger.getId());
         if (!jasminCharger.getStatus().equals("available")) {

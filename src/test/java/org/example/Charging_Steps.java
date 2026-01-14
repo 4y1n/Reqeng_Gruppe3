@@ -19,10 +19,8 @@ public class Charging_Steps {
     private static ChargingProcess chargingProcess;
     private static Map<String, Double> customerCredit = new HashMap<>();
 
-    // record pricing snapshot at the moment a customer starts charging (edge-case support)
     private static Map<String, Pricing> pricingAtStart = new HashMap<>();
 
-    // record explicit charging start times for sessions started with timestamps
     private static Map<String, LocalDateTime> chargingStartTime = new HashMap<>();
 
     private String normalizeStatus(String status) {
@@ -91,20 +89,20 @@ public class Charging_Steps {
         }
         System.out.println("[DEBUG] Starting charge: chargerId=" + chargerId + " status=" + charger.getStatus());
 
-        double pricePerMinute = 0.05; // fallback
         Pricing p = null;
         if (charger.getLocation() != null) {
             p = charger.getLocation().getPricingForMode(charger.getType());
-            if (p == null) {
-                p = PricingManager.getInstance().viewPricing(charger.getType());
-            }
-        } else {
+        }
+        if (p == null) {
             p = PricingManager.getInstance().viewPricing(charger.getType());
         }
-        if (p != null) pricePerMinute = p.getPricePerMinute();
-
-        double cost = pricePerMinute * minutes;
-
+        if (p == null) {
+            lastErrorMessage = "No pricing defined for mode " + charger.getType();
+            System.out.println("[ERROR] " + lastErrorMessage);
+            return;
+        }
+        double pricePerMinute = p.getPricePerMinute();
+        double cost = Math.round((p.getPricePerKwh() * 0.0 + pricePerMinute * minutes) * 100.0) / 100.0; // energy=0 at start
         System.out.println("[DEBUG] Price per minute=" + pricePerMinute + " minutes=" + minutes + " cost=" + cost);
 
         Customer cust = CustomerManager.getInstance().viewCustomer(customer);
@@ -165,6 +163,8 @@ public class Charging_Steps {
     public void theFollowingPricesExist(io.cucumber.datatable.DataTable table) {
         PricingManager pm = PricingManager.getInstance();
         pm.clearPricing();
+        java.util.List<Location> locations = LocationManager.getInstance().getAllLocations();
+        boolean hasLocations = locations != null && !locations.isEmpty();
         for (java.util.Map<String, String> row : table.asMaps(String.class, String.class)) {
             String mode = row.get("Mode");
             String kwh = row.get("Price per kWh");
@@ -173,14 +173,19 @@ public class Charging_Steps {
                 try {
                     double kwhPrice = Double.parseDouble(kwh.trim());
                     double minutePrice = Double.parseDouble(ppm.trim());
-                    pm.createPricing(mode.trim(), kwhPrice, minutePrice);
+                    if (hasLocations) {
+                        for (Location loc : locations) {
+                            loc.setPricing(mode.trim(), kwhPrice, minutePrice);
+                        }
+                    } else {
+                        pm.createPricing(mode.trim(), kwhPrice, minutePrice);
+                    }
                 } catch (NumberFormatException ignore) {
                 }
             }
         }
     }
 
-    // New step: customer starts charging at a specific timestamp (no immediate billing) - used by edge-case tests
     @Given("customer {string} starts charging at charger {string} at {string} with mode {string}")
     public void customerStartsChargingAtTimestamp(String customerId, String chargerId, String startIso, String mode) {
         LocalDateTime start = LocalDateTime.parse(startIso);
@@ -201,22 +206,19 @@ public class Charging_Steps {
             return;
         }
 
-        // record customer's credit prior to charging so we can verify billing later
         customerCredit.put(customerId, cust.getCredit());
 
-        // capture pricing snapshot at start of charging (prefer location pricing)
         Pricing p = null;
         if (charger.getLocation() != null) {
             p = charger.getLocation().getPricingForMode(mode);
-            if (p == null) p = PricingManager.getInstance().viewPricing(mode);
-        } else {
-            p = PricingManager.getInstance().viewPricing(mode);
         }
-        if (p != null) {
-            pricingAtStart.put(customerId, new Pricing(p.getMode(), p.getPricePerKwh(), p.getPricePerMinute()));
+        if (p == null) {
+            lastErrorMessage = "No pricing defined for mode " + mode + " at location " + (charger.getLocation() == null ? "<no-location>" : charger.getLocation().getName());
+            System.out.println("[ERROR] " + lastErrorMessage);
+            return;
         }
+        pricingAtStart.put(customerId, new Pricing(p.getMode(), p.getPricePerKwh(), p.getPricePerMinute()));
 
-        // mark charger occupied
         try {
             ChargersManager.getInstance().updateCharger(chargerId, null, ChargerStatus.OCCUPIED.toString(), null);
         } catch (Exception ignore) {}
@@ -225,15 +227,12 @@ public class Charging_Steps {
             if (ch.getId().equals(chargerId)) ch.setStatus(ChargerStatus.OCCUPIED.toString());
         }
 
-        // store start time so the end-step can construct the final ChargingProcess
         chargingStartTime.put(customerId, start);
         lastErrorMessage = null;
     }
 
-    // New step: simulate a price change at a certain time (updates global and per-location pricing where present)
     @And("at {string} the price for mode {string} changes to {double} EUR per kWh and {double} EUR per minute")
     public void priceChangesAtTime(String timeIso, String mode, double priceKwh, double priceMinute) {
-        // we parse the time to follow the step signature, but the time isn't required for internal logic here
         LocalDateTime when = LocalDateTime.parse(timeIso);
         System.out.println("[DEBUG] Price change at " + when + " for mode=" + mode + " to kwh=" + priceKwh + " min=" + priceMinute);
 
@@ -246,7 +245,6 @@ public class Charging_Steps {
             pm.createPricing(mode, priceKwh, priceMinute);
         }
 
-        // Update any existing location-level pricing for the mode
         for (Location loc : LocationManager.getInstance().getAllLocations()) {
             Pricing lp = loc.getPricingForMode(mode);
             if (lp != null) {
@@ -256,19 +254,15 @@ public class Charging_Steps {
         }
     }
 
-    // New step: customer ends charging with explicit end time and consumed energy; billing uses pricing snapshot captured at start
     @When("customer {string} ends charging at charger {string} at {string} having consumed {double} kWh")
     public void customerEndsChargingAtTimestamp(String customerId, String chargerId, String endIso, double energyKwh) {
         LocalDateTime end = LocalDateTime.parse(endIso);
         LocalDateTime start = chargingStartTime.get(customerId);
         if (start == null) {
-            // fallback: if no explicit start recorded, assume now - minimal guard
             start = end.minusMinutes(1);
         }
 
-        // create the ChargingProcess now that we have start and end
         try {
-            // determine mode for the charging process: prefer the mode from the pricing snapshot captured at start
             String modeForProcess = null;
             Pricing snapshot = pricingAtStart.get(customerId);
             if (snapshot != null) {
@@ -285,10 +279,8 @@ public class Charging_Steps {
             return;
         }
 
-        // determine pricing snapshot to use for billing: prefer snapshot captured at start
         Pricing p = pricingAtStart.get(customerId);
         if (p == null) {
-            // fallback to current pricing (location then global)
             Chargers ch = ChargersManager.getInstance().viewCharger(chargerId);
             if (ch != null && ch.getLocation() != null) {
                 p = ch.getLocation().getPricingForMode(ch.getType());
@@ -296,14 +288,10 @@ public class Charging_Steps {
             }
         }
 
-        double cost = 0.0;
-        if (p != null && energyKwh > 1e-9 && p.getPricePerKwh() > 1e-9) {
-            cost = p.getPricePerKwh() * energyKwh;
-        } else {
-            long minutes = Duration.between(start, end).toMinutes();
-            double ppm = (p != null) ? p.getPricePerMinute() : 0.05;
-            cost = ppm * minutes;
-        }
+        long minutes = Duration.between(start, end).toMinutes();
+        double ppm = (p != null) ? p.getPricePerMinute() : 0.05;
+        double pkwh = (p != null) ? p.getPricePerKwh() : 0.0;
+        double cost = Math.round((pkwh * energyKwh + ppm * minutes) * 100.0) / 100.0;
 
         Customer cust = CustomerManager.getInstance().viewCustomer(customerId);
         if (cust == null) {
@@ -311,7 +299,6 @@ public class Charging_Steps {
             return;
         }
 
-        // perform billing
         try {
             cust.deductCredit(cost);
         } catch (IllegalArgumentException e) {
@@ -319,7 +306,6 @@ public class Charging_Steps {
             return;
         }
 
-        // make charger available again
         try {
             ChargersManager.getInstance().updateCharger(chargerId, null, ChargerStatus.AVAILABLE.toString(), null);
         } catch (Exception ignore) {}
@@ -327,10 +313,6 @@ public class Charging_Steps {
             if (c.getId().equals(chargerId)) c.setStatus(ChargerStatus.AVAILABLE.toString());
         }
 
-        // cleanup stored session meta
-        // pricingAtStart.remove(customerId);
-        // chargingStartTime.remove(customerId);
-        // record lastErrorMessage as null to indicate success
         lastErrorMessage = null;
     }
 
@@ -374,7 +356,6 @@ public class Charging_Steps {
 
         Pricing p = null;
 
-        // Prefer a pricing snapshot captured at charging start (edge-case behavior)
         if (pricingAtStart.containsKey(customerId)) {
             p = pricingAtStart.get(customerId);
         }
@@ -390,13 +371,11 @@ public class Charging_Steps {
             p = PricingManager.getInstance().viewPricing(mode);
         }
 
-        double cost;
-        if (p != null && chargingProcess.getEnergyKwh() > 1e-9 && p.getPricePerKwh() > 1e-9) {
-            cost = p.getPricePerKwh() * chargingProcess.getEnergyKwh();
-        } else {
-            double ppm = (p != null) ? p.getPricePerMinute() : 0.05;
-            cost = ppm * chargingProcess.getDurationMinutes();
-        }
+        double energy = chargingProcess.getEnergyKwh();
+        long minutes = chargingProcess.getDurationMinutes();
+        double ppm = (p != null) ? p.getPricePerMinute() : 0.05;
+        double pkwh = (p != null) ? p.getPricePerKwh() : 0.0;
+        double cost = Math.round((pkwh * energy + ppm * minutes) * 100.0) / 100.0;
 
         Customer cust = CustomerManager.getInstance().viewCustomer(customerId);
         assertNotNull(cust, "Customer not found: " + customerId);
@@ -406,7 +385,6 @@ public class Charging_Steps {
 
         double expected = before - cost;
         assertEquals(expected, cust.getCredit(), 1e-6, "Customer balance was not reduced by the expected amount");
-        // cleanup stored session meta now that verification is complete
         pricingAtStart.remove(customerId);
         chargingStartTime.remove(customerId);
     }
@@ -457,7 +435,6 @@ public class Charging_Steps {
 
     @Then("customer {string} customer account balance is reduced according to the old pricing structure")
     public void customerAccountBalanceReducedOldPricing(String customerId) {
-        // Delegate to the existing verification logic which uses the pricing snapshot when present
         customerCustomerAccountBalanceIsReducedAccordingToConsumedEnergy(customerId);
     }
 }
